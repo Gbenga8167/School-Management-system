@@ -1,0 +1,94 @@
+@extends('backend.admin_profile.admin.admin_dashboard');
+@section('admin')
+
+<div class="container-fluid">
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">MANAGE TEACHERS </h4>
+
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Manage</a></li>
+                    <li class="breadcrumb-item active"> Teachers</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+
+<div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+        
+                                        <h4 class="card-title">View Teachers Info</h4>
+
+        
+                                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Photo</th>
+                                                <th>Teacher Name</th>
+                                                <th>Apointment Date</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            
+                                            </tr>
+                                            </thead>
+        
+        
+                                            <tbody>
+                                                @foreach($teachers as $key => $teacher)
+
+                                                <tr>
+                                                <td>{{ $key+1 }}</td>
+                                                <td>
+                                               
+                                                    <img src="{{ empty($teacher->photo)? asset('uploads/no_image.png') : asset('uploads/teachers_photos/'.$teacher->photo)}}" alt="avatar-4" class="rounded avatar-md" >
+                                               </td>
+                                                <td>{{ $teacher->name }}</td>
+                                                <td>{{ $teacher->created_at }}</td>
+                                                <td> @if($teacher->status == 1 )
+                                                    <span class="badge bg-success" style="padding:10px 15px; font-size:15px">Active</span>
+                                                    @else
+                                                    <span class="badge bg-danger" style="padding:10px 8px; font-size:15px">In-active</span>
+                                                    @endif</td>
+
+
+                                                <td > <a href="{{route('edit.teacher', $teacher->id)}}">
+                                                <button type="submit" class="btn btn-primary waves-effect waves-light">Edit</button>
+                                                </a> 
+
+                                                
+                                                <a href="{{route('delete.teacher', $teacher->id)}}" id="delete">
+                                                <button type="submit"  class="btn btn-danger waves-effect waves-light">Delete</button>
+                                                </a>
+
+                                            </td>
+                                               
+                                            </tr>
+                                            
+
+                                                @endforeach
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+        
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+
+
+
+
+
+@endsection
