@@ -54,7 +54,7 @@
                                             <tbody>
                                                 @foreach($students as $index => $student)
 
-                                            <tr>
+                                            <tr align="center">
 
                                                <td><b>{{ $index + 1}}</b></td>
 
@@ -67,7 +67,7 @@
                                             @endphp
 
                                                 <td>
-                                                    <select  name="assessments[{{ $index}}][attendance]" class="form-select" aria-label="Default select example">
+                                                    <select  name="assessments[{{ $index}}][attendance]" class="form-select" aria-label="Default select example" style="width:60px">
                                                 <option value="">----</option>
 
                                                  @foreach(['A', 'B', 'C','D', 'E', 'F'] as $grade)
@@ -80,7 +80,7 @@
                                                 
                                                 <td>
                                                     
-                                                    <b> <select  name="assessments[{{ $index}}][punctuality]" class="form-select" aria-label="Default select example">
+                                                    <b> <select  name="assessments[{{ $index}}][punctuality]" class="form-select" aria-label="Default select example" style="width:60px">
                                                 <option value="">----</option>
 
                                                  @foreach(['A', 'B', 'C','D', 'E', 'F'] as $grade)
@@ -92,7 +92,7 @@
 
 
                                                 <td>
-                                                <b> <select  name="assessments[{{ $index}}][neatness]" class="form-select" aria-label="Default select example">
+                                                <b> <select  name="assessments[{{ $index}}][neatness]" class="form-select" aria-label="Default select example" style="width:60px">
                                                 <option  value="">----</option>
 
                                                  @foreach(['A', 'B', 'C','D', 'E', 'F'] as $grade)
@@ -105,7 +105,7 @@
 
                                                 <td>
                                                     
-                                                <b> <select  name="assessments[{{ $index}}][honesty]" class="form-select" aria-label="Default select example">
+                                                <b> <select  name="assessments[{{ $index}}][honesty]" class="form-select" aria-label="Default select example" style="width:60px">
                                                 <option value="">----</option>
 
                                                  @foreach(['A', 'B', 'C','D', 'E', 'F'] as $grade)
@@ -117,7 +117,7 @@
 
                                                 <td>
                                                     
-                                                <b> <select  name="assessments[{{ $index}}][musical]" class="form-select" aria-label="Default select example">
+                                                <b> <select  name="assessments[{{ $index}}][musical]" class="form-select" aria-label="Default select example" style="width:60px">
                                                 <option value="">----</option>
 
                                                  @foreach(['A', 'B', 'C','D', 'E', 'F'] as $grade)
@@ -130,7 +130,7 @@
 
                                                 <td>
                                                     
-                                                    <b> <select  name="assessments[{{ $index}}][initiative]" class="form-select" aria-label="Default select example">
+                                                    <b> <select  name="assessments[{{ $index}}][initiative]" class="form-select" aria-label="Default select example" style="width:60px">
                                                     <option  value="">----</option>
     
                                                      @foreach(['A', 'B', 'C','D', 'E', 'F'] as $grade)
@@ -143,7 +143,7 @@
 
                                                     <td>
                                                     
-                                                    <b> <select  name="assessments[{{ $index}}][creativity]" class="form-select" aria-label="Default select example">
+                                                    <b> <select  name="assessments[{{ $index}}][creativity]" class="form-select" aria-label="Default select example" style="width:60px">
                                                     <option value="">----</option>
     
                                                      @foreach(['A', 'B', 'C','D', 'E', 'F'] as $grade)
@@ -157,7 +157,7 @@
 
                                                     <td>
                                                     
-                                                    <b> <select  name="assessments[{{ $index}}][sport]" class="form-select" aria-label="Default select example">
+                                                    <b> <select  name="assessments[{{ $index}}][sport]" class="form-select" aria-label="Default select example" style="width:60px">
                                                     <option value="">----</option>
     
                                                      @foreach(['A', 'B', 'C','D', 'E', 'F'] as $grade)
@@ -171,7 +171,7 @@
 
                                                     <td>
                                                     
-                                                    <b> <select  name="assessments[{{ $index}}][perseverance]" class="form-select" aria-label="Default select example">
+                                                    <b> <select  name="assessments[{{ $index}}][perseverance]" class="form-select" aria-label="Default select example" style="width:60px">
                                                     <option value="">----</option>
     
                                                      @foreach(['A', 'B', 'C','D', 'E', 'F'] as $grade)
@@ -185,7 +185,7 @@
 
                                                     <td>
                                                     
-                                                    <b> <select  name="assessments[{{ $index}}][cooperation]" class="form-select" aria-label="Default select example">
+                                                    <b> <select  name="assessments[{{ $index}}][cooperation]" class="form-select" aria-label="Default select example" style="width:60px">
                                                     <option value="">----</option>
     
                                                      @foreach(['A', 'B', 'C','D', 'E', 'F'] as $grade)

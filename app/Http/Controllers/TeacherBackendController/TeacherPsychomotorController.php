@@ -63,8 +63,8 @@ class TeacherPsychomotorController extends Controller
         }
 
        //check if the logged in user is a class teacher
-        $terms = terms::where('is_current', true)->value('name');
-        $sessions = academic_session::where('is_current', true)->value('name');
+        $terms = $request->term_id;
+        $sessions = $request->session_id;
         
         //check the student id in the assign_class_subject_students matching the request
         $assignments = DB::table('assign_class_subject_students')
@@ -84,6 +84,12 @@ class TeacherPsychomotorController extends Controller
         ->where('session', $sessions)
         ->get()
         ->keyBy('student_id');
+
+         //if no PsychoAssessment available for the selected combination Class,Term and Session
+    if($existingAssessment ->isEmpty()){
+        return back()->with('error', 'No record found for the selected Class, Term, and Session.');
+    }
+
   
         return view('backend.teacher_account.assess_psychomotor',compact('students', 'class', 'terms', 'sessions', 'existingAssessment'));
     }
@@ -141,7 +147,7 @@ class TeacherPsychomotorController extends Controller
             
         }
         $notification = array(
-            'message' => ' Psychomotor Assessments Saved Successfully!',
+            'message' => 'Assessments Saved Successfully!',
             'alert-type' => 'info'
         );
 

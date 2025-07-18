@@ -94,8 +94,15 @@ class ResultController extends Controller
             'session' => $request->session,
              ])->get()->keyBy('student_id');
 
+             if($existingResults->isEmpty()){
+                return back()->with('error', 'No record found for the selected Class, Term, and Session.');
+            }
+        
+
              $classes = classes::find($request->class_id);
              $subjects = subject::find($request->subject_id);
+
+
 
         return view('backend.teacher_account.result_upload', [
             'students' => $students,
@@ -109,68 +116,6 @@ class ResultController extends Controller
         ]);
 
     }//end method
-
-
-    /*public function SaveResultRow(Request $request){
-         //validate the request
-         $request->validate([
-
-            'student_id' => 'required|integer|exists:students,id',
-            'class_id' => 'required|integer',
-            'subject_id' => 'required|integer',
-            'term' => 'required|string',
-            'session' => 'required|string',
-            'ca1' =>  'required|numeric|min:0|max:20',
-            'ca2' =>  'required|numeric|min:0|max:20',
-            'exam' =>  'required|numeric|min:0|max:60',
-        ]);
-
-        $total = $request->ca1 + $request->ca2 + $request->exam;
-        $grade = match(true){
-            $total >= 70 =>'A', 
-            $total >= 60 =>'B',
-            $total >= 50 =>'c',
-            $total >= 45 =>'D',
-            $total >= 40 =>'E',
-            default=> 'F',
-        };
-
-        $remark = match($grade){
-            'A' => 'Excellent',
-            'B' => 'Good',
-            'C' => 'Credit',
-            'D' => 'Pass',
-            'E' => 'Weak Pass',
-            default=> 'Fail',
-        };
-
-        Result::updateOrCreate([
-            'student_id' =>$request->student_id,
-            'class_id' =>$request->class_id,
-            'subject_id' =>$request->subject_id,
-            'term' =>$request->term,
-            'session' =>$request->session,
-        ],
-            
-            [
-                'ca1' =>$request->ca1,
-                'ca2' =>$request->ca2,
-                'exam' =>$request->exam,
-                'total' =>$request->total,
-                'grade' =>$request->grade,
-                'remark' =>$request->remark,
-
-        ]);
-
-        return response()->json([
-            'total' => $total,
-            'garde' => $grade,
-            'remark' => $remake,
-            'status' => 'saved',
-        ]);
-
-    }// end method */
-
 
     public function StoreResults(Request $request){
 
@@ -263,14 +208,14 @@ class ResultController extends Controller
 
 
    public function LoadAdminResultsTable(Request $request){
-    $terms = terms::where('is_current', true)->firstOrFail();
-    $sessions = academic_session::where('is_current', true)->firstOrFail();
+    $terms = $request->term;
+    $sessions = $request->session;
     $classId = $request->class_id;
 
     //1. GET STUDENTS IDS IN THIS CLASS
     $studentIds = AssignClassSubjectStudent::where('class_id', $classId )
-    ->where('term', $terms->name)
-    ->where('session', $sessions->name)
+    ->where('term', $terms)
+    ->where('session', $sessions)
     ->pluck('student_id')
     ->unique();
 
@@ -282,8 +227,8 @@ class ResultController extends Controller
     //3.subject IDs offered in that class this term/session
     
     $subjectIds = AssignClassSubjectStudent::where('class_id', $classId)
-    ->where('term', $terms->name)
-    ->where('session', $sessions->name)
+    ->where('term', $terms)
+    ->where('session', $sessions)
     ->pluck('subject_id')
     ->unique();
 
@@ -293,24 +238,29 @@ class ResultController extends Controller
     $subjects = subject::whereIn('id', $subjectIds)
     ->orderBy('subject_name')->get();
 
-    //5. existing results, grouped key => subjectid_studentid
 
-    $results = Result::where('class_id', $classId)
-    ->where('term', $terms->name)
-    ->where('session', $sessions->name)
-    ->get()
-    ->groupBy(fn($r)=>$r->subject_id.'_'.$r->student_id);
-
-
-    //6. 
     $assignments = AssignClassSubjectStudent::where('class_id', $classId)
-    ->where('term', $terms->name)
-    ->where('session', $sessions->name)
+    ->where('term', $terms)
+    ->where('session', $sessions)
     ->get()
     ->groupBy(fn($r)=>$r->subject_id.'_'.$r->student_id);
 
     //7. Get class name 
     $classes = classes::find($request->class_id);
+
+
+    //5. existing results, grouped key => subjectid_studentid
+
+    $results = Result::where('class_id', $classId)
+    ->where('term', $terms)
+    ->where('session', $sessions)
+    ->get()
+    ->groupBy(fn($r)=>$r->subject_id.'_'.$r->student_id);
+    
+    //if no result found
+    if($results->isEmpty()){
+        return back()->with('error', 'No record found for the selected Class, Term, and Session.');
+    }
 
     return view('backend.admin_profile.admin.upload_result.upload_result_table', 
     compact('subjects', 'students', 'results', 'classes', 'terms', 'sessions', 'classId', 'assignments'));

@@ -29,7 +29,7 @@
                 <h4 class="card-title">Select Class, Term and Academic Session  </h4>
               
                 <form action="{{route('load.psychomotor')}}" method="get">
-                    @csrf 
+                 
 
                     @if(session('error'))
                     <div class="alert alert-danger">
@@ -61,7 +61,7 @@
                          <option selected value="">--Select Term--</option>
 
                          @foreach($terms as $term)
-                        <option value="{{$term->id}}">{{$term->name}}</option>
+                        <option value="{{$term->name}}">{{$term->name}}</option>
                          @endforeach
                                                     
                         </select>
@@ -79,7 +79,7 @@
                          <option selected value="">--Select Session--</option>
 
                          @foreach($sessions as $session)
-                        <option value="{{$session->id}}">{{$session->name}}</option>
+                        <option value="{{$session->name}}">{{$session->name}}</option>
                          @endforeach
                                                     
                         </select>

@@ -40,18 +40,18 @@ th{
                   <form action="{{route('store.admin.result')}}" method="POST">
                     @csrf 
                     <input type="hidden" name="class_id" value="{{$classId}}">
-                    <input type="hidden" name="term" value="{{$terms->name}}">
-                    <input type="hidden" name="session" value="{{$sessions->name}}">
+                    <input type="hidden" name="term" value="{{$terms}}">
+                    <input type="hidden" name="session" value="{{$sessions}}">
                             
-                                    <h4 class="card-title"> Result Entry For -{{$classes->class_name}} - 
-                                    {{ucfirst($terms->name)}} - {{$sessions->name}}</h4>
+                                    <h4 class="card-title"> RESULT ENTRY FOR -{{$classes->class_name}} - 
+                                    {{strtoupper($terms)}} - {{$sessions}}</h4>
 
                                      @foreach($subjects as $subject)
-                                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing:0; width: 100%;" border="0">
+                                        <table id="datatable"class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         
                                         @php $serialNumber = 1 @endphp
 
-                                        <h4 class="card-title">{{$subject->subject_name}}</h4>
+                                        <h4 class="card-title">{{strtoupper($subject->subject_name)}}</h4>
 
                                              <thead bgcolor="dodgerblue">
                                             <tr align="center">

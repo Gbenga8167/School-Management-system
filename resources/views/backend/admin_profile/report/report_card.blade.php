@@ -18,27 +18,8 @@
         background-color:#343a40;
         color:#fff;
     }
-    /*.report-card-page{
-        page-break-after:always;
-        border:1px solid black;
-        padding:20px;
-        margin:0;
-    }
     
-    .report-card-page table{
-       border-collapse:collapse;
-       width:100%;
-    }
-    .report-card-page table th,
-    .report-card-page table td{
-        border:1px solid black;
-        padding:6px;
-    }
-    html, body{
         
-    }*/
-        
-    
     @media print{
         body{
            -webkit-print-color-adjust:exact !important;
@@ -52,7 +33,7 @@
             display:none !important;
 
         }
-        img{
+       /* img{
             max-width:100%;
             height:auto;
         }
@@ -76,7 +57,7 @@
             background:url('{{asset("uploads/logo_images/logo.jpg")}}');
             background-size:cover;
             background-position:top;
-            opacity:0.01;
+            opacity:0.1;
             width:100%;
             height:70%;
             margin-top:300px;
@@ -234,7 +215,7 @@
             <img src="{{asset('uploads/school_stamp/stamp.jpg')}}"
              alt="School Stamp" style="width:80px; height:auto;">
         </td>
-        <tr>
+      </tr>
 
       </table>  
 
