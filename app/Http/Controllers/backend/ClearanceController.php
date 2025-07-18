@@ -21,7 +21,9 @@ class ClearanceController extends Controller
         $clearance->is_cleared = !$clearance->is_cleared;
         $clearance->save();
 
-        return response()->json(['message'=>'Student Clearance Updated']);
+        $message = $clearance->is_cleared? 'Student has been cleared successfully.' : 'Student has been uncleared.';
+
+        return response()->json(['message'=>$message]);
 
     }//end method
 
@@ -37,7 +39,6 @@ class ClearanceController extends Controller
         ])->pluck('student_id');
 
         
-        dd($request->all());
         foreach($students as $studentId){
             Clearance::updateOrCreate([
             'student_id' => $studentId,

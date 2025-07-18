@@ -106,8 +106,8 @@ class ReportCardController extends Controller
                 $student->clearance = Clearance::where([
                     'student_id' => $student->id,
                     'class_id' =>  $class->id,
-                    'term' => $term,
-                    'session' => $session,
+                    'term' => $term->name,
+                    'session' => $session->name,
                 ])->first();
         }
     
@@ -118,9 +118,9 @@ class ReportCardController extends Controller
             'session' => $session,
             'class' => $class,
             'nextTermBegins' => $nextTermBegins,
-            'selected_class_id' => $class,
-            'selected_term' => $term,
-            'selected_session' => $session,
+            //'selected_class_id' => $class,
+            //'selected_term' => $term,
+            //'selected_session' => $session,
 
         ]);
 

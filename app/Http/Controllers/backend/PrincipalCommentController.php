@@ -104,7 +104,7 @@ class PrincipalCommentController extends Controller
         }
 
         
-        return back()->with('success', 'Principal comments saved successfully!');
+        return back()->with('success', 'Comments saved successfully!');
 
       }//end method
 

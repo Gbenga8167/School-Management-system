@@ -76,7 +76,7 @@
             background:url('{{asset("uploads/logo_images/logo.jpg")}}');
             background-size:cover;
             background-position:top;
-            opacity:0.05;
+            opacity:0.01;
             width:100%;
             height:70%;
             margin-top:300px;
@@ -123,9 +123,9 @@
 <div class="no-print" >
 <h4 style="text-align:center; padding-top:20px;" >
      <u>
-     Report Cards &mdash;
+     REPORT CARDS &mdash;
     {{$session->name}} &bull;
-    {{$term->name}}&bull;
+    {{strtoupper($term->name)}}&bull;
     {{$class->class_name ?? $students->first()->report_class->name ?? 'unknown class'}}
      </u>
     
@@ -134,10 +134,21 @@
 
 
 <!-- Print All Result Button i-->
+<!-- Print All Result Button And Clear All Button 
+ From Appearing on the page if the class, 
+ term and session does not exist i-->
+
+@if($students->isEmpty())
+
+<p style="font-size:20px; text-align:center; color:red;">
+    Result Not Available.
+  </p>
+
+@else
 <div class="d-flex justify-content-around mb-3 no-print " >
         <button class="btn btn-sm btn-success clear-all"
          data-class-id="{{$class->id}}" 
-         data-term="{{$term}}" 
+         data-term="{{$term->name}}" 
          data-session="{{$session->name}}">
            Clear All Students
         </button>
@@ -146,12 +157,16 @@
            Print All Result
         </button>
     </div>
+@endif<!-- End Logic Print All Result Button And Clear All Button From Appearing on the page if the class, term and session does not exist i-->
 
+
+<!-- All Report-Cards  i-->
 <div id="all-report-cards">
 
    @forelse($students as $student)
    {{--Result fetch per student to check if there are
     students assigned to the selected class--}}
+
 
     <div id="report-card-{{ $student->id }}" class="border rounded p-4 shadow-sm  student-report">
       @include('backend.admin_profile.report.report_header', [
@@ -174,13 +189,14 @@
      @endphp
 
     
- 
+     <!-- All Report-Cards is empty -->
      @if($results->isEmpty())
     
-     <p style="font-size:18px; text-align:center; color:orange;">No Result for {{$student->name}}</p>
+     <p style="font-size:18px; text-align:center; color:orange;">No Result Declared For {{ucwords(strtolower($student->name))}}</p>
      @else
 
      {{-- Display Score Table --}}
+
      @include('backend.admin_profile.report.report_subject_table', [
      'results' => $results,
      ])
@@ -191,6 +207,7 @@
      ])
 
      {{-- Table Footer --}}
+
      <table class="table mt-5" style="width:90%;" align="center">
         <tr >
         <td style="width:33%">
@@ -223,12 +240,16 @@
 
 
      <div class="d-flex justify-content-around mt-3 no-print" >
+
         {{-- INDIVIDUAL CLEAR BUTTON PER STUDENT--}}
-        <button class="btn btn-sm btn-warning clear-student" 
+
+        <button class="btn btn-sm  clear-student 
+        {{ $student->clearance?->is_cleared? 'btn-danger' : 'btn-primary'}}" 
         data-student-id="{{$student->id}}" 
          data-class-id="{{$class->id}}" 
-         data-term="{{$term}}" 
-         data-session="{{$session->name}}">
+         data-term="{{$term->name}}" 
+         data-session="{{$session->name}}"
+         data-is-cleared="{{$student->clearance?->is_cleared? '1' : '0'}}" >
             {{ $student->clearance?->is_cleared? 'Uncleared Student' : 'Clear Student'}}
 
         </button>
@@ -275,11 +296,16 @@
     $(document).ready(function(){
        //Clear Single Student
        $(document).on('click', '.clear-student', function(){
+
+        //const isCleared = $(this).data('is-cleared');
+        //const actionText = isCleared? 'unclear' : 'clear';
+
+        //if(!confirm(`Are you sure you want to ${actionText} this student?`))
+        //return;
         const studentId = $(this).data('student-id');
         const classId = $(this).data('class-id');
         const term = $(this).data('term');
         const session = $(this).data('session');
-        
         $.ajax({
             url: `/admin/clearance/toggle/${studentId}`,
             type: 'POST',
@@ -295,7 +321,7 @@
             },
             error: function(){
                 alert('Failed to update clearance.');
-                console.error(err);
+                
             }
         });
        });
@@ -327,6 +353,7 @@
 
 
        //Clear All Student
+
        $(document).on('click', '.clear-all', function(){
         if(!confirm('Are you sure you want to clear all student?'))
         return;
@@ -335,14 +362,19 @@
         const term = $(this).data('term');
         const session = $(this).data('session');
 
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         $.ajax({
-            url: `/admin/clearance/clear-all`,
-            type: 'POST',
+            url: '/admin/clearance/clear-all', 
+            method: 'POST',
             data: {
                 class_id: classId,
                 term: term,
                 session: session,
-                _token: '{{csrf_token()}}'
             },
             success: function(response){
                 alert(response.message);

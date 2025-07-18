@@ -114,8 +114,8 @@
 
                 @if($selectedClass)
                 <h5 class="text-center mb-3"> 
-                    Students Comments for <strong>{{$selectedClass->class_name}}</strong>
-                <span class="text-muted">{{$selected_term}} | {{$selected_session}}</span>
+                    STUDENT COMMENT FOR  <strong>{{strtoupper($selectedClass->class_name)}} </strong>
+                <span class="text-muted">{{strtoupper($selected_term)}} | {{$selected_session}}</span>
                </h5>
                @endif
                 
