@@ -1,4 +1,4 @@
-<div class="table-responsive" style="max-height:400px; overflow:auto">
+
 
 <table class="border-collapse:collapse;" align='center' style="width:90%;">
     <tr>
@@ -90,4 +90,3 @@
 
 </table>
 
-</div>

@@ -1,5 +1,7 @@
-@extends('backend.admin_profile.admin.admin_dashboard')
-@section('admin')
+@extends('backend.student_account.student_dashboard')
+@section('student')
+
+
 
     <div class="container-fluid">
 
@@ -7,13 +9,12 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0">Result || Upload</h4>
-        
+            <h4 class="mb-sm-0">CHECK | RESULT</h4>
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Result</a></li>
-                    <li class="breadcrumb-item active"> Upload</li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Check</a></li>
+                    <li class="breadcrumb-item active"> Result</li>
                 </ol>
             </div>
 
@@ -28,8 +29,9 @@
             <div class="card-body">
 
                 <h4 class="card-title">Select Class, Term and Academic Session  </h4>
-                
-                <form action="{{route('load.admin.result')}}" method="GET">
+              
+                <form action="{{route('student.result.view')}}" method="post">
+                @csrf
 
                     @if(session('error'))
                     <div class="alert alert-danger">
@@ -51,7 +53,7 @@
                     </div>
                    
                 </div> 
-                <!-- end row -->
+                   <!-- end row -->
 
 
                    <div class="row mb-3">
@@ -61,25 +63,25 @@
                          <option selected value="">--Select Term--</option>
 
                          @foreach($terms as $term)
-                        <option value="{{$term->name}}">{{$term->name}}</option>
+                        <option value="{{$term}}">{{strtoupper($term)}}</option>
                          @endforeach
                                                     
                         </select>
                     </div>
                    
                 </div>
-                <!-- end row -->
+                     <!-- end row -->
                 
 
 
                      <div class="row mb-3">
-                    <label for="example-text-input" class="col-sm-2 col-form-label" style="font-size:15px">Academic Session</label>
+                    <label for="example-text-input" class="col-sm-2 col-form-label" style="font-size:15px">Session</label>
                     <div class="col-sm-10">
                     <select  name="session" required class="form-select" aria-label="Default select example">
                          <option selected value="">--Select Session--</option>
 
                          @foreach($sessions as $session)
-                        <option value="{{$session->name}}">{{$session->name}}</option>
+                        <option value="{{$session}}">{{$session}}</option>
                          @endforeach
                                                     
                         </select>
@@ -90,7 +92,7 @@
 
                 <!-- end row -->
 
-                <button type="submit" class="btn btn-primary waves-effect waves-light"> Load Class  </button>
+                <button type="submit" class="btn btn-primary waves-effect waves-light"> Check Result  </button>
                 
                 </form>
               
@@ -106,6 +108,4 @@
   
 
 @endsection
-
-
 

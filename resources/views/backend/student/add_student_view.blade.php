@@ -44,23 +44,12 @@
                    
                 </div>
 
-                <div class="row mb-3">
-                    <label for="example-text-input"  class="col-sm-2 col-form-label">Email</label>
-                    <div class="col-sm-10">
-                        <input class="form-control" required name="email"  type="text" placeholder="Email" >
-                    
-                    </div>
-                   
-                </div>
-                <!-- end row -->
-
-
-
+        
 
                 <div class="row mb-3">
-                    <label for="example-text-input" class="col-sm-2 col-form-label">Roll Id</label>
+                    <label for="example-text-input" class="col-sm-2 col-form-label">Student Id</label>
                     <div class="col-sm-10">
-                        <input class="form-control" required name="roll_id"  type="text" placeholder="Roll_Id"  value="AGM/2025/">
+                        <input class="form-control" required name="roll_id"  type="text"  value="AGM/25/">
                      
                     </div>
                    
@@ -167,6 +156,15 @@
                 <!-- end row -->
 
 
+                <div class="row mb-3">
+                    <label for="example-text-input"  class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" required name="email"  type="text" placeholder="Email" >
+                    
+                    </div>
+                   
+                </div>
+                <!-- end row -->
 
 
                 <div class="row mb-3">

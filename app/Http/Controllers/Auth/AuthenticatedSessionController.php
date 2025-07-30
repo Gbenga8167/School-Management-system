@@ -47,7 +47,7 @@ class AuthenticatedSessionController extends Controller
      //Student LOgin Role
      if( $LoginUserRole == 3){
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(route('student.dashboard', absolute: false));
      }
      
 

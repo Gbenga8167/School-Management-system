@@ -94,7 +94,7 @@ class ResultController extends Controller
             'session' => $request->session,
              ])->get()->keyBy('student_id');
 
-             if($existingResults->isEmpty()){
+             if($students->isEmpty()){
                 return back()->with('error', 'No record found for the selected Class, Term, and Session.');
             }
         
@@ -258,7 +258,7 @@ class ResultController extends Controller
     ->groupBy(fn($r)=>$r->subject_id.'_'.$r->student_id);
     
     //if no result found
-    if($results->isEmpty()){
+    if($assignments->isEmpty()){
         return back()->with('error', 'No record found for the selected Class, Term, and Session.');
     }
 

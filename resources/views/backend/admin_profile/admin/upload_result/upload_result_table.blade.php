@@ -31,11 +31,8 @@ th{
     </style>
 
     
-
+<div class="table-responsive" style="max-height:auto; overflow:auto">
 <div class="row">
-     <div class="col-12">
-            <div class="card">
-                <div class="card-body">
 
                   <form action="{{route('store.admin.result')}}" method="POST">
                     @csrf 
@@ -43,11 +40,14 @@ th{
                     <input type="hidden" name="term" value="{{$terms}}">
                     <input type="hidden" name="session" value="{{$sessions}}">
                             
+                    <div class="col-12">
+                         <div class="card">
+                             <div class="card-body">
                                     <h4 class="card-title"> RESULT ENTRY FOR -{{$classes->class_name}} - 
                                     {{strtoupper($terms)}} - {{$sessions}}</h4>
 
                                      @foreach($subjects as $subject)
-                                        <table id="datatable"class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         
                                         @php $serialNumber = 1 @endphp
 
@@ -130,10 +130,11 @@ th{
                                             @endforeach
                                             </tbody>
                                         </table>
-                                        @endforeach
+                                       
 
-                                        <input type="submit" class="btn btn-primary waves-effect waves-light" value="Submit All Results">
-                                        </form>
+                                        <input type="submit" class="btn btn-primary waves-effect waves-light" value="Submit All Results"><br><br><br>
+                                        @endforeach    
+                                    </form>
 
                                         
         
@@ -141,6 +142,7 @@ th{
         </div>
     </div> <!-- end col -->
 </div> <!-- end row -->
+
 
  
                                         

@@ -14,18 +14,35 @@ use App\Http\Controllers\backend\ReportCardController;
 use App\Http\Controllers\backend\AdminResultController;
 use App\Http\Controllers\backend\TermCalendarController;
 use App\Http\Controllers\backend\PrincipalCommentController;
+use App\Http\Controllers\backend\StudentAccount\StudentAccountController;
 use App\Http\Controllers\TeacherBackendController\TeacherAccountController;
 use App\Http\Controllers\TeacherBackendController\TeacherPsychomotorController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+   return view('welcome');
 });
 
-//student Route
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+//student Route
+Route::get('/student/dashboard', function () {
+    return view('backend.student_account.student_dashboard');
+})->middleware(['auth', 'verified'])->name('student.dashboard');
+
+
+
+//Student All Route
+    Route::controller(StudentAccountController::class)->group(function(){
+    Route::get('student/logout','StudentLogout')->name('student.logout');
+    Route::get('student/profile','StudentProfile')->name('student.profile');
+    Route::get('student/result/form','StudentResultForm')->name('student.result.form');
+    Route::post('student/result/view','StudentResultView')->name('student.result.view');
+});
+
 
 
 

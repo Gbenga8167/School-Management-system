@@ -33,10 +33,7 @@
             display:none !important;
 
         }
-       /* img{
-            max-width:100%;
-            height:auto;
-        }
+
 
         /*Ensure each student starts on a new page*/
         .page-break{
@@ -64,18 +61,6 @@
             z-index:-1;
         }
 
-        /*clean up table border
-
-        table,th,td{
-            border:1px solid black !important;
-            border-collapse:collapse !important;
-
-        }
-        th, td{
-            padding:6px !important;
-
-        }*/
-
         /* Normal layout spacing for student section*/
         .student-report{
             margin-bottom:20px;
@@ -91,7 +76,7 @@
 
     @media(max-width:576px){
         .table-responsive{
-            max-height:400px;
+            max-height:200vh;
         }
     }
 
@@ -110,7 +95,11 @@
     {{$class->class_name ?? $students->first()->report_class->name ?? 'unknown class'}}
      </u>
     
-</h4><br><br>
+</h4><br>
+
+<p style="text-align:center; padding-buttom:20px;">
+   <em>Tip : if pages print with extral space or blank, check printer settings like margins or use "Custom"  page range </em> 
+</p>
 </div>
 
 
@@ -122,7 +111,7 @@
 @if($students->isEmpty())
 
 <p style="font-size:20px; text-align:center; color:red;">
-    Result Not Available.
+    Results Unavailable.
   </p>
 
 @else
@@ -187,34 +176,34 @@
        'psychomotor' => $student->psychomotor,
      ])
 
-     {{-- Table Footer --}}
+     {{-- Table Footer  TEACHER AND PRINCIPAL COMMENT --}}
 
-     <table class="table mt-5" style="width:90%;" align="center">
+     <table class="table" style="width:90%;" align="center">
         <tr >
-        <td style="width:33%">
-            <strong>Class Teacher's Comment</strong> : 
+        <td style="width:70%" colspan ="3">
+            <strong style="font-size:15px;"><u>Class Teacher's Comment :</u> </strong> 
               {{ucwords(strtolower($student->psychomotor->teacher_comment ?? '_______'))}}
+              <br>
+
+              <strong style="font-size:15px;"><u>Principal's Comment : </u></strong>
+            {{ucwords(strtolower($student->psychomotor->principal_comment ?? '_______'))}}
+            <br>
+
+            <strong style="font-size:15px;"><u>Next Term Begins : </u></strong>
+            {{isset($nextTermBegins) ? \carbon\carbon::parse($nextTermBegins)->format('l, jS F, Y') :'________'}}<br>
            <!-- how to add student name at the comment session
              {{ucwords(strtolower($student->name?? 'N/A'))}} -->
        </td>
 
-        <td style="width:33%; text-align:center">
-            <strong>Principal's Comment</strong><br>
-            {{ucwords(strtolower($student->psychomotor->principal_comment ?? '_______'))}}<br>
-           
-       </td>
+       {{--END Table Footer  TEACHER AND PRINCIPAL COMMENT --}}
 
-       <td style="width:34%; text-align:center" >
-            <strong>Next Term Begins</strong><br>
-            {{isset($nextTermBegins) ? \carbon\carbon::parse($nextTermBegins)->format('l, jS F, Y') :'________'}}<br>
-        
-       </td>
-       
 
+       {{-- Table Footer  SCHOOL STAMP --}}
        <td style="width:20%; padding:4px; text-align:center;">
             <img src="{{asset('uploads/school_stamp/stamp.jpg')}}"
              alt="School Stamp" style="width:80px; height:auto;">
         </td>
+        {{-- END Table Footer  SCHOOL STAMP --}}
       </tr>
 
       </table>  
@@ -249,14 +238,14 @@
 
     
   @endif
-  <hr style="margin:25px 0; height:10px; width:100%;" class="no-print">
+  <hr style="margin:25px 0; height:3px; color:purple" class="no-print">
   
   </div> <!-- close div for single-report-card --> 
   @empty
 
 
  <p style="font-size:18px; text-align:center; color:red;">
-    No Results Found For This Class, Term, or Session
+    No Results Found For This Class, Term, or Session.
   </p>
 
  

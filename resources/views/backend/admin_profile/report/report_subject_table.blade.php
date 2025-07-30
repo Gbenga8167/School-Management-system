@@ -38,7 +38,7 @@
         <td><b>{{round($result->exam)}}</b></td>
         <td><b>{{round($result->total)}}</b></td>
         <td><b>{{$result->grade}}</b></td>
-        <td class="text-center"><b>{{$result->remark}}</b></td>
+        <td><b>{{$result->remark}}</b></td>
 
 
     </tr>
