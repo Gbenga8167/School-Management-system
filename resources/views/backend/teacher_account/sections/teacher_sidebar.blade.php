@@ -107,7 +107,20 @@ $teacherphoto = App\Models\teacher::where('user_id', $id)->first();
             </li>
 
 
+            <li>
+                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="ri-dashboard-line"></i>
+                    <span>CBT</span>
+                </a>
+                <ul class="sub-menu" aria-expanded="false">
+                    <li><a href="{{route('cbt.test.create')}}">Create CBT Test</a></li>
+                    <li><a href="{{route('cbt.test.index')}}">Create CBT Questions</a></li>
+                </ul>
+        
+            </li>
 
+
+            
             <a class="dropdown-item text-danger" href="{{route('teacher.logout')}}">
             <i class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</a>
 

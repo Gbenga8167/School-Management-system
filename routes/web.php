@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\backend\AdminController;
 use App\Http\Controllers\backend\ResultController;
+use App\Http\Controllers\backend\CBTTestController;
 use App\Http\Controllers\backend\ClassesController;
 use App\Http\Controllers\backend\StudentController;
 use App\Http\Controllers\backend\SubjectController;
@@ -42,6 +43,10 @@ Route::get('/student/dashboard', function () {
     Route::get('student/result/form','StudentResultForm')->name('student.result.form');
     Route::post('student/result/view','StudentResultView')->name('student.result.view');
 });
+
+
+
+
 
 
 
@@ -95,12 +100,36 @@ Route::get('/teacher/dashboard', function () {
 
 
 
-    //Admin Upload Result Route
+    //Admin Upload Result Route ////admin middleware
         Route::get('admin/result/upload','showSelectedAdminForm')->name('admin.result.upload');
         Route::get('load/admin/result','LoadAdminResultsTable')->name('load.admin.result');
         Route::post('store/admin/result','StoreAdminResultsTable')->name('store.admin.result');
     
 });
+
+
+//cbt teacher test create
+    Route::controller(CBTTestController::class)->group(function(){
+    Route::get('teacher/cbt-tests/create','CBTCreate')->name('cbt.test.create');
+    Route::post('teacher/cbt-tests/store','CBTStore')->name('cbt.test.store');
+    Route::get('teacher/cbt-tests/index','Index')->name('cbt.test.index');
+    //create the question and this cbt.questions.create is used to display question assigned to the teacher 
+    //in the cbt_index.blade
+    Route::get('teacher/cbt-tests/question/create/{cbtTest}','CreateQuestions')->name('cbt.questions.create');
+
+     //Store the CBT question
+      Route::post('teacher/cbt-tests/question/create/{cbtTest}','StoreQuestions')->name('cbt.questions.store');
+       
+
+      //Ajax GET SUBJECT IN SELECT FORM FROM CBT 
+      //Route::get('/teacher/get-subjects-cbt{classId}','getSubjectForTeacher')->name('teacher.getSubjectForTeacher');
+
+});
+
+
+
+
+
 
     //Admin Report Card Route
     Route::controller(ReportCardController::class)->group(function(){

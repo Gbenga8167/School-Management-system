@@ -21,4 +21,16 @@ class subject extends Model
         ('status');
 
     }
+
+
+
+    //raltionship for teacher's CBT(A teacher is assigned 
+     //to many subject and a subject and class have many teacher)
+     public function assignedTeachers(){
+        return $this->belongsToMany(teacher::class, 'assigned_class_subject_teachers',
+         'subject_id', //foreign key on pivot table pointing to subjects
+          'teacher_id'//foreign key on pivot table pointing to teachers
+          );
+    }
+
 }
