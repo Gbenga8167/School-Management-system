@@ -15,6 +15,7 @@ use App\Http\Controllers\backend\ReportCardController;
 use App\Http\Controllers\backend\AdminResultController;
 use App\Http\Controllers\backend\TermCalendarController;
 use App\Http\Controllers\backend\PrincipalCommentController;
+use App\Http\Controllers\backend\StudentAccount\StudentCBTController;
 use App\Http\Controllers\backend\StudentAccount\StudentAccountController;
 use App\Http\Controllers\TeacherBackendController\TeacherAccountController;
 use App\Http\Controllers\TeacherBackendController\TeacherPsychomotorController;
@@ -43,6 +44,24 @@ Route::get('/student/dashboard', function () {
     Route::get('student/result/form','StudentResultForm')->name('student.result.form');
     Route::post('student/result/view','StudentResultView')->name('student.result.view');
 });
+
+//Student All Route FOR CBTTEST
+    Route::controller(StudentCBTController::class)->group(function(){
+    Route::get('/student/cbt-tests','Index')->name('student.index');
+    Route::get('student/cbt/test/{id}','StartTest')->name('student.cbt.test');
+    Route::get('student/cbt/begin/{id}','BeginTest')->name('student.begin.test');
+    Route::post('student/cbt/save-answer/{attemptId}/{questionId}', 'saveAnswer')->name('student.cbt.save.answer');
+    Route::post('student/cbt/submit/{attemptId}', 'submitTest')->name('student.cbt.submit');
+
+
+    // routes/web.php
+
+
+
+});
+
+
+
 
 
 
@@ -118,12 +137,16 @@ Route::get('/teacher/dashboard', function () {
     Route::get('teacher/cbt-tests/question/create/{cbtTest}','CreateQuestions')->name('cbt.questions.create');
 
      //Store the CBT question
-      Route::post('teacher/cbt-tests/question/create/{cbtTest}','StoreQuestions')->name('cbt.questions.store');
-       
-
-      //Ajax GET SUBJECT IN SELECT FORM FROM CBT 
-      //Route::get('/teacher/get-subjects-cbt{classId}','getSubjectForTeacher')->name('teacher.getSubjectForTeacher');
-
+     Route::post('teacher/cbt-tests/question/create/{cbtTest}','StoreQuestions')->name('cbt.questions.store');
+      
+     //Teacher Cbt EDIT, UPDATE AND DELETE CBTQUESTION
+     Route::get('/cbt/questions/{id}/edit','edit')->name('cbt.questions.edit');
+     Route::delete('/cbt/delete-all-cbt-test-questions/{id}/delete','DestroyAllCBTTestQuestion')->name('cbt.questions.delete.all');
+     
+//Teacher Cbt EDIT, UPDATE AND DELETE SPECIFIC CBTQUESTION
+     Route::get('/cbt/specific/questions/{id}/edit','EditSpecificQuestion')->name('update.specific.questions');
+     Route::post('/cbt/questions/{id}/update','update')->name('cbt.questions.update');
+     Route::delete('/cbt/questions/{id}/delete','destroy')->name('cbt.questions.delete');
 });
 
 

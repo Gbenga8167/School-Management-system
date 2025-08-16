@@ -183,7 +183,88 @@ class CBTTestController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Question added successfully');
+        $notification = array(
+            'message' => 'Question added successfully!!',
+            'alert-type' => 'success'
+        );
+    
+        //redirect back to same page
+    
+       return redirect()->back()->with($notification );
 
     }//end method StoreQuestions
+
+
+
+// Edit ALL CBTQuestion
+public function edit($id)
+{
+    $cbtTest = CBTTest::with('questions')->findOrFail($id); // Fetch the test and its related questions
+    return view('backend.teacher_account.cbt_test_question.cbt_questions_edit', compact('cbtTest'));
+}
+
+//EDIT SPECIFIC QUESTION
+public function EditSpecificQuestion($id)
+{
+    $question = CBTQuestion::findOrFail($id); // Fetch the question by ID
+    return view('backend.teacher_account.cbt_test_question.update_specific_question', compact('question'));
+}
+
+// UPDATE SPECIFIC QUESTION
+public function update(Request $request, $id)
+{
+    $question = CBTQuestion::findOrFail($id);
+
+    $request->validate([
+        'question_text' => 'required|string',
+        'option_a' => 'required|string',
+        'option_b' => 'required|string',
+        'option_c' => 'required|string',
+        'option_d' => 'required|string',
+        'correct_option' => 'required|string|in:A,B,C,D',
+        'mark' => 'required|numeric',
+    ]);
+
+    $question->update([
+        'question_text' => $request->question_text,
+        'option_a' => $request->option_a,
+        'option_b' => $request->option_b,
+        'option_c' => $request->option_c,
+        'option_d' => $request->option_d,
+        'correct_option' => $request->correct_option,
+        'mark' => $request->mark,
+    ]);
+
+    return redirect()->back()->with('success', 'Question updated successfully!');
+  
+   
+}// end method
+
+//Delete CBTQuestion
+public function destroy($id)
+{
+    $question = CBTQuestion::findOrFail($id);
+    $question->delete();
+
+    return redirect()->back()->with('success', 'Question deleted successfully!');
+}
+
+
+public function DestroyAllCBTTestQuestion($id)
+{
+
+    $cbtTest = CBTTest::with('questions')->findOrFail($id);
+
+    // Delete all related questions
+    foreach ($cbtTest->questions as $question) {
+        $question->delete();
+    }
+
+    // Delete the CBT test
+    $cbtTest->delete();
+
+    return redirect()->back()->with('success', 'CBT Test and all related questions deleted successfully!');
+}
+
+
 }

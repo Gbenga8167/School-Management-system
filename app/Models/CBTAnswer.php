@@ -10,8 +10,9 @@ class CBTAnswer extends Model
         'cbt_attempt_id',
         'cbt_question_id',
         'selected_option',
-        		
+        'is_correct', 
     ];
+    
 
     // belongs to an attempt
     public function attempt(){

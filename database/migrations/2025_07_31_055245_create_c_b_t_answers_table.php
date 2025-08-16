@@ -28,8 +28,10 @@ return new class extends Migration
             $table->timestamps();
 
              //foreign key
-             $table->foreign('cbt_attempt_id')->references('id')->on('c_b_t_attempts')->onDelete('cascade');
-             $table->foreign('cbt_question_id')->references('id')->on('c_b_t_questions')->onDelete('cascade');
+             $table->foreign('cbt_attempt_id')->references('id')
+             ->on('c_b_t_attempts')->onDelete('cascade');
+             $table->foreign('cbt_question_id')->references('id')
+             ->on('c_b_t_questions')->onDelete('cascade');
         });
     }
 

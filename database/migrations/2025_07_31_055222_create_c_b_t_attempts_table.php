@@ -27,15 +27,14 @@ return new class extends Migration
 
             //Track how long student spent (in minutes)
             $table->Integer('duration_used')->nullable();
-
             //status can be 'completed', 'in_progress', 'abandoned'
             $table->string('status')->default('in_progress');
-
             $table->timestamps();
-
             //foreign key
-            $table->foreign('cbt_test_id')->references('id')->on('c_b_t_tests')->onDelete('cascade');
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('cbt_test_id')->references('id')->on('c_b_t_tests')
+            ->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('students')
+            ->onDelete('cascade');
         });
     }
 

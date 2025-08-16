@@ -66,7 +66,18 @@ $studentphoto = App\Models\student::where('user_id', $id)->first();
                 </ul>
             </li>
 
-
+            <li>
+                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="ri-dashboard-line"></i>
+                    <span> CBT Question</span>
+                </a>
+                <ul class="sub-menu" aria-expanded="false">
+                    <li><a href="{{route('student.index')}}">Attempt CBT</a></li>
+                   
+                
+                
+                </ul>
+            </li>
 
             <a class="dropdown-item text-danger" href="{{route('student.logout')}}">
             <i class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</a>

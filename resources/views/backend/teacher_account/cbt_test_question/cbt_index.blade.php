@@ -35,6 +35,12 @@
         </div>
     @else
         
+
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
     <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
         <thead>
             <tr class="table-center">
@@ -49,18 +55,28 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($cbtTests as $test)
-            <tr>
-                <td><b>{{$test->title}}</b></td>
-                <td>{{$test->class->class_name}}</td>
-                <td>{{$test->subject->subject_name}}</td>
-                <td>{{$test->term}}</td>
-                <td>{{$test->session}}</td>
-                <td align="center">{{$test->duration_minutes}}</td>
-                <td>{{$test->assessment_type}}</td>
-                <td><a href="{{route('cbt.questions.create', $test->id)}}" class="btn btn-success"> Add Questions</a></td>
-            </tr>
-            @endforeach
+        @foreach($cbtTests as $test)
+    <tr>
+        <td><b>{{$test->title}}</b></td>
+        <td>{{$test->class->class_name}}</td>
+        <td>{{$test->subject->subject_name}}</td>
+        <td>{{$test->term}}</td>
+        <td>{{$test->session}}</td>
+        <td align="center">{{$test->duration_minutes}}</td>
+        <td>{{$test->assessment_type}}</td>
+        <td>
+            <div class="d-flex">
+                <a href="{{ route('cbt.questions.create', $test->id) }}" class="btn btn-success me-2">Add Questions</a>
+                <a href="{{ route('cbt.questions.edit', $test->id) }}" class="btn btn-warning me-2">Edit</a>
+                <form action="{{ route('cbt.questions.delete.all', $test->id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this test and all related questions?')" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    @endforeach
         </tbody>
     </table>
     @endif

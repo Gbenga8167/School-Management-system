@@ -114,7 +114,7 @@ $teacherphoto = App\Models\teacher::where('user_id', $id)->first();
                 </a>
                 <ul class="sub-menu" aria-expanded="false">
                     <li><a href="{{route('cbt.test.create')}}">Create CBT Test</a></li>
-                    <li><a href="{{route('cbt.test.index')}}">Create CBT Questions</a></li>
+                    <li><a href="{{route('cbt.test.index')}}">Add CBT Questions</a></li>
                 </ul>
         
             </li>
