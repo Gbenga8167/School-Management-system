@@ -2,11 +2,11 @@
 @section('student')
 
 <div class="container">
-    <h4 class="text-center my-2" style="color:green"> Subject : 
-        {{ $cbtTest->subject->subject_name ?? 'CBT Test' }} - {{ $cbtTest->assessment_type }}
+    <h4 class="text-center my-2" style="color:green"> 
+        Subject : {{ $cbtTest->subject->subject_name ?? 'CBT Test' }} - {{ $cbtTest->assessment_type }}
     </h4>
-    <h5 class="text-center" style="color:red">Title : {{ucwords( $cbtTest->title )}}</h5>
-    <p class="text-center warning" style="color:green">Answer All Questions. Each Question Carry Equal Mark </p>
+    <h5 class="text-center" style="color:red">Title : {{ ucwords($cbtTest->title) }}</h5>
+    <p class="text-center warning" style="color:green">Answer All Questions. Each Question Carries Equal Mark</p>
 
     <div id="timer" class="alert alert-info text-center">Loading timer…</div>
 
@@ -45,20 +45,20 @@
 
 <script>
 (function () {
-    // ==== TIMER (uses server-provided endTime in milliseconds) ====
-    const endTime = Number(@json($endTime)); // <- a NUMBER, not a string
-    const timerEl = document.getElementById('timer');
+    // ==== TIMER (server-locked, timezone safe) ====
+    const endTime   = Number(@json($endTime));   // UTC timestamp from server
+    const serverNow = Number(@json($serverNow)); // UTC now from server
+    const clientNow = Date.now();
 
+    // adjust for client/server clock drift
+    const offset = serverNow - clientNow;
+
+    const timerEl = document.getElementById('timer');
     function formatTwo(n){ return n < 10 ? '0'+n : n; }
 
     function tick() {
-        const now = Date.now();
+        const now = Date.now() + offset; // always aligned to server UTC
         const diff = endTime - now;
-
-        if (!endTime || isNaN(endTime)) {
-            timerEl.textContent = 'Timer unavailable. Please contact admin.';
-            return;
-        }
 
         if (diff <= 0) {
             timerEl.textContent = 'Time is up! Submitting...';
@@ -66,19 +66,15 @@
             return;
         }
 
-        // show hours if needed
+
         const totalSeconds = Math.floor(diff / 1000);
         const hours = Math.floor(totalSeconds / 3600);
         const minutes = Math.floor((totalSeconds % 3600) / 60);
         const seconds = totalSeconds % 60;
-
-        if (hours > 0) {
-            timerEl.textContent = `Time Remaining: ${hours}h ${formatTwo(minutes)}m ${formatTwo(seconds)}s`;
-        } else {
-            timerEl.textContent = `Time Remaining: ${minutes}m ${formatTwo(seconds)}s`;
-        }
+        timerEl.textContent = hours > 0
+            ? `Time Remaining: ${hours}h ${formatTwo(minutes)}m ${formatTwo(seconds)}s`
+            : `Time Remaining: ${minutes}m ${formatTwo(seconds)}s`;
     }
-
     const timerInterval = setInterval(tick, 1000);
     tick();
 
@@ -97,12 +93,6 @@
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({ selected_option: selected })
-            })
-            .then(res => res.ok ? res.json() : Promise.reject(res))
-            .then(data => {
-                if (data.success) {
-                    // optional: console.log
-                }
             })
             .catch(err => {
                 console.error('Save failed', err);
@@ -142,14 +132,13 @@
 
     showQuestion(currentIndex);
 
-    // ==== SUBMIT (auto or manual) via AJAX, gets JSON back ====
+    // ==== SUBMIT (auto or manual) via AJAX ====
     function submitTest(auto = false) {
         clearInterval(timerInterval);
 
         if (!auto) {
             const ok = confirm("Are you sure you want to submit your test? You cannot change your answers after submitting.");
             if (!ok) {
-                // restart timer if they cancel
                 setInterval(tick, 1000);
                 return;
             }
@@ -173,7 +162,6 @@
         })
         .catch(err => {
             console.error('Submit failed', err);
-            // If server returned HTML (e.g., a redirect), just go back to index
             window.location.href = "{{ route('student.index') }}";
         });
     }
@@ -181,5 +169,6 @@
     document.getElementById('submitBtn').addEventListener('click', () => submitTest(false));
 })();
 </script>
+
 
 @endsection
