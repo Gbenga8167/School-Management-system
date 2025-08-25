@@ -127,6 +127,7 @@ Route::get('/teacher/dashboard', function () {
 });
 
 
+// TEACHER'S CBT CONTROLLER
 //cbt teacher test create
     Route::controller(CBTTestController::class)->group(function(){
     Route::get('teacher/cbt-tests/create','CBTCreate')->name('cbt.test.create');
@@ -147,14 +148,30 @@ Route::get('/teacher/dashboard', function () {
      Route::get('/cbt/specific/questions/{id}/edit','EditSpecificQuestion')->name('update.specific.questions');
      Route::post('/cbt/questions/{id}/update','update')->name('cbt.questions.update');
      Route::delete('/cbt/questions/{id}/delete','destroy')->name('cbt.questions.delete');
-});
+
+
+
+     //TEACHER CBT RESULT CHECK
+     // ===============================
+// Teacher CBT Results Routes
+// =============================
+    // Show the CBT Results filter form
+    Route::get('/cbt-results', 'results')->name('teacher.cbt.results.form');
+    // Fetch and display CBT Results
+    Route::post('/cbt-results/fetch','fetchCBTResults')->name('teacher.cbt.results.fetch');
+    // Allow a student to retake test
+    Route::post('/cbt-results/retake/{student_id}/{cbt_id}', 'retakeTest')->name('teacher.cbt.results.retake');
+    Route::post('/teacher/cbt-results/{attempt}/retake', 'retake')->name('teacher.cbt.retake');
+
+
+    });
 
 
 
 
 
 
-    //Admin Report Card Route
+    //Admin Report Card Route  
     Route::controller(ReportCardController::class)->group(function(){
     Route::get('admin/report-card/select','ShowReportSelectForm')->name('admin.report.card.selection');
     Route::get('admin/report-card','Index')->name('admin.report.card');

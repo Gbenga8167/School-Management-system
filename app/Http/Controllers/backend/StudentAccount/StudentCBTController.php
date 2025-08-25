@@ -145,8 +145,8 @@ public function saveAnswer(Request $request, $attemptId, $questionId)
     $effectiveEnd = Carbon::parse($attempt->started_at)->addMinutes($cbtTest->duration_minutes);
 
     // ✅ If test has a global end_time, respect it too
-    $absoluteEnd = $cbtTest->end_time 
-        ? Carbon::parse($cbtTest->end_time)->utc() 
+        $absoluteEnd = $cbtTest->end_time
+        ? Carbon::parse($cbtTest->end_time, 'Africa/Lagos')->utc()
         : null;
 
     // ✅ Final deadline = min(effectiveEnd, absoluteEnd if exists)
@@ -211,9 +211,10 @@ public function submitTest(Request $request, $attemptId)
     $effectiveEnd = Carbon::parse($attempt->started_at)->addMinutes($cbtTest->duration_minutes);
 
     // ✅ If test has a global end_time, respect it too
-    $absoluteEnd = $cbtTest->end_time 
-        ? Carbon::parse($cbtTest->end_time)->utc() 
+        $absoluteEnd = $cbtTest->end_time
+        ? Carbon::parse($cbtTest->end_time, 'Africa/Lagos')->utc()
         : null;
+
 
     // ✅ Final deadline = min(effectiveEnd, absoluteEnd if exists)
     $finalDeadline = $absoluteEnd 

@@ -26,7 +26,7 @@ class CBTAttempt extends Model
 
     // belongs to a student
     public function student(){
-        return $this->belongsTo(student::class);
+        return $this->belongsTo(student::class, 'student_id');
     }
 
     // has many answers

@@ -86,9 +86,11 @@
 
 
                          <div class="form-group">
-                            <label for="">Mark</label>
-                            <input type="number" name="questions[0][mark]" class="form-control" required placeholder="Enter score">
+                            <!--<label for="">Mark</label> -->
+                            <input type="hidden" name="questions[0][mark]" class="form-control" required placeholder="Enter score" value="1">
                         </div>
+                     
+
                          <!-- end row -->
 
                     </div>
@@ -145,8 +147,8 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="">Mark</label>
-                <input type="number" name="questions[${questionIndex}][mark]" class="form-control" required placeholder="Enter score">
+               <!-- <label for="">Mark</label> -->
+                <input type="hidden" value="1" name="questions[${questionIndex}][mark]" class="form-control" required placeholder="Enter score">
             </div>
         `;
         wrapper.appendChild(block);

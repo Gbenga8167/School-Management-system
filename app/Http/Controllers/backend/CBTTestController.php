@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\backend;
 
 use App\Models\User;
+use App\Models\terms;
 use App\Models\CBTTest;
+use App\Models\academic_session;
 use App\Models\classes;
 use App\Models\subject;
 use App\Models\teacher;
@@ -14,7 +16,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 
-// THE TEACHER CBT
+// THE TEACHER CBT CONTROLLER
 class CBTTestController extends Controller
 {
     public function CBTCreate(){
@@ -266,5 +268,98 @@ public function DestroyAllCBTTestQuestion($id)
     return redirect()->back()->with('success', 'CBT Test and all related questions deleted successfully!');
 }
 
+
+
+
+
+  /** TEACHER CBT RESULTS CHECK
+     * Show the CBT results filter form
+     */
+        // Show list of CBT tests created by this teacher
+        public function results()
+        {
+            // get current term & session
+            $currentTerm = \DB::table('terms')->where('is_current', 1)->value('name');
+            $currentSession = \DB::table('academic_sessions')->where('is_current', 1)->value('name');
+        
+            // fetch teacher's CBT results
+            $results = \DB::table('c_b_t_attempts')
+                ->join('c_b_t_tests', 'c_b_t_attempts.cbt_test_id', '=', 'c_b_t_tests.id')
+                ->join('students', 'c_b_t_attempts.student_id', '=', 'students.id')
+                ->join('users', 'students.user_id', '=', 'users.id')
+                ->join('classes', 'c_b_t_tests.class_id', '=', 'classes.id')
+                ->join('subjects', 'c_b_t_tests.subject_id', '=', 'subjects.id')
+                ->select(
+                    'users.name as student_name',
+                    'classes.class_name as class_name',
+                    'subjects.subject_name as subject_name',
+                    'c_b_t_tests.term',
+                    'c_b_t_tests.session',
+                    'c_b_t_tests.assessment_type',
+                    'c_b_t_attempts.score',
+                    'c_b_t_attempts.id as attempt_id' // needed for retake button
+                )
+                ->where('c_b_t_tests.term', $currentTerm)
+                ->where('c_b_t_tests.session', $currentSession)
+                ->get();
+        
+            return view('backend.teacher_account.cbt_test_question.cbt_results_index', compact('results', 'currentTerm', 'currentSession'));
+        }
+        
+        
+
+        //Retake CBT Test   
+      /*  public function retake($attemptId)
+        {
+            $attempt = \DB::table('c_b_t_attempts')->where('id', $attemptId)->first();
+        
+            if (!$attempt) {
+                return back()->with([
+                    'message' => 'Attempt not found.',
+                    'alert-type' => 'error'
+                ]);
+            }
+        
+            // Mark old attempt as invalid/retake
+            \DB::table('c_b_t_attempts')->where('id', $attemptId)->update([
+                'status' => 'retake_allowed'
+            ]);
+        
+            return back()->with([
+                'message' => 'Student can now retake the test.',
+                'alert-type' => 'success'
+            ]);
+        }
+      */
+      public function retake($attemptId)
+{
+    try {
+        \DB::transaction(function () use ($attemptId) {
+            $attempt = \DB::table('c_b_t_attempts')->where('id', $attemptId)->first();
+
+            if (!$attempt) {
+                throw new \Exception('Attempt not found.');
+            }
+
+            // Delete all answers linked to this attempt
+            \DB::table('c_b_t_answers')->where('cbt_attempt_id', $attemptId)->delete();
+
+            // Delete the attempt itself
+            \DB::table('c_b_t_attempts')->where('id', $attemptId)->delete();
+        });
+
+        return back()->with([
+            'message' => 'Previous attempt deleted. Student can now retake the test afresh.',
+            'alert-type' => 'success'
+        ]);
+
+    } catch (\Exception $e) {
+        return back()->with([
+            'message' => $e->getMessage(),
+            'alert-type' => 'error'
+        ]);
+    }
+}
+  
 
 }

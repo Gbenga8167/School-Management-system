@@ -97,6 +97,19 @@ $teacherphoto = App\Models\teacher::where('user_id', $id)->first();
             <li>
                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                 <i class="ri-dashboard-line"></i>
+                    <span>CBT</span>
+                </a>
+                <ul class="sub-menu" aria-expanded="false">
+                    <li><a href="{{route('cbt.test.create')}}">Create CBT Test</a></li>
+                    <li><a href="{{route('cbt.test.index')}}">Add CBT Questions</a></li>
+                    <li><a href="{{route('teacher.cbt.results.form')}}">Check CBT Result</a></li>
+                </ul>
+        
+            </li>
+
+            <li>
+                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="ri-dashboard-line"></i>
                     <span>Profile</span>
                 </a>
                 <ul class="sub-menu" aria-expanded="false">
@@ -105,21 +118,6 @@ $teacherphoto = App\Models\teacher::where('user_id', $id)->first();
                 
                 </ul>
             </li>
-
-
-            <li>
-                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                <i class="ri-dashboard-line"></i>
-                    <span>CBT</span>
-                </a>
-                <ul class="sub-menu" aria-expanded="false">
-                    <li><a href="{{route('cbt.test.create')}}">Create CBT Test</a></li>
-                    <li><a href="{{route('cbt.test.index')}}">Add CBT Questions</a></li>
-                </ul>
-        
-            </li>
-
-
             
             <a class="dropdown-item text-danger" href="{{route('teacher.logout')}}">
             <i class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</a>
