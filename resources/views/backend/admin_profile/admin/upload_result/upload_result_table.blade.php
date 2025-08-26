@@ -31,7 +31,7 @@ th{
     </style>
 
     
-<div class="table-responsive" style="max-height:auto; overflow:auto">
+<div class="table-responsive">
 <div class="row">
 
                   <form action="{{route('store.admin.result')}}" method="POST">
@@ -60,6 +60,7 @@ th{
                                                 <th>Student Name</th>
                                                 <th>CA1</th>
                                                 <th>CA2</th>
+                                                <th>CA3</th>
                                                 <th>Exam</th>
                                                 <th>Total</th>
                                                 <th>Grade</th>
@@ -90,7 +91,7 @@ th{
                                             
 
                                                 <td class="data-column">
-                                                    <input type ="number"  name="results[{{$subject->id}}][{{$index}}][ca1]" max="20" min="0" 
+                                                    <input type ="number"  name="results[{{$subject->id}}][{{$index}}][ca1]" max="10" min="0" 
                                                     value="{{round($existing?->ca1) ?? 0}}" class="score-input" 
                                                     data-index="{{$index}}" data-type="ca1" 
                                                     data-student-id="{{$student->id}}" size="3px" style="text-align:center">
@@ -98,14 +99,21 @@ th{
 
                                                 
                                             <td class="data-column">
-                                                    <input type ="number"  name="results[{{$subject->id}}][{{$index}}][ca2]" max="20" min="0" 
+                                                    <input type ="number"  name="results[{{$subject->id}}][{{$index}}][ca2]" max="10" min="0" 
                                                     value="{{round($existing?->ca2) ?? 0}}" class="score-input" 
                                                     data-index="{{$index}}" data-type="ca2" 
                                                     data-student-id="{{$student->id}}" size="3px" style="text-align:center">
                                             </td>
 
                                             <td class="data-column">
-                                                    <input type ="number"  name="results[{{$subject->id}}][{{$index}}][exam]" max="60" min="0" 
+                                                    <input type ="number"  name="results[{{$subject->id}}][{{$index}}][ca3]" max="10" min="0" 
+                                                    value="{{round($existing?->ca3) ?? 0}}" class="score-input" 
+                                                    data-index="{{$index}}" data-type="ca3" 
+                                                    data-student-id="{{$student->id}}" size="3px" style="text-align:center">
+                                            </td>
+
+                                            <td class="data-column">
+                                                    <input type ="number"  name="results[{{$subject->id}}][{{$index}}][exam]" max="70" min="0" 
                                                     value="{{round($existing?->exam) ?? 0}}" class="score-input" 
                                                     data-index="{{$index}}" data-type="exam" 
                                                     data-student-id="{{$student->id}}" size="3px" style="text-align:center">

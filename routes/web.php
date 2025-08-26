@@ -116,15 +116,9 @@ Route::get('/teacher/dashboard', function () {
 
     //Ajax GET SUBJECT IN SELECT FORM FOR RESULT
        Route::get('/teacher/get-subjects','getSubjectByClass')->name('teacher.getSubjectByClass');
-
-
-
-    //Admin Upload Result Route ////admin middleware
-        Route::get('admin/result/upload','showSelectedAdminForm')->name('admin.result.upload');
-        Route::get('load/admin/result','LoadAdminResultsTable')->name('load.admin.result');
-        Route::post('store/admin/result','StoreAdminResultsTable')->name('store.admin.result');
-    
+   
 });
+
 
 
 // TEACHER'S CBT CONTROLLER
@@ -333,6 +327,15 @@ Route::get('/teacher/dashboard', function () {
 
 });
 
+
+
+    //ADMIN UPLOAD RESULTS ROUTE
+    Route::controller(AdminResultController::class)->group(function(){ 
+    Route::get('admin/result/upload','showSelectedAdminForm')->name('admin.result.upload');
+    Route::get('load/admin/result','LoadAdminResultsTable')->name('load.admin.result');
+    Route::post('store/admin/result','StoreAdminResultsTable')->name('store.admin.result');
+
+    });
 
 
     Route::middleware('auth')->group(function () {

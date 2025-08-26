@@ -307,30 +307,6 @@ public function DestroyAllCBTTestQuestion($id)
         }
         
         
-
-        //Retake CBT Test   
-      /*  public function retake($attemptId)
-        {
-            $attempt = \DB::table('c_b_t_attempts')->where('id', $attemptId)->first();
-        
-            if (!$attempt) {
-                return back()->with([
-                    'message' => 'Attempt not found.',
-                    'alert-type' => 'error'
-                ]);
-            }
-        
-            // Mark old attempt as invalid/retake
-            \DB::table('c_b_t_attempts')->where('id', $attemptId)->update([
-                'status' => 'retake_allowed'
-            ]);
-        
-            return back()->with([
-                'message' => 'Student can now retake the test.',
-                'alert-type' => 'success'
-            ]);
-        }
-      */
       public function retake($attemptId)
 {
     try {

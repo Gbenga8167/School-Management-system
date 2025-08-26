@@ -15,6 +15,7 @@ class Result extends Model
     'session',
     'ca1',
     'ca2',
+    'ca3',
     'exam',
     'total',
     'grade',

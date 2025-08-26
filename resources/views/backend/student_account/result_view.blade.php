@@ -18,20 +18,6 @@ table.deep-border tbody td,
         color:#fff;
     }
 
-/* Logo Watermark
-.watermark-image{
-    position:absolute;
-    top:25%;
-    left:50%;
-    transform:translate(-50%, -50%);
-    width:400px;
-    height:400px;
-    background:url('{{asset("uploads/logo_images/logo.jpg")}}');
-    background:size;
-    opacity:0.06;
-    z-index:0;
-    pointer-events:none;
-}*/
 
 /*hide on print elements*/
 @media print{
@@ -88,8 +74,7 @@ table.deep-border tbody td,
 
 {{-- student result info goes here --}}
 
-
-<div class="table-responsive" style=" overflow:auto" id="result-section">
+<div class="table-responsive" style="max-height:auto; overflow:auto" id="result-section">
 
      <table class="border-collapse:collapse;" align='center' style="width:90%;">
     <tr>
@@ -192,6 +177,7 @@ table.deep-border tbody td,
                 <th>Subjects</th>
                 <th>CA1</th>
                 <th>CA2</th>
+                <th>CA3</th>
                 <th>EXAM</th>
                 <th>TOTAL</th>
                 <th>GRADE</th>
@@ -205,10 +191,11 @@ table.deep-border tbody td,
        
         <th></th>
         <th></th>
-        <th><b>20%</b></th>
-        <th><b>20%</b></th>
+        <th><b>10%</b></th>
+        <th><b>10%</b></th>
+        <th><b>10%</b></th>
+        <th><b>70%</b></th>
         <th><b>100%</b></th>
-        <th></th>
         <th></th>
         <th></th>      
     </tr>
@@ -220,6 +207,7 @@ table.deep-border tbody td,
                 <td class="text-start"><b>{{ucwords(strtolower($r->subject->subject_name ?? 'N/A'))}}</b></td>
                 <td><b>{{round($r->ca1)}}</b></td>
                 <td><b>{{round($r->ca2)}}</b></td>
+                <td><b>{{round($r->ca3)}}</b></td>
                 <td><b>{{round($r->exam)}}</b></td>
                 <td><b>{{round($r->total)}}</b></td>
                 <td><b>{{$r->grade}}</b></td>
@@ -301,8 +289,8 @@ table.deep-border tbody td,
       </tr>
       <td>
  
-    <button onclick="window.print()" class="btn btn-primary no-print">Print Results</button>
-    <button onclick="downloadPDF()" class="btn btn-danger no-print">Download as PDF</button>
+    <!--<button onclick="window.print()" class="btn btn-primary no-print">Print Results</button>
+    <button onclick="downloadPDF()" class="btn btn-danger no-print">Download as PDF</button>-->
 
 
      </td>

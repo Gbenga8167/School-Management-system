@@ -1,4 +1,4 @@
-<div class="table-responsive" style="max-height:auto; overflow:auto">
+
 
 <table class="table table-bordered deep-border table-striped mb-4 fixed-header" style="width:90%;" align="center">
     <thead class="table-dark text-center align-middle">
@@ -8,6 +8,7 @@
         <th >Subjects</th>
         <th>CA1</th>
         <th>CA2</th>
+        <th>CA3</th>
         <th >Exam</th>
         <th >Total</th>
         <th>Grade</th>
@@ -20,9 +21,10 @@
 <tr>
         <th></th>
         <th></th>
-        <th><b>20%</b></th>
-        <th><b>20%</b></th>
-        <th> <b>60%</b></th>
+        <th><b>10%</b></th>
+        <th><b>10%</b></th>
+        <th><b>10%</b></th>
+        <th> <b>70%</b></th>
         <th><b>100%</b></th>
         <th></th>
         <th></th>
@@ -35,6 +37,7 @@
         <td class="text-start"><b>{{ucwords(strtolower($result->subject->subject_name ?? 'N/A'))}}</b></td>
         <td><b>{{round($result->ca1)}}</b></td>
         <td><b>{{round($result->ca2)}}</b></td>
+        <td><b>{{round($result->ca3)}}</b></td>
         <td><b>{{round($result->exam)}}</b></td>
         <td><b>{{round($result->total)}}</b></td>
         <td><b>{{$result->grade}}</b></td>
