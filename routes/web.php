@@ -19,25 +19,44 @@ use App\Http\Controllers\backend\StudentAccount\StudentCBTController;
 use App\Http\Controllers\backend\StudentAccount\StudentAccountController;
 use App\Http\Controllers\TeacherBackendController\TeacherAccountController;
 use App\Http\Controllers\TeacherBackendController\TeacherPsychomotorController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
+// Show login page if guest
+Route::get('/', [AuthenticatedSessionController::class, 'create'])
+    ->middleware('guest')
+    ->name('login');
 
+// If logged in, redirect to correct dashboard
 Route::get('/', function () {
-   return view('welcome');
-});
+    $user = auth()->user();
 
+    if ($user->role == 1) {
+        return redirect()->route('admin.dashboard');
+    } elseif ($user->role == 2) {
+        return redirect()->route('teacher.dashboard');
+    } else {
+        return redirect()->route('student.dashboard');
+    }
+})->middleware('auth');
+
+
+/*
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+*/
 
-//student Route
+//student Route for student dashboard
 Route::get('/student/dashboard', function () {
     return view('backend.student_account.student_dashboard');
-})->middleware(['auth', 'verified'])->name('student.dashboard');
+})->middleware(['auth', 'verified', 'students'])->name('student.dashboard');
 
 
 
-//Student All Route
+//Start Student All Route  
+    Route::middleware(['auth', 'students'])->group(function(){
+
     Route::controller(StudentAccountController::class)->group(function(){
     Route::get('student/logout','StudentLogout')->name('student.logout');
     Route::get('student/profile','StudentProfile')->name('student.profile');
@@ -53,12 +72,10 @@ Route::get('/student/dashboard', function () {
     Route::post('student/cbt/save-answer/{attemptId}/{questionId}', 'saveAnswer')->name('student.cbt.save.answer');
     Route::post('student/cbt/submit/{attemptId}', 'submitTest')->name('student.cbt.submit');
 
+     });
 
-    // routes/web.php
-
-
-
-});
+    }); //end Student Route
+    
 
 
 
@@ -69,13 +86,14 @@ Route::get('/student/dashboard', function () {
 
 
 
+//Start Teacher Route
 
-//Teacher Route
 Route::get('/teacher/dashboard', function () {
     return view('backend.teacher_account.teacher_dashboard');
-})->middleware(['auth', 'verified'])->name('teacher.dashboard');
+})->middleware(['auth', 'verified','teachers'])->name('teacher.dashboard');
 
 //Teacher All Route
+    Route::middleware(['auth', 'teachers'])->group(function(){
     Route::controller(TeacherAccountController::class)->group(function(){
     Route::get('teacher/logout','TeacherLogout')->name('teacher.logout');
     Route::get('teacher/profile','TeacherProfile')->name('teacher.profile');
@@ -160,66 +178,22 @@ Route::get('/teacher/dashboard', function () {
 
     });
 
-
-
-
-
-
-    //Admin Report Card Route  
-    Route::controller(ReportCardController::class)->group(function(){
-    Route::get('admin/report-card/select','ShowReportSelectForm')->name('admin.report.card.selection');
-    Route::get('admin/report-card','Index')->name('admin.report.card');
-    
-  
-});
-
-
-//Academic Calender NEXT TERM BEGINS 
-    Route::controller(TermCalendarController::class)->group(function(){
-    Route::get('term-calendar','TermCalendar')->name('term.calendar');
-    Route::Post('store-term-calendar','StoreTermCalendar')->name('store.term.calendar');
-    Route::get('edit/term-calendar/{id}','EditTermCalendar')->name('edit.term.calendar');
-    Route::delete('delete/term-calendar/{id}','destroy')->name('delete.term.calendar');
-});
-
-//Admin add principal comment
-
-    Route::controller(PrincipalCommentController::class)->group(function(){
-    Route::get('admin/comment/form','PrincipalCommentForm')->name('principal.comment.form');
-    Route::get('admin/comment/load','PrincipalCommentLoad')->name('principal.comment.load');
-    Route::post('admin/comment/submit','PrincipalCommentSubmit')->name('principal.comment.submit');
-});
-
-
-//Admin clear and print student results
-    Route::controller(ClearanceController::class)->group(function(){
-    Route::post('/admin/clearance/toggle/{student}','toggleClearance');
-    Route::post('/admin/clearance/clear-all','clearAll');
-    
-});
+      });// end teacher route
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
+      // Start Admin All Route
     //Admin Dashbord Login Route
     Route::get('/admin/dashboard', function () {
     return view('backend.admin_profile.admin.index');
-})->middleware(['auth', 'verified'])->name('admin.dashboard');
+})->middleware(['auth', 'verified', 'admin'])->name('admin.dashboard');
 
 
     //Admin All Route
+     Route::middleware(['auth', 'admin'])->group(function(){
     Route::controller(AdminController::class)->group(function(){
     Route::get('admin/logout','AdminLogout')->name('admin.logout');
     Route::get('admin/profile','AdminProfile')->name('admin.profile');
@@ -337,7 +311,45 @@ Route::get('/teacher/dashboard', function () {
 
     });
 
+    Route::controller(ReportCardController::class)->group(function(){
+    Route::get('admin/report-card/select','ShowReportSelectForm')->name('admin.report.card.selection');
+    Route::get('admin/report-card','Index')->name('admin.report.card');
+    
+  
+});
 
+
+//Academic Calender NEXT TERM BEGINS 
+    Route::controller(TermCalendarController::class)->group(function(){
+    Route::get('term-calendar','TermCalendar')->name('term.calendar');
+    Route::Post('store-term-calendar','StoreTermCalendar')->name('store.term.calendar');
+    Route::get('edit/term-calendar/{id}','EditTermCalendar')->name('edit.term.calendar');
+    Route::delete('delete/term-calendar/{id}','destroy')->name('delete.term.calendar');
+});
+
+
+//Admin add principal comment
+
+    Route::controller(PrincipalCommentController::class)->group(function(){
+    Route::get('admin/comment/form','PrincipalCommentForm')->name('principal.comment.form');
+    Route::get('admin/comment/load','PrincipalCommentLoad')->name('principal.comment.load');
+    Route::post('admin/comment/submit','PrincipalCommentSubmit')->name('principal.comment.submit');
+});
+
+
+//Admin clear and print student results
+    Route::controller(ClearanceController::class)->group(function(){
+    Route::post('/admin/clearance/toggle/{student}','toggleClearance');
+    Route::post('/admin/clearance/clear-all','clearAll');
+    
+});
+    
+});// End Admin Route
+
+
+
+
+    //THIS IS THE DEFAULT ROUTE
     Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
