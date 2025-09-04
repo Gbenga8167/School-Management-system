@@ -50,8 +50,8 @@
         </div>	
 
         <div class="form-group">
-            <label for="mark">Mark</label>
-            <input type="number" name="mark" class="form-control" required value="{{ $question->mark }}">
+            <!--<label for="mark">Mark</label> -->
+            <input type="hidden" name="mark" class="form-control" required value="{{ $question->mark }}" >
         </div>
 
         <button type="submit" class="btn btn-primary mt-3">Update Question</button>

@@ -49,7 +49,7 @@ Route::get('/dashboard', function () {
 
 //student Route for student dashboard
 Route::get('/student/dashboard', function () {
-    return view('backend.student_account.student_dashboard');
+    return view('backend.student_account.student_index');
 })->middleware(['auth', 'verified', 'students'])->name('student.dashboard');
 
 
@@ -89,7 +89,7 @@ Route::get('/student/dashboard', function () {
 //Start Teacher Route
 
 Route::get('/teacher/dashboard', function () {
-    return view('backend.teacher_account.teacher_dashboard');
+    return view('backend.teacher_account.teacher_index');
 })->middleware(['auth', 'verified','teachers'])->name('teacher.dashboard');
 
 //Teacher All Route
@@ -100,7 +100,6 @@ Route::get('/teacher/dashboard', function () {
     Route::post('teacher/profile/update','TeacherProfileUpdate')->name('teacher.profile.update');
     Route::get('teacher/password/change','TeacherPasswordChange')->name('teacher.password.change');
     Route::post('teacher/password/update','TeacherPasswordUpdate')->name('teacher.password.update');
-
 
     //TEACHER ASSIGNED SUBJECT ROUTE
 

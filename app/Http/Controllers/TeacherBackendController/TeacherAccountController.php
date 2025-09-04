@@ -12,6 +12,7 @@ use App\Models\AssignedClassSubjectTeacher;
 
 class TeacherAccountController extends Controller
 {
+
     public function TeacherLogout(Request $request)
     {
         Auth::guard('web')->logout();
@@ -147,5 +148,5 @@ class TeacherAccountController extends Controller
         return view('backend.teacher_account.teacher_assigned_subject_view', compact('assignments'));
     
     }//end method
-
+    
 }

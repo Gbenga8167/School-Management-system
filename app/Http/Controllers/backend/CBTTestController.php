@@ -276,36 +276,40 @@ public function DestroyAllCBTTestQuestion($id)
      * Show the CBT results filter form
      */
         // Show list of CBT tests created by this teacher
-        public function results()
-        {
-            // get current term & session
-            $currentTerm = \DB::table('terms')->where('is_current', 1)->value('name');
-            $currentSession = \DB::table('academic_sessions')->where('is_current', 1)->value('name');
-        
-            // fetch teacher's CBT results
-            $results = \DB::table('c_b_t_attempts')
-                ->join('c_b_t_tests', 'c_b_t_attempts.cbt_test_id', '=', 'c_b_t_tests.id')
-                ->join('students', 'c_b_t_attempts.student_id', '=', 'students.id')
-                ->join('users', 'students.user_id', '=', 'users.id')
-                ->join('classes', 'c_b_t_tests.class_id', '=', 'classes.id')
-                ->join('subjects', 'c_b_t_tests.subject_id', '=', 'subjects.id')
-                ->select(
-                    'users.name as student_name',
-                    'classes.class_name as class_name',
-                    'subjects.subject_name as subject_name',
-                    'c_b_t_tests.term',
-                    'c_b_t_tests.session',
-                    'c_b_t_tests.assessment_type',
-                    'c_b_t_attempts.score',
-                    'c_b_t_attempts.id as attempt_id' // needed for retake button
-                )
-                ->where('c_b_t_tests.term', $currentTerm)
-                ->where('c_b_t_tests.session', $currentSession)
-                ->get();
-        
-            return view('backend.teacher_account.cbt_test_question.cbt_results_index', compact('results', 'currentTerm', 'currentSession'));
-        }
-        
+public function results()
+{
+    // current term & session
+    $currentTerm = \DB::table('terms')->where('is_current', 1)->value('name');
+    $currentSession = \DB::table('academic_sessions')->where('is_current', 1)->value('name');
+
+    // logged-in teacher
+    $teacher = \App\Models\Teacher::where('user_id', auth()->id())->first();
+
+    // fetch ONLY results for this teacher's CBT tests
+    $results = \DB::table('c_b_t_attempts')
+        ->join('c_b_t_tests', 'c_b_t_attempts.cbt_test_id', '=', 'c_b_t_tests.id')
+        ->join('students', 'c_b_t_attempts.student_id', '=', 'students.id')
+        ->join('users', 'students.user_id', '=', 'users.id')
+        ->join('classes', 'c_b_t_tests.class_id', '=', 'classes.id')
+        ->join('subjects', 'c_b_t_tests.subject_id', '=', 'subjects.id')
+        ->select(
+            'users.name as student_name',
+            'classes.class_name as class_name',
+            'subjects.subject_name as subject_name',
+            'c_b_t_tests.term',
+            'c_b_t_tests.session',
+            'c_b_t_tests.assessment_type',
+            'c_b_t_attempts.score',
+            'c_b_t_attempts.id as attempt_id'
+        )
+        ->where('c_b_t_tests.term', $currentTerm)
+        ->where('c_b_t_tests.session', $currentSession)
+        ->where('c_b_t_tests.teacher_id', $teacher->id) // 🔑 restrict by teacher
+        ->get();
+
+    return view('backend.teacher_account.cbt_test_question.cbt_results_index', compact('results', 'currentTerm', 'currentSession'));
+}
+
         
       public function retake($attemptId)
 {

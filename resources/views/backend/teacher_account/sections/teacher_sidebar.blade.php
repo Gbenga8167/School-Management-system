@@ -118,11 +118,18 @@ $teacherphoto = App\Models\teacher::where('user_id', $id)->first();
                 
                 </ul>
             </li>
+                   
             
-            <a class="dropdown-item text-danger" href="{{route('teacher.logout')}}">
-            <i class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</a>
-
-            
+            <li>
+                 <a class="dropdown-item text-danger" href="{{route('teacher.logout')}}">
+                <i class="ri-shut-down-line align-middle me-1 text-danger"></i>
+                    <span>Logout</span>
+                </a>
+                <ul class="sub-menu" aria-expanded="false">
+                    
+              
+                </ul>
+            </li>
 
         </ul>
     </div>

@@ -57,4 +57,29 @@ class teacher extends Model
           'teacher_id'//foreign key on pivot table pointing to teachers
           );
     }
+
+
+
+    //SUBJECTS ASSIGNED DISPLAYED IN THE TEACHER DASHBOARD
+    public function teacherSubjects()
+{
+    return $this->belongsToMany(
+        Subject::class,
+        'assigned_class_subject_teachers',
+        'teacher_id', // pivot column that refers to teacher
+        'subject_id'  // pivot column that refers to subject
+    );
+}
+
+//cLASSES ASSIGNED DISPLAYED IN THE TEACHER DASHBOARD
+public function teacherClasses()
+{
+    return $this->belongsToMany(
+        Classes::class,
+        'assigned_class_subject_teachers',
+        'teacher_id', // pivot column that refers to teacher
+        'class_id'    // pivot column that refers to class
+    );
+}
+
 }

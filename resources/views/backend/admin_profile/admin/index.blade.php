@@ -153,7 +153,7 @@ $totalteachers = count(App\Models\teacher::all());
                     <div class="row mt-4">
     <!-- Student Growth Chart -->
     <div class="col-xl-6 col-md-12">
-        <div class="card shadow-lg border-0 rounded-4">
+        <div class="card shadow-lg border-0 rounded-4" class="dashboard-card">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0" style="color: #fff;">Student Growth (Monthly)</h5>
             </div>
