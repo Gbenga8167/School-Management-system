@@ -7,12 +7,14 @@ use App\Models\terms;
 use App\Models\Result;
 use App\Models\classes;
 use App\Models\student;
+use App\Models\subject;
 use App\Models\Clearance;
 use App\Models\TermCalendar;
 use Illuminate\Http\Request;
 use App\Models\SchoolSetting;
 use App\Models\PsychoAssessment;
 use App\Models\academic_sessions;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\AssignClassSubjectStudent;
@@ -158,6 +160,24 @@ class StudentAccountController extends Controller
 
     }// end method
 
+    //STUDENT SUBJECTS VIEW
+     public function StudentSubjects()
+    {
+        // Logged-in student
+        $student = Student::where('user_id', Auth::id())->first();
 
+        // Current term & session
+        $currentTerm = DB::table('terms')->where('is_current', 1)->value('name');
+        $currentSession = DB::table('academic_sessions')->where('is_current', 1)->value('name');
 
+        // Get subjects for this student
+        $subjectIds = AssignClassSubjectStudent::where('student_id', $student->id)
+            ->where('term', $currentTerm)
+            ->where('session', $currentSession)
+            ->pluck('subject_id');
+
+        $subjects = subject::whereIn('id', $subjectIds)->get();
+
+        return view('backend.student_account.student_subjects', compact('subjects', 'currentTerm', 'currentSession'));
+    }
 }

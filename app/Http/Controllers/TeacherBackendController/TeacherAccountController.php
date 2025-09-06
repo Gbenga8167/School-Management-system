@@ -5,6 +5,7 @@ namespace App\Http\Controllers\TeacherBackendController;
 use App\Models\User;
 use App\Models\teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -141,12 +142,23 @@ class TeacherAccountController extends Controller
     // teacher assigned subject
     //view teacher assigned subject in the teacher's dashboard
 
-    public function TeacherAssignedSubject(){
+    public function TeacherAssignedSubject()
+{
+    $teacher = auth()->user()->teacher; // Get the logged-in teacher  
 
-        $teacher_id  = auth()->user()->teacher; // Get the logged-in teacher
-        $assignments =  $teacher_id->assignedsubjectteacher()->with(['subject', 'class'])->get();
-        return view('backend.teacher_account.teacher_assigned_subject_view', compact('assignments'));
-    
-    }//end method
+    // Get current term & session
+    $currentTerm = DB::table('terms')->where('is_current', 1)->value('name');
+    $currentSession = DB::table('academic_sessions')->where('is_current', 1)->value('name');
+
+    // Fetch only assignments for the current term & session
+    $assignments = $teacher->assignedsubjectteacher()
+        ->with(['subject', 'class'])
+        ->where('term', $currentTerm)
+        ->where('session', $currentSession)
+        ->get();
+
+    return view('backend.teacher_account.teacher_assigned_subject_view', compact('assignments', 'currentTerm', 'currentSession'));
+}
+
     
 }

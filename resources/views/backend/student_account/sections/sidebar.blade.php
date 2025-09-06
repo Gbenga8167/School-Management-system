@@ -40,6 +40,19 @@ $studentphoto = App\Models\student::where('user_id', $id)->first();
 
             <li class="menu-title">APPERANCE</li>
 
+            <li>
+                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="ri-dashboard-line"></i>
+                    <span>My Subjects</span>
+                </a>
+                <ul class="sub-menu" aria-expanded="false">
+                    <li><a href="{{route('student.subjects')}}">My Subjects</a></li>
+                   
+                
+                
+                </ul>
+            </li>
+
            <li>
                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                 <i class="ri-dashboard-line"></i>
@@ -57,18 +70,6 @@ $studentphoto = App\Models\student::where('user_id', $id)->first();
             <li>
                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                 <i class="ri-dashboard-line"></i>
-                    <span>Profile</span>
-                </a>
-                <ul class="sub-menu" aria-expanded="false">
-                    <li><a href="{{route('student.profile')}}">View Profile</a></li>
-
-                
-                </ul>
-            </li>
-
-            <li>
-                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                <i class="ri-dashboard-line"></i>
                     <span> CBT Question</span>
                 </a>
                 <ul class="sub-menu" aria-expanded="false">
@@ -79,8 +80,32 @@ $studentphoto = App\Models\student::where('user_id', $id)->first();
                 </ul>
             </li>
 
-            <a class="dropdown-item text-danger" href="{{route('student.logout')}}">
-            <i class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</a>
+             <li>
+                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="ri-dashboard-line"></i>
+                    <span>Profile</span>
+                </a>
+                <ul class="sub-menu" aria-expanded="false">
+                    <li><a href="{{route('student.profile')}}">View Profile</a></li>
+
+                
+                </ul>
+            </li>
+
+
+
+             <li>
+                 <a class="dropdown-item text-danger" href="{{route('student.logout')}}">
+                <i class="ri-shut-down-line align-middle me-1 text-danger"></i>
+                    <span>Logout</span>
+                </a>
+                <ul class="sub-menu" aria-expanded="false">
+                    
+              
+                </ul>
+            </li>
+
+
 
             
 

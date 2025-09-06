@@ -60,6 +60,17 @@ if ($hour < 12) {
 }
 @endphp
 
+{{-- ================= CSS EFFECTS ================= --}}
+<style>
+    .zoom-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .zoom-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+</style>
+
 <!-- Student Dashboard -->
 <!-- ================= Student Dashboard ================= -->
 
@@ -85,7 +96,7 @@ if ($hour < 12) {
 
         <!-- Total Subjects -->
         <div class="col-xl-4 col-md-6">
-            <div class="card shadow-lg border-0 rounded-4 text-white" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+            <div class="card shadow-lg border-0 rounded-4 text-white zoom-card" style="background: linear-gradient(135deg, #667eea, #764ba2);">
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div>
                         <p class="mb-1 fw-semibold">My Subjects</p>
@@ -100,7 +111,7 @@ if ($hour < 12) {
 
         <!-- Total CBT Tests -->
         <div class="col-xl-4 col-md-6">
-            <div class="card shadow-lg border-0 rounded-4 text-white" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);">
+            <div class="card shadow-lg border-0 rounded-4 text-white zoom-card" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);">
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div>
                         <p class="mb-1 fw-semibold">CBT Tests</p>
@@ -115,7 +126,7 @@ if ($hour < 12) {
 
         <!-- Results Availability -->
         <div class="col-xl-4 col-md-6">
-            <div class="card shadow-lg border-0 rounded-4 text-white" style="background: linear-gradient(135deg, #11998e, #38ef7d);">
+            <div class="card shadow-lg border-0 rounded-4 text-white zoom-card" style="background: linear-gradient(135deg, #11998e, #38ef7d);">
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div>
                         <p class="mb-1 fw-semibold">My Results</p>

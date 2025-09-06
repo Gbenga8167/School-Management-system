@@ -62,6 +62,7 @@ Route::get('/student/dashboard', function () {
     Route::get('student/profile','StudentProfile')->name('student.profile');
     Route::get('student/result/form','StudentResultForm')->name('student.result.form');
     Route::post('student/result/view','StudentResultView')->name('student.result.view');
+    Route::get('student/subjects','StudentSubjects')->name('student.subjects');
 });
 
 //Student All Route FOR CBTTEST

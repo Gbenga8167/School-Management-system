@@ -35,7 +35,7 @@
                 <div class="row mb-3">
                     <label for="example-text-input" class="col-sm-2 col-form-label">Username</label>
                     <div class="col-sm-10">
-                        <input class="form-control" name="user_name" type="text" value="{{ $TeacherData->user_name }}">
+                        <input class="form-control" readonly name="user_name" type="text" value="{{ $TeacherData->user_name }}">
                     </div>
                 </div>
                 <!-- end row -->
