@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\backend;
 
 use App\Models\User;
+use App\Models\terms;
+use App\Models\academic_session;
 use App\Models\classes;
 use App\Models\subject;
 use App\Models\teacher;
@@ -214,30 +216,42 @@ class TeacherController extends Controller
 
     public function AssignSubjectTeacher(){
 
+        $terms = terms::where('is_current', true)->get();
+        $sessions = academic_session::where('is_current', true)->get();
         $teachers = teacher::all();
         $subjects = subject::all();
         $classes  = classes::all();
-        
-        return view('backend.teacher.assign_teacher_subject', compact('teachers', 'subjects', 'classes'));
+
+        return view('backend.teacher.assign_teacher_subject', compact('teachers', 'subjects', 'classes', 'terms', 'sessions'));
 
     }// end method
 
-// FetchStudent class from database
-    public function FetchStudent(Request $request){
-        $class_id = $request->class_id;
-        $class = classes::with('subjects')->where('id', $class_id)->first();
-        $class_subjects = $class->subjects;
-        for($i=0; $i < count($class_subjects); $i++){
-            $subject_data[$i] = 
+// Fetch subjects of a class from DB
+public function FetchStudent(Request $request)
+{
+    $class_id = $request->class_id;
 
-            '<input class="form-check-input" name="subject_ids[]" value="'.$class_subjects[$i]->id.'" type="checkbox" id="formCheck1"></label>
-            <label for="english">'. $class_subjects[$i]->subject_name.'</label> <br>';
-        }
+    $class = classes::with('subjects')->where('id', $class_id)->first();
 
-return response()->json(['subjects'=>$subject_data]);
-
+    if (!$class) {
+        return response()->json(['subjects' => '']);
     }
- 
+
+    $class_subjects = $class->subjects;
+    $subject_data = '';
+
+    foreach ($class_subjects as $subject) {
+        $subject_data .= '
+            <div>
+                <input class="form-check-input" name="subject_ids[]" value="'.$subject->id.'" type="checkbox" id="subject_'.$subject->id.'">
+                <label for="subject_'.$subject->id.'">'.$subject->subject_name.'</label>
+            </div>
+        ';
+    }
+
+    return response()->json(['subjects' => $subject_data]);
+}
+
     //end method
     
 

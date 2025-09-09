@@ -77,30 +77,31 @@
                 
 
                 
-          <div class="row mb-3">
-                    <label for="example-text-input" class="col-sm-2 col-form-label" style="font-size:15px">Team</label>
-                    <div class="col-sm-10">
-                    <select  name="term" required class="form-select" aria-label="Default select example">
-                    <option value="first_term" selected> First Term </option>  
-                    <option value="second_term"> Second Term </option> 
-                    <option value="third_term"> Third Term </option>                         
-                     </select>
-                    </div>
-                   
-                </div>
-            <!-- end row -->
+                                  <!-- Term -->
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Term</label>
+                            <div class="col-sm-10">
+                                <select name="term" class="form-select" required>
+                                     <option selected value="">--Select Term--</option>
+                                    @foreach($terms as $term)
+                                       <option value="{{$term->name}}">{{$term->name}}</option>
+                                     @endforeach
+                                </select>
+                            </div>
+                        </div>
 
-
-                <div class="row mb-3">
-                    <label for="example-text-input" class="col-sm-2 col-form-label" style="font-size:15px">Academic Session</label>
-                    <div class="col-sm-10">
-                    <select  name="session" required class="form-select" aria-label="Default select example">
-                    <option value="2025/2026" selected> 2025/2026 </option>                          
-                     </select>
-                    </div>
-                   
-                </div>
-
+                        <!-- Session -->
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Academic Session</label>
+                            <div class="col-sm-10">
+                                <select name="session" class="form-select" required>
+                                     <option selected value="">--Select Session--</option>
+                                    @foreach($sessions as $session)
+                                      <option value="{{$session->name}}">{{$session->name}}</option>
+                                      @endforeach
+                                </select>
+                            </div>
+                        </div>
 
                 <!-- end row -->
 
@@ -118,31 +119,37 @@
   
 
 <script>
-    $(document).ready(function(){
-        $('.showSubject').hide();
-        $('.dynamic').on('change', function(){
-            let class_id = $(this).val();
-            let dependent = $(this).data('dependant');
-            let _token = "{{ csrf_token() }}";
-            $.ajax({
-                url:"{{route('fetch.student')}}",
-                method:"GET",
-                datatype:"json",
-                data: {class_id:class_id, _token:_token},
-                success: function(result){
-                    $('.sub').html(result.subjects);
-                    $('.showSubject').show();
+$(document).ready(function(){
+    $('.showSubject').hide();
 
-                    
-                    
-                }
-            });
+    $('.dynamic').on('change', function(){
+        let class_id = $(this).val();
+        let _token = "{{ csrf_token() }}";
 
+        $.ajax({
+            url:"{{route('fetch.student')}}",
+            method:"GET",
+            data:{ class_id:class_id, _token:_token },
+            success:function(result){
+                // Add "Select All" checkbox
+                let selectAll = `
+                    <div>
+                        <input type="checkbox" id="select_all_subjects" class="form-check-input">
+                        <label for="select_all_subjects"><strong>Select All Subjects</strong></label>
+                    </div><hr>
+                `;
+
+                $('.sub').html(selectAll + result.subjects);
+                $('.showSubject').show();
+
+                // Handle "Select All"
+                $('#select_all_subjects').on('change', function(){
+                    $('input[name="subject_ids[]"]').prop('checked', this.checked);
+                });
+            }
         });
-
-
     });
-
+});
 
 </script>
   

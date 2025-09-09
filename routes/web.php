@@ -263,13 +263,13 @@ Route::get('/teacher/dashboard', function () {
     // ASSIGN STUDENT CLASS SUBJECT
     Route::get('assign/student/class/subject', 'AssignStudentClassSubject')->name('assign.student.class.subject');
     Route::post('store/student/class/subject', 'StoreStudentClassSubject')->name('store.student.class.subject');
+    Route::get('fetch/subjects', 'FetchSubjects')->name('fetch.subjects');
+    Route::get('fetch/students', 'FetchStudents')->name('fetch.students');
     Route::get('manage/assign/student/class/subject', 'ManageAssignStudentClassSubject')->name('manage.assign.student.class.subject');
     Route::get('edit/assign/student/class/subject/{id}', 'EditAssignStudentClassSubject')->name('edit.assign.student.class.subject');
     Route::post('update/assign/student/class/subject', 'UpdateAssignStudentClassSubject')->name('update.assign.student.class.subject');
     Route::get('delete/assign/student/class/subject/{id}', 'DeleteAssignStudentClassSubject')->name('delete.assign.student.class.subject');
-    
 
-    
      //Ajax All Request For Assign Subject To Teacher
      Route::get('fetch/student','FetchStudent')->name('fetch.student');
     

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\backend;
 
 use App\Models\User;
+use App\Models\terms;
+use App\Models\academic_session;
 use App\Models\classes;
 use App\Models\student;
 use App\Models\subject;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Models\AssignClassSubjectStudent;
@@ -56,7 +59,7 @@ public function StoreStudent(Request $request)
   return redirect()->back()->with($notification);
         
 
-    }
+    }  */
 
 
 
@@ -77,7 +80,6 @@ public function StoreStudent(Request $request)
 
     }
 
-*/
 
     // To disallow Duplication of Email
 
@@ -141,6 +143,7 @@ public function StoreStudent(Request $request)
             'phone_number' => $request->phone_number,
             'address' => $request->address,
             'nationality' => $request->nationality,
+            'class_id' => $request->class_id,
 
             
         ]);
@@ -214,6 +217,7 @@ public function StoreStudent(Request $request)
        $student->phone_number = $request->phone_number;
        $student->address = $request->address;
        $student->nationality = $request->nationality;
+       $student->class_id = $request->class_id;
 
 
 
@@ -276,92 +280,91 @@ public function StoreStudent(Request $request)
     }
 
     //ASSIGN STUDENT CLASS SUBJECT
-    public function AssignStudentClassSubject(){
-        $students = student::all();
-        $subjects = subject::all();
-        $classes  = classes::all();
-        
-        return view('backend.student.assign_student_class_subject', compact('students', 'subjects', 'classes'));
-    }//end method
+   public function AssignStudentClassSubject()
+{
+    $classes  = classes::all();
 
+    // Fetch only current term & session set by admin
+     // Current term & session
+        $terms = terms::where('is_current', true)->get();
+        $sessions = academic_session::where('is_current', true)->get();
+    return view('backend.student.assign_student_class_subject', compact('classes', 'terms', 'sessions'));
+}
 
-    // FetchStudent class from database
-    public function FetchStudent(Request $request){
-        $class_id = $request->class_id;
-        $class = classes::with('subjects')->where('id', $class_id)->first();
-        $class_subjects = $class->subjects;
-        for($i=0; $i < count($class_subjects); $i++){
-            $subject_data[$i] = 
+// Fetch subjects for selected class
+public function FetchSubjects(Request $request)
+{
+    $class_id = $request->class_id;
+    $class = classes::with('subjects')->where('id', $class_id)->first();
+    $class_subjects = $class->subjects;
 
-            '<input class="form-check-input" name="subject_ids[]" value="'.$class_subjects[$i]->id.'" type="checkbox" id="formCheck1"></label>
-            <label for="english">'. $class_subjects[$i]->subject_name.'</label> <br>';
-        }
+    $subject_data = [];
+    $subject_data[] = '<input type="checkbox" id="select_all_subjects"> <label><strong>Select All Subjects</strong></label><br>';
 
-return response()->json(['subjects'=>$subject_data]);
-
+    foreach ($class_subjects as $subject) {
+        $subject_data[] =
+            '<input class="form-check-input subject-checkbox" name="subject_ids[]" value="' . $subject->id . '" type="checkbox">
+             <label>' . $subject->subject_name . '</label><br>';
     }
 
+    return response()->json(['subjects' => $subject_data]);
+}
 
-    // store subject teacher
+// Fetch students for a class
+public function FetchStudents(Request $request)
+{
+    $class_id = $request->class_id;
+    $students = student::where('class_id', $class_id)->get();
 
-    public function StoreStudentClassSubject(Request $request){
+    $student_data = [];
+    $student_data[] = '<input type="checkbox" id="select_all_students"> <label><strong>Select All Students</strong></label><br>';
 
-        $AlreadyExist =  AssignClassSubjectStudent::where('student_id', $request->student_id)
-        ->where('class_id', $request->class_id)
-        ->where('subject_id', $request->subject_ids)
-        ->first();
-
-
-        if($AlreadyExist){
-
-                 $notification = array(
-                'message' => ' Details Already exist',
-                'alert-type' => 'info'
-            );
-
-            //redirect back to same page
-  
-      return redirect()->back()->with($notification);
-            
-
-        }else{
-            
-        $request->validate([
-
-            'student_id' => 'required',
-            'class_id' => 'required',
-            'subject_ids' => 'required|array',
-            'session' => 'required|string',
-            'term' => 'required'
-        ]);
-
-        $sub_count = count($request->subject_ids);
-        for($i=0; $i < $sub_count; $i++){
-
-            AssignClassSubjectStudent::create([
-                'student_id' => $request->student_id, 
-                'subject_id' => $request->subject_ids[$i],
-                 'class_id' =>$request->class_id, 
-                 'session' =>$request->session,
-                 'term' => $request->term
-    
-            ]);
-        }
-       
-
-
-        $notification = array(
-            'message' => 'Assigned Succesfully',
-            'alert-type' => 'info'
-        );
-    
-        //redirect back to same page
-    
-        return redirect()->back()->with($notification);
-    
-       }
-
+    foreach ($students as $student) {
+        $student_data[] =
+            '<input class="form-check-input student-checkbox" name="student_ids[]" value="' . $student->id . '" type="checkbox">
+             <label>' . $student->name . '</label><br>';
     }
+
+    return response()->json(['students' => $student_data]);
+}
+
+// Store Assignments
+public function StoreStudentClassSubject(Request $request)
+{
+    $request->validate([
+        'student_ids' => 'required|array',
+        'class_id' => 'required',
+        'subject_ids' => 'required|array',
+        'session' => 'required|string',
+        'term' => 'required|string'
+    ]);
+
+    foreach ($request->student_ids as $student_id) {
+        foreach ($request->subject_ids as $subject_id) {
+            $alreadyExist = AssignClassSubjectStudent::where('student_id', $student_id)
+                ->where('class_id', $request->class_id)
+                ->where('subject_id', $subject_id)
+                ->where('session', $request->session)
+                ->where('term', $request->term)
+                ->first();
+
+            if (!$alreadyExist) {
+                AssignClassSubjectStudent::create([
+                    'student_id' => $student_id,
+                    'subject_id' => $subject_id,
+                    'class_id' => $request->class_id,
+                    'session' => $request->session,
+                    'term' => $request->term,
+                ]);
+            }
+        }
+    }
+
+    return redirect()->back()->with([
+        'message' => 'Assigned Successfully',
+        'alert-type' => 'success'
+    ]);
+}
 // end method
 
 
@@ -439,4 +442,4 @@ public function DeleteAssignStudentClassSubject($id){
 
 
  
-}
+}// end method

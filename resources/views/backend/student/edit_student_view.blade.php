@@ -55,6 +55,23 @@
                 </div>
 
             
+                 <div class="row mb-3">
+                     <label for="class_id" class="col-sm-2 col-form-label" style="font-size:15px">Class</label>
+                     <div class="col-sm-10">
+                         <select name="class_id" class="form-select" required>
+                             <option value="">-- Select Class --</option>
+                             @foreach($classes as $class)
+                                 <option value="{{ $class->id }}" 
+                                     {{ $students->class_id == $class->id ? 'selected' : '' }}>
+                                     {{ $class->class_name }}
+                                 </option>
+                             @endforeach
+                         </select>
+                     </div>
+                 </div>
+
+                
+
 
                 <div class="row mb-3">
                     <label for="example-text-input" class="col-sm-2 col-form-label">DOB</label>
