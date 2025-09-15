@@ -15,11 +15,12 @@ use App\Http\Controllers\backend\ReportCardController;
 use App\Http\Controllers\backend\AdminResultController;
 use App\Http\Controllers\backend\TermCalendarController;
 use App\Http\Controllers\backend\PrincipalCommentController;
+use App\Http\Controllers\backend\StudentPromotionController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\backend\StudentAccount\StudentCBTController;
 use App\Http\Controllers\backend\StudentAccount\StudentAccountController;
 use App\Http\Controllers\TeacherBackendController\TeacherAccountController;
 use App\Http\Controllers\TeacherBackendController\TeacherPsychomotorController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 // Show login page if guest
 Route::get('/', [AuthenticatedSessionController::class, 'create'])
@@ -241,7 +242,7 @@ Route::get('/teacher/dashboard', function () {
     Route::post('store/subject/combination','StoreSubjectCombination')->name('store.subject.combination');
     Route::get('manage/subject/combination','ManageSubjectCombination')->name('manage.subject.combination');
     Route::get('deactivate/subject/combination/{id}','DeactivateSubjectCombination')->name('deactivate.subject.combination');
-    
+    Route::get('delete/subject/combination/{id}','DeleteSubjectCombination')->name('delete.subject.combination');
 
 
     
@@ -274,6 +275,29 @@ Route::get('/teacher/dashboard', function () {
      Route::get('fetch/student','FetchStudent')->name('fetch.student');
     
 });
+
+// Admin Manage Student Promotion Route
+// =====================
+// Promotion Routes
+// =====================
+Route::controller(StudentPromotionController::class)->group(function(){
+Route::get('promote/student', 'index')->name('promote.student');
+Route::get('fetch/promotion/students', 'fetchStudents')->name('promotion.fetch.students');
+Route::get('fetch/promotion/subjects', 'fetchSubjects')->name('promotion.fetch.subjects');
+Route::post('store/promotion', 'storePromotion')->name('promotion.store');
+
+//MANGE PROMOTION
+Route::get('/promotion/manage', 'managePromotion')->name('promotion.manage');
+Route::delete('/promotion/delete/{id}', 'deletePromotion')->name('promotion.delete');
+Route::delete('/promotion/bulk-delete', 'bulkDelete')->name('promotion.bulk.delete');
+
+// ✅ Edit & Update Promotion
+Route::get('/promotion/edit/{id}', 'editPromotion')->name('promotion.edit');
+Route::post('/promotion/update/{id}', 'updatePromotion')->name('promotion.update');
+
+
+});
+
 
 
 
@@ -341,7 +365,6 @@ Route::get('/teacher/dashboard', function () {
     Route::controller(ClearanceController::class)->group(function(){
     Route::post('/admin/clearance/toggle/{student}','toggleClearance');
     Route::post('/admin/clearance/clear-all','clearAll');
-    
 });
     
 });// End Admin Route

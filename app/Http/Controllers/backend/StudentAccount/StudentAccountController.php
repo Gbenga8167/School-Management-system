@@ -83,6 +83,20 @@ class StudentAccountController extends Controller
         //GET AUTHENTICATED LOGGED IN USERS(STUDENT)
         $student = student::where('user_id', Auth::id())->firstOrFail();
 
+
+        //CHECK IF STUDENT SELECTED CLASS, TERM AND SESSION MATCH
+        $notMatch = Clearance::where('student_id', $student->id)
+        ->where('class_id', $classId)
+        ->where('term', $terms)
+        ->where('session', $sessions)->first();
+
+        //conditional statement to check if student result is cleared by the admin
+        if(!$notMatch){
+            return redirect()->back()->with(
+                'error', 'The selected class, term and session does not match our records, No Results Found.');
+        }
+
+
         //CLEAR STUDENT RESULT BY ADMIN
         $isCleared = Clearance::where('student_id', $student->id)
         ->where('class_id', $classId)

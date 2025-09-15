@@ -6,7 +6,7 @@
         Subject : {{ $cbtTest->subject->subject_name ?? 'CBT Test' }} - {{ $cbtTest->assessment_type }}
     </h4>
     <h5 class="text-center" style="color:red">Title : {{ ucwords($cbtTest->title) }}</h5>
-    <p class="text-center warning" style="color:green">Answer All Questions. Each Question Carries Equal Mark</p>
+    <p class="text-center warning" style="color:green">Answer All Questions.</p>
 
     <div id="timer" class="alert alert-info text-center">Loading timer…</div>
 

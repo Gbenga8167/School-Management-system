@@ -60,21 +60,28 @@
                                                 </td>
                                                
 
-
+                                            
                                                 <td style="text-align:center;" > 
-                                                    @if($result->status == 1)
-                                                <a href="{{ route('deactivate.subject.combination',$result->id)}}" style="color: #444; margin-left: 30px">
+
+                                                <a href="{{ route('delete.subject.combination',$result->id)}}" id="delete">
+                                                <button type="submit"  class="btn btn-danger waves-effect waves-light">Delete</button>
+                                                </a>
+
+
+                                                   {{-- @if($result->status == 1) --}}
+                                               <!-- <a href="{{ route('deactivate.subject.combination',$result->id)}}" style="color: #444; margin-left: 30px">
                                                <i class="fas fa-check"></i>
                                                 
 
-                                                    @else
+                                                    {{-- @else --}}
                                                 <a href="{{ route('deactivate.subject.combination',$result->id)}}" style="color: #444; margin-left: 30px">
                                                <i class="fas fa-times"></i>
                                                 </a> 
-                                                @endif
+                                                {{-- @endif --}}
+                                                  -->
 
                                                 
-                                            
+                                             
                                             </td>
 
                                             </tr>

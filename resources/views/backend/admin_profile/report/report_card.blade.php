@@ -138,7 +138,7 @@
     students assigned to the selected class--}}
 
 
-    <div id="report-card-{{ $student->id }}" class="border rounded p-4 shadow-sm  student-report">
+    <div id="report-card-{{ $student->id }}" class="border rounded p-4 shadow-sm  student-report table-responsive">
       @include('backend.admin_profile.report.report_header', [
       'settings' => $settings,
        'student' => $student,

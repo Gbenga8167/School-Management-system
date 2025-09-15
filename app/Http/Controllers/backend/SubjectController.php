@@ -220,7 +220,22 @@ class SubjectController extends Controller
             
                }//end method
 
-             
+            
+               
+
+               public function DeleteSubjectCombination($id){
+               DB::table("classes_subject")->where('id', $id)->delete();
+
+             $notification = array(
+            'message' => ' Subject Deleted Succesfully',
+            'alert-type' => 'info'
+        );
+    
+        //redirect back to same page
+    
+        return redirect()->back()->with($notification);
+    }// end method
+
 
               
 }

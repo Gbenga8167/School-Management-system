@@ -117,7 +117,7 @@ $gradeCounts = $gradeDistribution->values();
 
 <!-- Welcome Header -->
 <div class="row mb-4">
-    <div class="col-12">
+    <div class="col-12 animate-card" style="--delay:0s;">
         <div class="d-flex justify-content-between align-items-center p-4 bg-primary text-white rounded-4 shadow">
             <!-- Greeting Section -->
             <div>
@@ -165,72 +165,75 @@ $gradeCounts = $gradeDistribution->values();
 
 
     <!-- Quick Stats Cards -->
-    <div class="row">
-        <!-- Total Classes -->
-        <div class="col-xl-4 col-md-6">
-            <div class="card dashboard-card shadow-lg border-0 rounded-4 text-white" style="background: linear-gradient(135deg, #6a11cb, #2575fc);">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-grow-1">
-                            <p class="mb-1 fw-semibold">Classes Assigned</p>
-                            <h3 class="fw-bold mb-0" style="color: #fff;">{{ $teacher->teacherClasses()->count() }}</h3>
-                        </div>
-                        <div class="avatar-sm bg-white bg-opacity-25 rounded-3 d-flex align-items-center justify-content-center">
-                            <i class="ri-building-line fs-3"></i>
-                        </div>
+<div class="row">
+    <!-- Total Classes -->
+    <div class="col-xl-4 col-md-6 animate-card" style="--delay:0s;">
+        <div class="card dashboard-card shadow-lg border-0 rounded-4 text-white" style="background: linear-gradient(135deg, #6a11cb, #2575fc);">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <p class="mb-1 fw-semibold">Classes Assigned</p>
+                        <h3 class="fw-bold mb-0" style="color: #fff;">
+                            {{ \App\Models\AssignedClassSubjectTeacher::where('teacher_id', $teacher->id)
+                                ->where('term', $currentTerm)
+                                ->where('session', $currentSession)
+                                ->distinct('class_id')
+                                ->count('class_id') }}
+                        </h3>
+                    </div>
+                    <div class="avatar-sm bg-white bg-opacity-25 rounded-3 d-flex align-items-center justify-content-center">
+                        <i class="ri-building-line fs-3"></i>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Total Subjects -->
-        <div class="col-xl-4 col-md-6">
-            <div class="card dashboard-card shadow-lg border-0 rounded-4 text-white" style="background: linear-gradient(135deg, #00b09b, #96c93d);">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-grow-1">
-                            <p class="mb-1 fw-semibold">Subjects Assigned</p>
-                            <h3 class="fw-bold mb-0" style="color: #fff;">{{ $teacher->teacherSubjects()->count() }}</h3>
-                        </div>
-                        <div class="avatar-sm bg-white bg-opacity-25 rounded-3 d-flex align-items-center justify-content-center">
-                            <i class="fas fa-book-open fs-3"></i>
-                        </div>
+    <!-- Total Subjects -->
+    <div class="col-xl-4 col-md-6 animate-card" style="--delay:0.2s;">
+        <div class="card dashboard-card shadow-lg border-0 rounded-4 text-white" style="background: linear-gradient(135deg, #00b09b, #96c93d);">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <p class="mb-1 fw-semibold">Subjects Assigned</p>
+                        <h3 class="fw-bold mb-0" style="color: #fff;">
+                            {{ \App\Models\AssignedClassSubjectTeacher::where('teacher_id', $teacher->id)
+                                ->where('term', $currentTerm)
+                                ->where('session', $currentSession)
+                                ->distinct('subject_id')
+                                ->count('subject_id') }}
+                        </h3>
+                    </div>
+                    <div class="avatar-sm bg-white bg-opacity-25 rounded-3 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-book-open fs-3"></i>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-
-
-
-
-        <!-- Total Students (offering teacher's subject across all classes) -->
-<div class="col-xl-4 col-md-6">
-    <div class="card dashboard-card shadow-lg border-0 rounded-4 text-white" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);">
-        <div class="card-body">
-            <div class="d-flex align-items-center">
-                <div class="flex-grow-1">
-                    <p class="mb-1 fw-semibold" style="color: #fff;">My Students  Across all classes</p>
-                    <h3 class="fw-bold mb-0" style="color: #fff;">
+    <!-- Total Students -->
+    <div class="col-xl-4 col-md-6 animate-card" style="--delay:0.4s;">
+        <div class="card dashboard-card shadow-lg border-0 rounded-4 text-white" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <p class="mb-1 fw-semibold" style="color: #fff;">My Students Across all classes</p>
                         <h3 class="fw-bold mb-0" style="color: #fff;">{{ $studentCount }}</h3>
-
-
-                    </h3>
-                </div>
-                <div class="avatar-sm bg-white bg-opacity-25 rounded-3 d-flex align-items-center justify-content-center">
-                    <i class="ri-user-3-line fs-3"></i>
+                    </div>
+                    <div class="avatar-sm bg-white bg-opacity-25 rounded-3 d-flex align-items-center justify-content-center">
+                        <i class="ri-user-3-line fs-3"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-    </div>
-
-    <!-- Optional Charts -->
- <div class="row mt-4">
-    <!-- Performance (Avg CA/Exam/Total) -->
-    <div class="col-xl-6 col-md-12">
+<!-- Optional Charts -->
+<div class="row mt-4">
+    <!-- Performance -->
+    <div class="col-xl-6 col-md-12 animate-card" style="--delay:0.6s;">
         <div class="card shadow-lg border-0 rounded-4">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0" style="color:#fff;">
@@ -247,7 +250,7 @@ $gradeCounts = $gradeDistribution->values();
     </div>
 
     <!-- Grade Distribution -->
-    <div class="col-xl-6 col-md-12">
+    <div class="col-xl-6 col-md-12 animate-card" style="--delay:0.8s;">
         <div class="card shadow-lg border-0 rounded-4">
             <div class="card-header bg-success text-white">
                 <h5 class="mb-0" style="color:#fff;">
@@ -263,6 +266,22 @@ $gradeCounts = $gradeDistribution->values();
         </div>
     </div>
 </div>
+
+<!-- Animation Styles -->
+<style>
+    .animate-card {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: popUp 0.8s ease forwards;
+        animation-delay: var(--delay, 0s);
+    }
+    @keyframes popUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>

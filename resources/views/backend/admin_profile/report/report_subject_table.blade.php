@@ -1,6 +1,6 @@
 
 
-<table class="table table-bordered deep-border table-striped mb-4 fixed-header" style="width:90%;" align="center">
+<table class="table table-bordered deep-border table-striped mb-4 fixed-header table-responsive" style="width:90%;" align="center">
     <thead class="table-dark text-center align-middle">
 
     <tr>

@@ -7,15 +7,9 @@
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
-        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0">STUDENT'S PROFILE</h4>
-
-            <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Student</a></li>
-                    <li class="breadcrumb-item active">Profile</li>
-                </ol>
-            </div>
+        <div class="col-12">
+        <h4 class="p-2 bg-info text-white rounded" style="text-align:center">Student | profile</h4>
+    </div>
 
         </div>
     </div>
