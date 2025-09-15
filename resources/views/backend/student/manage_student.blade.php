@@ -35,10 +35,9 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Photo</th>
-                                                <th>student Name</th>
+                                                <th>Students Name</th>
                                                 <th>Roll Id</th>
-                                                <th>Reg Date</th>
-                                                <th>Updated Date </th>
+                                                <th>Admission Date</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             
@@ -55,10 +54,9 @@
                                                
                                                     <img src="{{ empty($student->photo)? asset('uploads/no_image.png') : asset('uploads/student_photos/'.$student->photo)}}" alt="avatar-4" class="rounded avatar-md" >
                                                </td>
-                                                <td>{{ $student->name }}</td>
+                                                <td>{{ ucwords(strtolower($student->name)) }}</td>
                                                 <td>{{ $student->roll_id }}</td>
                                                 <td>{{ $student->created_at}}</td>
-                                                <td>{{ $student->updated_at}}</td>
                                                 <td> @if($student->status == 1 )
                                                     <span class="badge bg-success" style="padding:10px 15px; font-size:15px">Active</span>
                                                     @else

@@ -53,7 +53,7 @@
                                                
                                                     <img src="{{ empty($teacher->photo)? asset('uploads/no_image.png') : asset('uploads/teachers_photos/'.$teacher->photo)}}" alt="avatar-4" class="rounded avatar-md" >
                                                </td>
-                                                <td>{{ $teacher->name }}</td>
+                                                <td>{{ ucwords(strtolower($teacher->name)) }}</td>
                                                 <td>{{ $teacher->created_at }}</td>
                                                 <td> @if($teacher->status == 1 )
                                                     <span class="badge bg-success" style="padding:10px 15px; font-size:15px">Active</span>

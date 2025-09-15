@@ -48,8 +48,8 @@
 
                                                 <tr>
                                                 <td>{{ $key+1 }}</td>
-                                                <td>{{ $class->class_name }}</td>
-                                                <td>{{ $class->classTeacher->name  ?? 'N/A'}}</td>
+                                                <td>{{ strtoupper($class->class_name) }}</td>
+                                                <td>{{ ucwords(strtolower($class->classTeacher->name  ?? 'N/A'))}}</td>
                                                 <td>{{ $class->classTeacher->user->email ?? 'N/A'}}</td>
                                            <td>
                                                 <form action="{{route('remove.assigned.class.teacher',  $class->id )}}"  method="POST" onsubmit ="return confirm('Are you sure you want to remove this class teacher?');">

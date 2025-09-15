@@ -1,0 +1,32 @@
+<div class="col-xl-6 col-md-12 animate__animated animate__fadeInLeft animate__delay-1s">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0" style="color:#fff;">
+                Performance ({{ $currentTerm }} • {{ $currentSession }})
+            </h5>
+        </div>
+        <div class="card-body">
+            @if($results->isEmpty())
+                <div class="alert alert-info mb-3">No results yet for your assigned classes/subjects in the current term & session.</div>
+            @endif
+            <canvas id="perfChart" height="200"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="col-xl-6 col-md-12 animate__animated animate__fadeInRight animate__delay-1s">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0" style="color:#fff;">
+                Grade Distribution ({{ $currentTerm }} • {{ $currentSession }})
+            </h5>
+        </div>
+        <div class="card-body">
+            @if($results->isEmpty())
+                <div class="alert alert-info mb-3">No grades yet for your assigned classes/subjects in the current term & session.</div>
+            @endif
+            <canvas id="gradeChart" height="200"></canvas>
+        </div>
+    </div>
+</div>
+                            </div>

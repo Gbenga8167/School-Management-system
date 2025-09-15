@@ -111,7 +111,22 @@ $gradeCounts = $gradeDistribution->values();
         transform: scale(1.2);
         color: #fff;
     }
+
+    /*Animation Styles*/
+    .animate-card {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: popUp 0.8s ease forwards;
+        animation-delay: var(--delay, 0s);
+    }
+    @keyframes popUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 </style>
+
 
 <div class="container-fluid">
 
@@ -167,7 +182,7 @@ $gradeCounts = $gradeDistribution->values();
     <!-- Quick Stats Cards -->
 <div class="row">
     <!-- Total Classes -->
-    <div class="col-xl-4 col-md-6 animate-card" style="--delay:0s;">
+    <div class="col-xl-4 col-md-6 animate-card" style="--delay:0.2s;">
         <div class="card dashboard-card shadow-lg border-0 rounded-4 text-white" style="background: linear-gradient(135deg, #6a11cb, #2575fc);">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -190,7 +205,7 @@ $gradeCounts = $gradeDistribution->values();
     </div>
 
     <!-- Total Subjects -->
-    <div class="col-xl-4 col-md-6 animate-card" style="--delay:0.2s;">
+    <div class="col-xl-4 col-md-6 animate-card" style="--delay:0.4s;">
         <div class="card dashboard-card shadow-lg border-0 rounded-4 text-white" style="background: linear-gradient(135deg, #00b09b, #96c93d);">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -213,7 +228,7 @@ $gradeCounts = $gradeDistribution->values();
     </div>
 
     <!-- Total Students -->
-    <div class="col-xl-4 col-md-6 animate-card" style="--delay:0.4s;">
+    <div class="col-xl-4 col-md-6 animate-card" style="--delay:0.6s;">
         <div class="card dashboard-card shadow-lg border-0 rounded-4 text-white" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);">
             <div class="card-body">
                 <div class="d-flex align-items-center">
@@ -233,7 +248,7 @@ $gradeCounts = $gradeDistribution->values();
 <!-- Optional Charts -->
 <div class="row mt-4">
     <!-- Performance -->
-    <div class="col-xl-6 col-md-12 animate-card" style="--delay:0.6s;">
+    <div class="col-xl-6 col-md-12 animate-card" style="--delay:0.8s;">
         <div class="card shadow-lg border-0 rounded-4">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0" style="color:#fff;">
@@ -250,7 +265,7 @@ $gradeCounts = $gradeDistribution->values();
     </div>
 
     <!-- Grade Distribution -->
-    <div class="col-xl-6 col-md-12 animate-card" style="--delay:0.8s;">
+    <div class="col-xl-6 col-md-12 animate-card" style="--delay:1s;">
         <div class="card shadow-lg border-0 rounded-4">
             <div class="card-header bg-success text-white">
                 <h5 class="mb-0" style="color:#fff;">
@@ -267,21 +282,7 @@ $gradeCounts = $gradeDistribution->values();
     </div>
 </div>
 
-<!-- Animation Styles -->
-<style>
-    .animate-card {
-        opacity: 0;
-        transform: translateY(30px);
-        animation: popUp 0.8s ease forwards;
-        animation-delay: var(--delay, 0s);
-    }
-    @keyframes popUp {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-</style>
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>

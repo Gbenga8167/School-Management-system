@@ -49,9 +49,9 @@
 
                                                 <tr>
                                                 <td>{{ $key+1 }}</td>
-                                                <td>{{ $assign->teacher->name }}</td>
-                                                <td>{{ $assign->class->class_name }}</td>
-                                                <td>{{ $assign->subject->subject_name }}</td>
+                                                <td>{{ ucwords(strtolower($assign->teacher->name)) }}</td>
+                                                <td>{{ strtoupper($assign->class->class_name) }}</td>
+                                                <td>{{ ucwords(strtolower($assign->subject->subject_name)) }}</td>
                                                 <td > <a href="{{route('edit.assign.subject.teacher', $assign->id)}}">
                                                 <button type="submit" class="btn btn-primary waves-effect waves-light">Edit</button>
                                                 </a> 

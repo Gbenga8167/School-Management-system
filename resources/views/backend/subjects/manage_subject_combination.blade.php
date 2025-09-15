@@ -49,8 +49,8 @@
 
                                                 <tr>
                                                 <td>{{ $key+1 }}</td>
-                                                <td>{{ $result->class_name }}</td>
-                                                <td>{{ $result->subject_name }}</td>
+                                                <td>{{ strtoupper($result->class_name) }}</td>
+                                                <td>{{ ucwords(strtolower($result->subject_name)) }}</td>
                                                 <td style="text-align:center;">
                                                     @if($result->status == 1 )
                                                     <span class="badge bg-success" style="padding:10px 15px; font-size:15px">Active</span>

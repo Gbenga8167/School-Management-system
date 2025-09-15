@@ -35,9 +35,8 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Subject Name</th>
-                                                <th>Status</th>
                                                 <th>Creation Date</th>
-                                                <th>Updated Date</th>
+                                                <th>Status</th> 
                                                 <th>Action</th>
                                             
                                             </tr>
@@ -49,15 +48,14 @@
 
                                                 <tr>
                                                 <td>{{ $key+1 }}</td>
-                                                <td>{{ $subject->subject_name }}</td>
+                                                <td>{{ ucwords(strtolower($subject->subject_name)) }}</td>
+                                                 <td>{{ $subject->created_at }}</td>
                                                 <td>
                                                    @if($subject->status == 1)
                                                    <span class="badge bg-success" style="padding:10px 15px; font-size:15px">Active</span>
                                                     @else <span class="badge bg-danger" style="padding:10px 8px; font-size:15px">In-Active</span>
                                                     @endif</td>
                                                 </td>
-                                                <td>{{ $subject->created_at }}</td>
-                                                <td>{{ $subject->updated_at }}</td>
 
 
                                                 <td > <a href="{{ route('edit.subject',$subject->id)}}">

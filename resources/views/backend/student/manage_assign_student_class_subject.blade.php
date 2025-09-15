@@ -28,14 +28,14 @@
                                 <div class="card">
                                     <div class="card-body">
         
-                                        <h4 class="card-title">Manage Assign Student Class Subject Info</h4>
+                                        <h4 class="card-title">Manage Assign Student, Class & Subject Info</h4>
 
         
                                         <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                             <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Student</th>
+                                                <th>Students</th>
                                                 <th>Class</th>
                                                 <th>Subject</th>
                                                 <th>Actions</th>
@@ -49,9 +49,9 @@
 
                                                 <tr>
                                                 <td>{{ $key+1 }}</td>
-                                                <td>{{ $assign->student->name }}</td>
-                                                <td>{{ $assign->class->class_name }}</td>
-                                                <td>{{ $assign->subject->subject_name }}</td>
+                                                <td>{{ ucwords(strtolower($assign->student->name)) }}</td>
+                                                <td>{{ strtoupper($assign->class->class_name) }}</td>
+                                                <td>{{ ucwords(strtolower($assign->subject->subject_name)) }}</td>
                                                 <td > <a href="{{route('edit.assign.student.class.subject', $assign->id)}}">
                                                 <button type="submit" class="btn btn-primary waves-effect waves-light">Edit</button>
                                                 </a> 

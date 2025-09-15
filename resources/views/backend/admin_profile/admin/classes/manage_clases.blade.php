@@ -35,9 +35,10 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Class Name</th>
+                                                <th>Created Date</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
-                                                <th>Created Date</th>
+                                                
                                             
                                             </tr>
                                             </thead>
@@ -48,7 +49,8 @@
 
                                                 <tr>
                                                 <td>{{ $key+1 }}</td>
-                                                <td>{{ $class->class_name }}</td>
+                                                <td>{{strtoupper($class->class_name) }}</td>
+                                                 <td>{{ $class->created_at}}</td>
                                                 <td>@if($class->status == 1)
                                                    <span class="badge bg-success" style="padding:10px 15px; font-size:15px">Active</span>
                                                     @else <span class="badge bg-danger" style="padding:10px 8px; font-size:15px">In-Active</span>
@@ -65,7 +67,7 @@
                                                 </a>
 
                                             </td>
-                                                <td>{{ $class->created_at}}</td>
+                                               
                                             </tr>
                                             
 

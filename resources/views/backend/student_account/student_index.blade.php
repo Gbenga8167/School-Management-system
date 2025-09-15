@@ -69,7 +69,23 @@ if ($hour < 12) {
         transform: scale(1.05);
         box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     }
+
+    /*Animation Styles*/
+        .animate-card {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: popUp 0.8s ease forwards;
+        animation-delay: var(--delay, 0s);
+    }
+    @keyframes popUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 </style>
+
+
 
 <!-- Student Dashboard -->
 <!-- ================= Student Dashboard ================= -->
@@ -77,7 +93,7 @@ if ($hour < 12) {
 <div class="container-fluid">
 
     <!-- 1. Welcome Header -->
-    <div class="row mb-4">
+    <div class="row mb-4 animate-card" style="--delay:0s;">
         <div class="col-12">
             <div class="d-flex align-items-center p-4 bg-primary text-white rounded-4 shadow">
                 <div>
@@ -95,7 +111,7 @@ if ($hour < 12) {
     <div class="row">
 
         <!-- Total Subjects -->
-        <div class="col-xl-4 col-md-6">
+        <div class="col-xl-4 col-md-6 animate-card" style="--delay:0.2s;">
             <div class="card shadow-lg border-0 rounded-4 text-white zoom-card" style="background: linear-gradient(135deg, #667eea, #764ba2);">
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div>
@@ -110,7 +126,7 @@ if ($hour < 12) {
         </div>
 
         <!-- Total CBT Tests -->
-        <div class="col-xl-4 col-md-6">
+        <div class="col-xl-4 col-md-6 animate-card" style="--delay:0.4s;">
             <div class="card shadow-lg border-0 rounded-4 text-white zoom-card" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);">
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div>
@@ -125,7 +141,7 @@ if ($hour < 12) {
         </div>
 
         <!-- Results Availability -->
-        <div class="col-xl-4 col-md-6">
+        <div class="col-xl-4 col-md-6 animate-card" style="--delay:0.6s;">
             <div class="card shadow-lg border-0 rounded-4 text-white zoom-card" style="background: linear-gradient(135deg, #11998e, #38ef7d);">
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div>
@@ -145,8 +161,8 @@ if ($hour < 12) {
 
     <!-- 3. Recent CBT & Results -->
     <div class="row">
-        <div class="col-lg-6">
-            <div class="card shadow border-0 rounded-4">
+        <div class="col-lg-6 animate-card" style="--delay:0.8s;">
+            <div class="card shadow-lg border-0 rounded-4">
                 <div class="card-header bg-gradient text-white rounded-top-4" style="background: linear-gradient(135deg, #36d1dc, #5b86e5);">
                     <h6 class="mb-0 fw-bold">Recent CBT Tests</h6>
                 </div>
@@ -163,8 +179,8 @@ if ($hour < 12) {
             </div>
         </div>
 
-        <div class="col-lg-6 mb-4">
-            <div class="card shadow border-0 rounded-4">
+        <div class="col-lg-6 mb-4 animate-card" style="--delay:1s;">
+            <div class="card shadow-lg border-0 rounded-4">
                 <div class="card-header bg-gradient text-white rounded-top-4" style="background: linear-gradient(135deg, #ff9a9e, #fecfef);">
                     <h6 class="mb-0 fw-bold">Recent Results</h6>
                 </div>
