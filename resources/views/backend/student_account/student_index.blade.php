@@ -58,6 +58,10 @@ if ($hour < 12) {
 } else {
     $greeting = "Good Evening";
 }
+
+// Get class name
+$studentClassName = \App\Models\classes::where('id', $studentClassId)->value('class_name');
+
 @endphp
 
 {{-- ================= CSS EFFECTS ================= --}}
@@ -83,8 +87,25 @@ if ($hour < 12) {
             transform: translateY(0);
         }
     }
-</style>
 
+
+    /*Header Class Animation Styles*/
+    .animate-badges span {
+        opacity: 0;
+        transform: translateY(10px);
+        animation: fadeUp 0.6s ease forwards;
+    }
+    .animate-badges span:nth-child(1) { animation-delay: 0.2s; }
+    .animate-badges span:nth-child(2) { animation-delay: 0.4s; }
+    .animate-badges span:nth-child(3) { animation-delay: 0.6s; }
+
+    @keyframes fadeUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
 
 
 <!-- Student Dashboard -->
@@ -101,8 +122,34 @@ if ($hour < 12) {
                         Good {{ now()->format('A') == 'AM' ? 'Morning' : (now()->format('H') < 17 ? 'Afternoon' : 'Evening') }},
                         {{ $student->name }}
                     </h5>
-                    <small class="text-light" style="font-size:18px;">Today is {{ now()->format('l, F j, Y') }}</small>
+                    <small class="text-light" style="font-size:18px;"> Welcome back to your dashboard 👋</small><br>
+                     <small class="text-light" style="font-size:15px;">Today is {{ now()->format('l, F j, Y') }}</small>
+                    <!--Student class, term & session -->
+                    <!-- Student Info Badges -->
+                    <div class="d-flex flex-wrap gap-2 mt-1 animate-badges">
+                        <span class="badge bg-danger text-light px-3 py-2 shadow-sm" style="font-size:12px;">
+                            <i class="bi bi-people-fill me-1"></i>
+                            Class: {{ strtoupper($studentClassName ?? 'Not Assigned') }}
+                        </span>
+
+                        <span class="badge bg-success text-white px-3 py-2 shadow-sm" style="font-size:12px;">
+                            <i class="bi bi-calendar2-week-fill me-1"></i>
+                            Term: {{ $currentTerm }}
+                        </span>
+
+                        <span class="badge bg-warning text-dark px-3 py-2 shadow-sm" style="font-size:12px;">
+                            <i class="bi bi-calendar-check-fill me-1"></i>
+                            Session: {{ $currentSession }}
+                        </span>
+
+                        <!--<h6 class="mb-0" style="color:#f8f9fa;">
+                            Class: {{ $studentClass ?? 'Not Assigned' }} | 
+                            Term: {{ $currentTerm }} | 
+                            Session: {{ $currentSession }}
+                        </h6>-->
+                   </div>
                 </div>
+            
             </div>
         </div>
     </div>

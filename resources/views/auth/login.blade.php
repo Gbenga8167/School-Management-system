@@ -27,14 +27,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                    
-                     <div class="text-center mt-4">
-                            <h3 class="text-muted text-center"> My School Portal</h3>
-                            
-
-                        </div>
-                     
-    
+                
                         <h1 class="text-muted text-center font-size-20"> Log In </h1>
     
                         <div class="p-3">

@@ -38,6 +38,8 @@
                                                 <th>Students</th>
                                                 <th>Class</th>
                                                 <th>Subject</th>
+                                                <th>Term</th>
+                                                <th>Session</th>
                                                 <th>Actions</th>
                                             
                                             </tr>
@@ -52,6 +54,8 @@
                                                 <td>{{ ucwords(strtolower($assign->student->name)) }}</td>
                                                 <td>{{ strtoupper($assign->class->class_name) }}</td>
                                                 <td>{{ ucwords(strtolower($assign->subject->subject_name)) }}</td>
+                                                <td>{{ $assign->term }}</td>
+                                                <td>{{ $assign->session }}</td>
                                                 <td > <a href="{{route('edit.assign.student.class.subject', $assign->id)}}">
                                                 <button type="submit" class="btn btn-primary waves-effect waves-light">Edit</button>
                                                 </a> 

@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-12">
         <div class="col-12">
-        <h4 class="p-2 bg-info text-white rounded" style="text-align:center">Student | profile</h4>
+        <h4 class="p-2 bg-primary text-white rounded" style="text-align:center">Student | profile</h4>
     </div>
 
         </div>
@@ -85,7 +85,7 @@
 
 
                 <a  href="{{route('student.dashboard')}}">
-                     <button type="submit" class="btn btn-dark waves-effect waves-light">Back</button>
+                     <button type="submit" class="btn btn-primary waves-effect waves-light">Back</button>
                     </a>
 
                 

@@ -93,7 +93,7 @@ class StudentAccountController extends Controller
         //conditional statement to check if student result is cleared by the admin
         if(!$notMatch){
             return redirect()->back()->with(
-                'error', 'The selected class, term and session does not match our records, No Results Found.');
+                'error', 'Sorry, we couldn\'t find any results for the selected class, term, and session.');
         }
 
 

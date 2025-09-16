@@ -82,7 +82,7 @@
 
                 <!-- end row -->
 
-                <button type="submit" class="btn btn-primary waves-effect waves-light"> Check Result  </button>
+                <button type="submit" class="btn btn-info waves-effect waves-light"> Check Result  </button>
                 
                 </form>
               

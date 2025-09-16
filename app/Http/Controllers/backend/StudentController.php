@@ -372,7 +372,7 @@ public function StoreStudentClassSubject(Request $request)
 public function ManageAssignStudentClassSubject(){
 
     $manageAssigns = AssignClassSubjectStudent::with(['student', 'subject', 'class'])
-    ->orderBy('student_id')
+    ->orderBy('created_at')
     ->get();
 
 
@@ -439,7 +439,5 @@ public function DeleteAssignStudentClassSubject($id){
 
 
 }
-
-
  
 }// end method
