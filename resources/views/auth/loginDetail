@@ -1,155 +1,192 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!doctype html>
+<html lang="en">
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+<head>
+    <meta charset="utf-8" />
+    <title>LOGIN PAGE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- User ID Address -->
-        <div>
-            <x-input-label for="user_id" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{asset('../BackendTem/assets/images/favicon.ico')}}">
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+    <!-- Bootstrap Css -->
+    <link href="{{asset('../BackendTem/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{{asset('../BackendTem/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{{asset('../BackendTem/assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
-
-
-
-
-
-Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('role')->default(3)->comment('1:Admin, 2:Teacher, 3: Student');
-            $table->string('password');
-            $table->string('photo')->nullable;
-            $table->rememberToken();
-            $table->timestamps();
-
-
-
-
-
-
-
-
-            <?php
-
-namespace App\Http\Requests\Auth;
-
-use Illuminate\Auth\Events\Lockout;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
-
-class LoginRequest extends FormRequest
-{
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
-    public function rules(): array
-    {
-        return [
-            'email' => ['required', 'string',],
-            'password' => ['required', 'string'],
-        ];
-    }
-
-    /**
-     * Attempt to authenticate the request's credentials.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function authenticate(): void
-    {
-        $this->ensureIsNotRateLimited();
-
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
-
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
-            ]);
+    <style>
+        /* ===== Animations ===== */
+        .auth-body-bg {
+            background: linear-gradient(135deg, #007bff, #17a2b8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
 
-        RateLimiter::clear($this->throttleKey());
-    }
-
-    /**
-     * Ensure the login request is not rate limited.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function ensureIsNotRateLimited(): void
-    {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
-            return;
+        .card {
+            border-radius: 20px;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-in-out;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
 
-        event(new Lockout($this));
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-        $seconds = RateLimiter::availableIn($this->throttleKey());
+        .card-body {
+            animation: popIn 1s ease;
+        }
 
-        throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
-        ]);
-    }
+        @keyframes popIn {
+            0% {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
 
-    /**
-     * Get the rate limiting throttle key for the request.
-     */
-    public function throttleKey(): string
-    {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
-    }
-}
+        .form-control {
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #17a2b8;
+            box-shadow: 0 0 10px rgba(23, 162, 184, 0.4);
+        }
+
+        .btn-info {
+            border-radius: 10px;
+            font-weight: bold;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(23, 162, 184, 0.5);
+        }
+
+        h1 {
+            font-weight: 700;
+            animation: fadeDown 1s ease;
+        }
+
+        @keyframes fadeDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== Logo Animation ===== */
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px auto;
+            display: block;
+            animation: bounceIn 1.2s ease;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body class="auth-body-bg">
+    <div class="wrapper-page">
+        <div class="container-fluid p-0">
+            <div class="card">
+                <div class="card-body text-center">
+
+                    <!-- 🔹 Logo with Animation -->
+                    <img src="{{asset('uploads/logo_images/logo.jpg')}}" alt="Logo" class="login-logo">
+                    
+                    <h1 class="text-dark mb-4">Log In</h1>
+
+                    <div class="p-3">
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
+
+                            <!-- Username -->
+                            <div class="form-group mb-3">
+                                <input class="form-control @error('user_name') is-invalid @enderror" type="text"
+                                    name="user_name" :value="old('user_name')" placeholder="Username">
+                                @error('user_name')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <!-- Password -->
+                            <div class="form-group mb-3">
+                                <input class="form-control @error('password') is-invalid @enderror" type="password"
+                                    name="password" placeholder="Password">
+                                @error('password')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <!-- Remember Me -->
+                            <div class="form-group mb-3 d-flex align-items-center">
+                                <input type="checkbox" class="form-check-input me-2" id="customCheck1">
+                                <label class="form-check-label" for="customCheck1">Remember me</label>
+                            </div>
+
+                            <!-- Login Button -->
+                            <div class="form-group mb-3 text-center">
+                                <button class="btn btn-info w-100 waves-effect waves-light" type="submit">Log In</button>
+                            </div>
+
+                            <!-- Links -->
+                            <div class="d-flex justify-content-between mt-3">
+                                <a href="auth-recoverpw.html" class="text-muted"><i class="mdi mdi-lock"></i> Forgot
+                                    password?</a>
+                                <a href="auth-register.html" class="text-muted"><i class="mdi mdi-account-circle"></i>
+                                    Create account</a>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="{{asset('../BackendTem/assets/libs/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('../BackendTem/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('../BackendTem/assets/libs/metismenu/metisMenu.min.js')}}"></script>
+    <script src="{{asset('../BackendTem/assets/libs/simplebar/simplebar.min.js')}}"></script>
+    <script src="{{asset('../BackendTem/assets/libs/node-waves/waves.min.js')}}"></script>
+    <script src="{{asset('../BackendTem/assets/js/app.js')}}"></script>
+</body>
+</html>
+

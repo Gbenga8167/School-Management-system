@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable;
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('roll_id')->nullable;
+            $table->string('roll_id')->unique;
             $table->string('dob')->nullable;
             $table->string('gender')->nullable;
             $table->integer('status')->default(1);

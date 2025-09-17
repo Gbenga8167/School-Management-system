@@ -46,7 +46,7 @@
             
 
                 <div class="row mb-3">
-                    <label for="example-text-input" class="col-sm-2 col-form-label">Roll Id</label>
+                    <label for="example-text-input" class="col-sm-2 col-form-label">Student ID</label>
                     <div class="col-sm-10">
                         <input class="form-control" name="roll_id"  type="text"  value="{{$students->roll_id}}" >
                      

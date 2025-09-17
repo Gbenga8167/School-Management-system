@@ -85,11 +85,6 @@ class TeacherPsychomotorController extends Controller
         ->get()
         ->keyBy('student_id');
 
-         //if no PsychoAssessment available for the selected combination Class,Term and Session
-    if($existingAssessment ->isEmpty()){
-        return back()->with('error', 'No record found for the selected Class, Term, and Session.');
-    }
-
   
         return view('backend.teacher_account.assess_psychomotor',compact('students', 'class', 'terms', 'sessions', 'existingAssessment'));
     }

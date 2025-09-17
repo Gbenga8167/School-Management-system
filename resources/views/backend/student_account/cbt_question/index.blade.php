@@ -28,7 +28,7 @@
 <!-- end page title -->
 <div i class="container-fluid">
 @if($cbtTests->isEmpty())
-    <p class="bg-success p-4 " style="color:red; font-size:18px">No CBT tests available at the moment</p>
+    <p class="bg-success p-4 " style="color:red; font-size:18px; text-align:center">No CBT tests available at the moment</p>
 @else
     <div class="table-responsive">
         <table class="table table-bordered">

@@ -19,7 +19,25 @@ class StudentController extends Controller
 {
     public function AddStudent(){
         $classes = classes::all();
-        return view('backend.student.add_student_view', compact('classes'));
+
+        //AUTO STUDENT ID GENERATO
+            $year = date('y'); // e.g. 25 for 2025
+            // Get last roll_id for this year
+                $lastStudent = Student::where('roll_id', 'like', "AGM/$year/%")
+                          ->orderBy('id', 'desc')
+                          ->first();
+          
+               if ($lastStudent) {
+                   $lastSeq = (int) substr($lastStudent->roll_id, strrpos($lastStudent->roll_id, '/') + 1);
+                   $nextSeq = $lastSeq + 1;
+               } else {
+                   $nextSeq = 1;
+               }
+
+               $nextRollId = "AGM/$year/" . str_pad($nextSeq, 4, '0', STR_PAD_LEFT);
+
+
+        return view('backend.student.add_student_view', compact('classes', 'nextRollId'));
     }//end method
 
 
@@ -37,29 +55,7 @@ public function StoreStudent(Request $request)
         'dob' => 'required|date',
         'gender' => 'required',
         'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
-
-    
-
-
-    
-
-    // To disallow Duplication of Email
-
-    $AlreadyEmail = User::where('email', $request->email)->first();
-    if($AlreadyEmail){
-
-             $notification = array(
-            'message' => ' Email Already exist',
-            'alert-type' => 'info'
-        );
-
-        //redirect back to same page
-
-  return redirect()->back()->with($notification);
-        
-
-    }  */
+    ]);  */
 
 
 
@@ -79,6 +75,26 @@ public function StoreStudent(Request $request)
         
 
     }
+
+
+          $year = date('y'); // e.g. 25 for 2025
+
+           // Get last roll_id for this year
+           $lastStudent = Student::where('roll_id', 'like', "AGM/$year/%")
+                                 ->orderBy('id', 'desc')
+                                 ->first();
+           
+           if ($lastStudent) {
+               // Extract the sequence number (after last slash)
+               $lastSeq = (int) substr($lastStudent->roll_id, strrpos($lastStudent->roll_id, '/') + 1);
+               $nextSeq = $lastSeq + 1;
+           } else {
+               $nextSeq = 1; // First student of the year
+           }
+           
+           $roll_id = "AGM/$year/" . str_pad($nextSeq, 4, '0', STR_PAD_LEFT);
+
+
 
 
     // To disallow Duplication of Email
@@ -133,7 +149,7 @@ public function StoreStudent(Request $request)
     if ($user->role == 3) {
         $student = $user->student()->create([
             'name' => $request->full_name,
-            'roll_id' => $request->roll_id,
+            'roll_id' => $roll_id, // ✅ auto-generated
             'dob' => $request->dob,
             'gender' => $request->gender,
             'parent_name' => $request->parent_name,
@@ -188,10 +204,12 @@ public function StoreStudent(Request $request)
 
 
 
-     public function ManageStudent(){
-        $students = student::all();
-        return view('backend.student.manage_student', compact('students'));
-    }//end method
+public function ManageStudent()
+{
+    $students = student::orderBy('id', 'desc')->get();
+    return view('backend.student.manage_student', compact('students'));
+}
+
 
     public function EditStudent($id){
         $students= student::find($id);
@@ -372,7 +390,7 @@ public function StoreStudentClassSubject(Request $request)
 public function ManageAssignStudentClassSubject(){
 
     $manageAssigns = AssignClassSubjectStudent::with(['student', 'subject', 'class'])
-    ->orderBy('created_at')
+    ->orderBy('id', 'desc')
     ->get();
 
 

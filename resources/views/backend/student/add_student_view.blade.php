@@ -26,6 +26,10 @@
         <div class="card">
             <div class="card-body">
 
+            <div class="alert alert-info">
+                <strong>Generated Student ID:</strong> {{ $nextRollId }}
+             </div>
+
                 <h4 class="card-title">Add - Student </h4>
               
                 <form action="{{route('store.student')}}" method="post"  enctype="multipart/form-data">
@@ -47,14 +51,15 @@
         
 
                 <div class="row mb-3">
-                    <label for="example-text-input" class="col-sm-2 col-form-label">Student Id</label>
+                    <label for="example-text-input" class="col-sm-2 col-form-label">Student ID</label>
                     <div class="col-sm-10">
-                        <input class="form-control" required name="roll_id"  type="text"  value="AGM/25/">
-                     
+                        <input class="form-control" readonly name="roll_id"  type="text"  id="roll_id" value="{{ $nextRollId }}">
+                        <small class="text-muted">This ID is generated automatically.</small>
                     </div>
                    
                 </div>
                 <!-- end row -->
+
 
 
                 <div class="row mb-3">
