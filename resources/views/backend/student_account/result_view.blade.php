@@ -1,5 +1,11 @@
 @extends('backend.student_account.student_dashboard')
 @section('student')
+
+@php
+    use App\Models\SchoolSetting;
+    $schoolSetting = SchoolSetting::first();
+@endphp
+
 <style>
 
 table.deep-border tbody td,
@@ -281,9 +287,11 @@ table.deep-border tbody td,
 
 
        {{-- Table Footer  SCHOOL STAMP --}}
-       <td style="width:20%; padding:4px; text-align:center;">
-            <img src="{{asset('uploads/school_stamp/stamp.jpg')}}"
-             alt="School Stamp" style="width:80px; height:auto;">
+       <td style="width:20%; padding:4px; text-align:center;"> 
+           @if(!empty($schoolSetting->stamp))
+           <img src="{{ asset('uploads/stamp_images/'.$schoolSetting->stamp) }}" 
+           alt="School Stamp" width="120" style="width:80px; height:auto;">
+           @endif
         </td>
         {{-- END Table Footer  SCHOOL STAMP --}}
       </tr>

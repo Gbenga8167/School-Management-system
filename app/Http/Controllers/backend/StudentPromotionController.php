@@ -39,6 +39,7 @@ class StudentPromotionController extends Controller
             ->where('class_id', $class_id)
             ->where('term', $currentTerm->name)
             ->where('session', $currentSession->name)
+            ->orderBy('id', 'desc')
             ->get()
             ->pluck('student')
             ->unique('id');

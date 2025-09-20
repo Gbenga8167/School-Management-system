@@ -11,6 +11,7 @@ class SchoolSetting extends Model
         'address',
         'motto',
         'logo',
+        'stamp',
     		
     ];
 }

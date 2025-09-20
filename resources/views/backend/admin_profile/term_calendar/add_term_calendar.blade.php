@@ -44,9 +44,9 @@
                   @endif
                     
                 <div class="row mb-3">
-                    <label for="example-text-input" class="col-sm-2 col-form-label" style="font-size:15px">Session</label>
+                    <label for="example-text-input" class="col-sm-2 col-form-label" style="font-size:15px">Current Session</label>
                     <div class="col-sm-10">
-                    <input type="text" name="session" value="{{old('session', $record->session ?? '')}}" class="form-control" required placeholder="Enter Academic Session">
+                    <input type="text" name="session" value="{{old('session', $record->session ?? '')}}" class="form-control" required placeholder="Enter Current Academic Session">
                     </div>
                    
                 </div> 
@@ -55,13 +55,13 @@
 
 
                 <div class="row mb-3">
-                    <label for="example-text-input" class="col-sm-2 col-form-label" style="font-size:15px">Term</label>
+                    <label for="example-text-input" class="col-sm-2 col-form-label" style="font-size:15px">Current Term</label>
                     <div class="col-sm-10">
                     <select  name="term" required class="form-select" aria-label="Default select example">
                        
-                        <option  value="">-- Select Term --</option>
+                        <option  value="">-- Enter Current Term --</option>
                         <option value="first_term" {{(old('term', $record->term ?? '') == 'first_term') ? 'selected' : '' }}>First Term</option>
-                        <option value="second_term" {{(old('term', $record->term ?? '') == 'second_term') ? 'selected' : '' }}>Second Term</option>
+                        <option value="Second Team" {{(old('term', $record->term ?? '') == 'Second Team') ? 'selected' : '' }}>Second Team</option>
                         <option value="third_term"  {{(old('term', $record->term ?? '') == 'third_term') ? 'selected' : '' }}>Third Term</option>                         
                     </select>
                     </div>

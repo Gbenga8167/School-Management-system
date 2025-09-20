@@ -81,7 +81,7 @@
                                 <a class="dropdown-item" href="{{route('admin.profile')}}"><i class="ri-user-line align-middle me-1"></i> Profile</a>
 
 
-                               <!-- <a class="dropdown-item" href="{{route('admin.password.change')}}"><i class="ri-user-line align-middle me-1"></i> Password Change</a> -->
+                               <a class="dropdown-item" href="{{route('admin.password.change')}}"><i class="ri-user-line align-middle me-1"></i> Password Change</a>
                             
                             
                                 

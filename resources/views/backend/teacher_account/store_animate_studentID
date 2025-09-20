@@ -30,3 +30,47 @@
     </div>
 </div>
                             </div>
+
+
+
+
+                            /Student ID Auto generation
+
+                            $currentSession = AcademicSession::where('is_current', true)->first();
+$sessionCode = str_replace('/', '-', $currentSession->name); 
+// e.g. "2024/2025" → "24-25"
+
+// Get last student for this session
+$lastStudent = Student::where('roll_id', 'like', "AGM/$sessionCode/%")
+                      ->orderBy('id', 'desc')
+                      ->first();
+
+if ($lastStudent) {
+    $lastSeq = (int) substr($lastStudent->roll_id, strrpos($lastStudent->roll_id, '/') + 1);
+    $nextSeq = $lastSeq + 1;
+} else {
+    $nextSeq = 1;
+}
+
+$roll_id = "AGM/$sessionCode/" . str_pad($nextSeq, 4, '0', STR_PAD_LEFT);
+
+
+
+<!-- Look -->
+
+✅ Example:
+
+AGM/24-25/0001
+
+AGM/24-25/0002
+
+AGM/24-25/0003
+
+👉 This ties IDs to the school’s academic year, not the calendar year.
+
+⚖️ Difference at a glance:
+
+Global Year → Simple, always correct, never depends on admin input.
+
+Academic Session → More professional if your school really identifies students by session.
+

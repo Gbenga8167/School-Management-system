@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('role')->default(3)->comment('1:Admin, 2:Teacher, 3: Student');
-            $table->string('user_name')->unique();;
+            $table->string('user_name')->unique();
             $table->string('password');
-            $table->string('photo')->nullable;
+            $table->string('photo')->nullable();
             $table->rememberToken();
             $table->timestamps();
             

@@ -332,7 +332,8 @@ public function FetchSubjects(Request $request)
 public function FetchStudents(Request $request)
 {
     $class_id = $request->class_id;
-    $students = student::where('class_id', $class_id)->get();
+    $students = student::where('class_id', $class_id)
+    ->orderBy('id', 'desc')->get();
 
     $student_data = [];
     $student_data[] = '<input type="checkbox" id="select_all_students"> <label><strong>Select All Students</strong></label><br>';

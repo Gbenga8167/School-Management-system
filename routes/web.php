@@ -14,6 +14,7 @@ use App\Http\Controllers\backend\ClearanceController;
 use App\Http\Controllers\backend\ReportCardController;
 use App\Http\Controllers\backend\AdminResultController;
 use App\Http\Controllers\backend\TermCalendarController;
+use App\Http\Controllers\backend\SchoolSettingController;
 use App\Http\Controllers\backend\PrincipalCommentController;
 use App\Http\Controllers\backend\StudentPromotionController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -276,6 +277,8 @@ Route::get('/teacher/dashboard', function () {
     
 });
 
+
+
 // Admin Manage Student Promotion Route
 // =====================
 // Promotion Routes
@@ -301,7 +304,7 @@ Route::post('/promotion/update/{id}', 'updatePromotion')->name('promotion.update
 
 
 
-//TEACHERS ALL ROUTE
+    //TEACHERS ALL ROUTE
     Route::controller(TeacherController::class)->group(function(){
     Route::get('add/teacher','AddTeacher')->name('add.teacher');
     Route::post('store/teacher','StoreTeacher')->name('store.teacher');
@@ -341,6 +344,14 @@ Route::post('/promotion/update/{id}', 'updatePromotion')->name('promotion.update
     
   
 });
+
+
+
+    Route::controller(SchoolSettingController::class)->group(function(){
+    Route::get('/school-settings', 'index')->name('school.settings');
+    Route::post('/school-settings/store', 'store')->name('school.settings.store');
+
+    });
 
 
 //Academic Calender NEXT TERM BEGINS 

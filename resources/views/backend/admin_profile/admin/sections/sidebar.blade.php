@@ -78,8 +78,8 @@ $adminData = App\Models\User::findOrFail(Auth::user()->id);
                 <ul class="sub-menu" aria-expanded="false">
                     <li><a href="{{route('add.student')}}">Add Students</a></li>
                     <li><a href="{{route('manage.student')}}">Manage Students</a></li>
-                    <li><a href="{{route('assign.student.class.subject')}}">Assign Student Subject & Class</a></li>
-                    <li><a href="{{route('manage.assign.student.class.subject')}}">Manage Assigned Student Subject & Class</a></li>
+                    <li><a href="{{route('assign.student.class.subject')}}">Assign Student to Class & Subject</a></li>
+                    <li><a href="{{route('manage.assign.student.class.subject')}}">Manage Assigned Student Class & Subject</a></li>
                   
                 
                 
@@ -97,8 +97,8 @@ $adminData = App\Models\User::findOrFail(Auth::user()->id);
                 <ul class="sub-menu" aria-expanded="false">
                     <li><a href="{{route('add.teacher')}}">Add Teachers</a></li>
                     <li><a href="{{route('manage.teacher')}}">Manage Teachers</a></li>
-                    <li><a href="{{route('assign.teacher.subject')}}">Assign Teacher Subject & Class</a></li>
-                    <li><a href="{{route('manage.assign.subject.teacher')}}">Manage Assign Teacher Subject & Class</a></li>
+                    <li><a href="{{route('assign.teacher.subject')}}">Assign Teacher to Class & Subject</a></li>
+                    <li><a href="{{route('manage.assign.subject.teacher')}}">Manage Assigned Teacher Class & Subject</a></li>
                 </ul>
             </li>
 
@@ -117,6 +117,34 @@ $adminData = App\Models\User::findOrFail(Auth::user()->id);
             </li>
 
 
+
+
+            <li>
+                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                    <i class="ri-profile-line"></i>
+                    <span>Student Promotion</span>
+                </a>
+                <ul class="sub-menu" aria-expanded="false">
+                <li><a href="{{route('promote.student')}}">Promote Student</a></li>
+                 <li><a href="{{route('promotion.manage')}}">Manage student Promotions</a></li>
+                </ul>
+                
+            </li>
+
+
+
+            <li>
+
+                <a href="{{route('principal.comment.form')}}" class="waves-effect">
+                <i class="ri-profile-line"></i>
+               <span>Add Comment</span> 
+            </a>
+            
+                
+            </li>
+
+    
+            
             <li>
                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                     <i class="ri-profile-line"></i>
@@ -129,30 +157,13 @@ $adminData = App\Models\User::findOrFail(Auth::user()->id);
             </li>
 
 
-            <li>
-                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                    <i class="ri-profile-line"></i>
-                    <span>Principal Comment</span>
-                </a>
-                <ul class="sub-menu" aria-expanded="false">
-                <li><a href="{{route('principal.comment.form')}}">Add Comment</a></li>
-                </ul>
-                
-            </li>
-
 
             <li>
-                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                    <i class="ri-profile-line"></i>
-                    <span>Student Promotion</span>
+                 <a href="{{ route('school.settings') }}" class="waves-effect">
+                <i class="ri-settings-3-line"></i>
+                <span>School Settings</span>
                 </a>
-                <ul class="sub-menu" aria-expanded="false">
-                <li><a href="{{route('promote.student')}}">Promote Student</a></li>
-                 <li><a href="{{route('promotion.manage')}}">Manage Promotions</a></li>
-                </ul>
-                
             </li>
-
 
 
         </ul>

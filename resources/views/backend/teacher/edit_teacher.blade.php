@@ -112,13 +112,44 @@
                     <label for="example-text-input" class="col-sm-2 col-form-label">State Of Origin</label>
                     <div class="col-sm-10">
                     <select  name="State_of_origin" required class="form-select" aria-label="Default select example">
-                    <option selected="" value="{{$teachers->state_of_origin}}">{{$teachers->state_of_origin}}</option>
-                    <option value="Ekiti">Ekiti</option>  
-                    <option value="Osun">Osun</option>
-                    <option value="Oyo">Oyo</option>
-                    <option value="Lagos">Lagos</option>
-                    <option value="Delta">Delta</option>
-                    <option value="Ondo">Ondo</option>                             
+                    <option value="">-- Select State --</option>
+            <option value="Abia" {{ $teachers->state_of_origin == 'Abia' ? 'selected' : '' }}>Abia</option>
+            <option value="Adamawa" {{ $teachers->state_of_origin == 'Adamawa' ? 'selected' : '' }}>Adamawa</option>
+            <option value="Akwa Ibom" {{ $teachers->state_of_origin == 'Akwa Ibom' ? 'selected' : '' }}>Akwa Ibom</option>
+            <option value="Anambra" {{ $teachers->state_of_origin == 'Anambra' ? 'selected' : '' }}>Anambra</option>
+            <option value="Bauchi" {{ $teachers->state_of_origin == 'Bauchi' ? 'selected' : '' }}>Bauchi</option>
+            <option value="Bayelsa" {{ $teachers->state_of_origin == 'Bayelsa' ? 'selected' : '' }}>Bayelsa</option>
+            <option value="Benue" {{ $teachers->state_of_origin == 'Benue' ? 'selected' : '' }}>Benue</option>
+            <option value="Borno" {{ $teachers->state_of_origin == 'Borno' ? 'selected' : '' }}>Borno</option>
+            <option value="Cross River" {{ $teachers->state_of_origin == 'Cross River' ? 'selected' : '' }}>Cross River</option>
+            <option value="Delta" {{ $teachers->state_of_origin == 'Delta' ? 'selected' : '' }}>Delta</option>
+            <option value="Ebonyi" {{ $teachers->state_of_origin == 'Ebonyi' ? 'selected' : '' }}>Ebonyi</option>
+            <option value="Edo" {{ $teachers->state_of_origin == 'Edo' ? 'selected' : '' }}>Edo</option>
+            <option value="Ekiti" {{ $teachers->state_of_origin == 'Ekiti' ? 'selected' : '' }}>Ekiti</option>
+            <option value="Enugu" {{ $teachers->state_of_origin == 'Enugu' ? 'selected' : '' }}>Enugu</option>
+            <option value="Gombe" {{ $teachers->state_of_origin == 'Gombe' ? 'selected' : '' }}>Gombe</option>
+            <option value="Imo" {{ $teachers->state_of_origin == 'Imo' ? 'selected' : '' }}>Imo</option>
+            <option value="Jigawa" {{ $teachers->state_of_origin == 'Jigawa' ? 'selected' : '' }}>Jigawa</option>
+            <option value="Kaduna" {{ $teachers->state_of_origin == 'Kaduna' ? 'selected' : '' }}>Kaduna</option>
+            <option value="Kano" {{ $teachers->state_of_origin == 'Kano' ? 'selected' : '' }}>Kano</option>
+            <option value="Katsina" {{ $teachers->state_of_origin == 'Katsina' ? 'selected' : '' }}>Katsina</option>
+            <option value="Kebbi" {{ $teachers->state_of_origin == 'Kebbi' ? 'selected' : '' }}>Kebbi</option>
+            <option value="Kogi" {{ $teachers->state_of_origin == 'Kogi' ? 'selected' : '' }}>Kogi</option>
+            <option value="Kwara" {{ $teachers->state_of_origin == 'Kwara' ? 'selected' : '' }}>Kwara</option>
+            <option value="Lagos" {{ $teachers->state_of_origin == 'Lagos' ? 'selected' : '' }}>Lagos</option>
+            <option value="Nasarawa" {{ $teachers->state_of_origin == 'Nasarawa' ? 'selected' : '' }}>Nasarawa</option>
+            <option value="Niger" {{ $teachers->state_of_origin == 'Niger' ? 'selected' : '' }}>Niger</option>
+            <option value="Ogun" {{ $teachers->state_of_origin == 'Ogun' ? 'selected' : '' }}>Ogun</option>
+            <option value="Ondo" {{ $teachers->state_of_origin == 'Ondo' ? 'selected' : '' }}>Ondo</option>
+            <option value="Osun" {{ $teachers->state_of_origin == 'Osun' ? 'selected' : '' }}>Osun</option>
+            <option value="Oyo" {{ $teachers->state_of_origin == 'Oyo' ? 'selected' : '' }}>Oyo</option>
+            <option value="Plateau" {{ $teachers->state_of_origin == 'Plateau' ? 'selected' : '' }}>Plateau</option>
+            <option value="Rivers" {{ $teachers->state_of_origin == 'Rivers' ? 'selected' : '' }}>Rivers</option>
+            <option value="Sokoto" {{ $teachers->state_of_origin == 'Sokoto' ? 'selected' : '' }}>Sokoto</option>
+            <option value="Taraba" {{ $teachers->state_of_origin == 'Taraba' ? 'selected' : '' }}>Taraba</option>
+            <option value="Yobe" {{ $teachers->state_of_origin == 'Yobe' ? 'selected' : '' }}>Yobe</option>
+            <option value="Zamfara" {{ $teachers->state_of_origin == 'Zamfara' ? 'selected' : '' }}>Zamfara</option>
+            <option value="FCT" {{ $teachers->state_of_origin == 'FCT' ? 'selected' : '' }}>Federal Capital Territory (Abuja)</option>                           
                      </select>
                     </div>
                    
