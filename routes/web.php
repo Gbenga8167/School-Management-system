@@ -383,17 +383,22 @@ Route::post('/promotion/update/{id}', 'updatePromotion')->name('promotion.update
 
 // Railway cache 
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Artisan;
 
-Route::get('/fix-cache', function () {
+Route::get('/force-fix', function () {
+    // Force Laravel to use file cache
+    Config::set('cache.default', 'file');
+    Config::set('session.driver', 'file');
+
+    // Clear caches
     Artisan::call('config:clear');
     Artisan::call('cache:clear');
     Artisan::call('route:clear');
     Artisan::call('view:clear');
-    return '✅ All caches cleared and config reset!';
+
+    return '✅ Forced config fixed. Now using FILE driver for cache/session.';
 });
-
-
 
 
 
