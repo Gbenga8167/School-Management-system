@@ -1,2 +1,1 @@
-
-web: npx serve -s public -l $PORT
+web: php -S 0.0.0.0:$PORT -t public
