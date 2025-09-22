@@ -381,6 +381,21 @@ Route::post('/promotion/update/{id}', 'updatePromotion')->name('promotion.update
 });// End Admin Route
 
 
+// Railway cache 
+
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/fix-cache', function () {
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+    return '✅ All caches cleared and config reset!';
+});
+
+
+
+
 
 
     //THIS IS THE DEFAULT ROUTE
