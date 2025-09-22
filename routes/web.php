@@ -23,6 +23,19 @@ use App\Http\Controllers\backend\StudentAccount\StudentAccountController;
 use App\Http\Controllers\TeacherBackendController\TeacherAccountController;
 use App\Http\Controllers\TeacherBackendController\TeacherPsychomotorController;
 
+
+
+Route::get('/fix-app-url', function () {
+    \Artisan::call('config:clear');
+    \Artisan::call('cache:clear');
+    \Artisan::call('view:clear');
+    return '✅ APP_URL cache cleared';
+});
+
+
+
+
+
 // Show login page if guest
 Route::get('/', [AuthenticatedSessionController::class, 'create'])
     ->middleware('guest')
@@ -379,26 +392,6 @@ Route::post('/promotion/update/{id}', 'updatePromotion')->name('promotion.update
 });
     
 });// End Admin Route
-
-
-// Railway cache 
-
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Artisan;
-
-Route::get('/force-fix', function () {
-    // Force Laravel to use file cache
-    Config::set('cache.default', 'file');
-    Config::set('session.driver', 'file');
-
-    // Clear caches
-    Artisan::call('config:clear');
-    Artisan::call('cache:clear');
-    Artisan::call('route:clear');
-    Artisan::call('view:clear');
-
-    return '✅ Forced config fixed. Now using FILE driver for cache/session.';
-});
 
 
 
