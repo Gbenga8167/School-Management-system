@@ -390,14 +390,4 @@ Route::post('/promotion/update/{id}', 'updatePromotion')->name('promotion.update
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//railway app clear cache
-use Illuminate\Support\Facades\Artisan;
-
-Route::get('/clear-cache', function () {
-    Artisan::call('config:clear');
-    Artisan::call('cache:clear');
-    Artisan::call('route:clear');
-    return "✅ Laravel caches cleared!";
-});
-
 require __DIR__.'/auth.php';
