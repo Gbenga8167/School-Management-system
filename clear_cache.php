@@ -1,15 +1,16 @@
 <?php
-// Temporary script to clear Laravel cache on Railway
+// Force clear Laravel caches on Railway
+echo "Clearing Laravel cache...\n";
 
-echo "Clearing config, cache, and routes...\n";
+putenv('CACHE_DRIVER=file');
+putenv('APP_URL=https://school-management-system-production-2fe2.up.railway.app');
 
-exec('php artisan config:clear', $output1);
-exec('php artisan cache:clear', $output2);
-exec('php artisan route:clear', $output3);
+exec('php artisan config:clear', $out1);
+exec('php artisan cache:clear', $out2);
+exec('php artisan route:clear', $out3);
 
-echo implode("\n", $output1);
-echo "\n";
-echo implode("\n", $output2);
-echo "\n";
-echo implode("\n", $output3);
-echo "\nDone!";
+echo implode("\n", $out1) . "\n";
+echo implode("\n", $out2) . "\n";
+echo implode("\n", $out3) . "\n";
+
+echo "✅ Done!\n";
