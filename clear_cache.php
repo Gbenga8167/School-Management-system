@@ -1,16 +1,14 @@
 <?php
-// Force clear Laravel caches on Railway
-echo "Clearing Laravel cache...\n";
 
-putenv('CACHE_DRIVER=file');
-putenv('APP_URL=https://school-management-system-production-2fe2.up.railway.app');
+require __DIR__.'/vendor/autoload.php';
 
-exec('php artisan config:clear', $out1);
-exec('php artisan cache:clear', $out2);
-exec('php artisan route:clear', $out3);
+$app = require_once __DIR__.'/bootstrap/app.php';
 
-echo implode("\n", $out1) . "\n";
-echo implode("\n", $out2) . "\n";
-echo implode("\n", $out3) . "\n";
+$kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
 
-echo "✅ Done!\n";
+$kernel->call('config:clear');
+$kernel->call('cache:clear');
+$kernel->call('route:clear');
+$kernel->call('view:clear');
+
+echo "✅ All cache cleared, now using CACHE_DRIVER=file";
