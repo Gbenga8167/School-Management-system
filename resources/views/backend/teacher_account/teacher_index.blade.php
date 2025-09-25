@@ -8,13 +8,13 @@
 use App\Models\AssignedClassSubjectTeacher;
 use App\Models\AssignClassSubjectStudent;
 
-$teacher = \App\Models\teacher::where('user_id', Auth::id())->first();
+$teacher = \App\Models\Teacher::where('user_id', Auth::id())->first();
  
 // 1) Current Term & Session
 $currentTerm = DB::table('terms')->where('is_current', 1)->value('name');
 $currentSession = DB::table('academic_sessions')->where('is_current', 1)->value('name');
 
-$teacherId = \App\Models\teacher::where('user_id', Auth::id())->first();
+$teacherId = \App\Models\Teacher::where('user_id', Auth::id())->first();
 
 // Step 1: Get all class IDs assigned to this teacher
 $teacherClassIds = AssignedClassSubjectTeacher::where('teacher_id', $teacherId->id)
