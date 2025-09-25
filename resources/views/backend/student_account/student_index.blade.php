@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use App\Models\AssignClassSubjectStudent;
 use App\Models\CBTTest;
 use App\Models\Result;
-use App\Models\Student;
 
 // 1. Logged-in student
 $student = \App\Models\Student::where('user_id', Auth::id())->first();
