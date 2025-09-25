@@ -9,7 +9,7 @@ use App\Models\CBTTest;
 use App\Models\Result;
 
 // 1. Logged-in student
-$student = \App\Models\student::where('user_id', Auth::id())->first();
+$student = \App\Models\Student::where('user_id', Auth::id())->first();
 
 // 2. Current term & session
 $currentTerm = DB::table('terms')->where('is_current', 1)->value('name');
