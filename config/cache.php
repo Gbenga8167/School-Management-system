@@ -15,8 +15,14 @@ return [
     |
     */
 
-    'default' => env('CACHE_STORE', 'database'),
+    /*my changes for railway*/
+   /* 'default' => env('CACHE_STORE', 'database'), */
 
+    'default' => env('CACHE_DRIVER', 'file'),
+
+    
+    
+    
     /*
     |--------------------------------------------------------------------------
     | Cache Stores

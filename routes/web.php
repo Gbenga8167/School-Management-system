@@ -23,6 +23,19 @@ use App\Http\Controllers\backend\StudentAccount\StudentAccountController;
 use App\Http\Controllers\TeacherBackendController\TeacherAccountController;
 use App\Http\Controllers\TeacherBackendController\TeacherPsychomotorController;
 
+
+
+Route::get('/fix-app-url', function () {
+    \Artisan::call('config:clear');
+    \Artisan::call('cache:clear');
+    \Artisan::call('view:clear');
+    return '✅ APP_URL cache cleared';
+});
+
+
+
+
+
 // Show login page if guest
 Route::get('/', [AuthenticatedSessionController::class, 'create'])
     ->middleware('guest')
