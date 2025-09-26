@@ -9,14 +9,15 @@
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
         <meta content="Themesdesign" name="author" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="{{asset('../BackendTem/assets/images/favicon.ico')}}">
+        <link rel="shortcut icon" href="{{asset('BackendTem/assets/images/favicon.ico')}}">
 
         <!-- Bootstrap Css -->
-        <link href="{{asset('../BackendTem/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap Css -->
+        <link href="{{asset('BackendTem/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
         <!-- Icons Css -->
-        <link href="{{asset('../BackendTem/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('BackendTem/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
-        <link href="{{asset('../BackendTem/assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+        <link href="{{asset('BackendTem/assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
 
     </head>
 
@@ -94,13 +95,13 @@
         <!-- end -->
 
         <!-- JAVASCRIPT -->
-        <script src="{{asset('../BackendTem/assets/libs/jquery/jquery.min.js')}}"></script>
-        <script src="{{asset('../BackendTem/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-        <script src="{{asset('../BackendTem/assets/libs/metismenu/metisMenu.min.js')}}"></script>
-        <script src="{{asset('../BackendTem/assets/libs/simplebar/simplebar.min.js')}}"></script>
-        <script src="{{asset('../BackendTem/assets/libs/node-waves/waves.min.js')}}"></script>
+        <script src="{{asset('BackendTem/assets/libs/jquery/jquery.min.js')}}"></script>
+        <script src="{{asset('BackendTem/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <script src="{{asset('BackendTem/assets/libs/metismenu/metisMenu.min.js')}}"></script>
+        <script src="{{asset('BackendTem/assets/libs/simplebar/simplebar.min.js')}}"></script>
+        <script src="{{asset('BackendTem/assets/libs/node-waves/waves.min.js')}}"></script>
 
-        <script src="{{asset('../BackendTem/assets/js/app.js')}}"></script>
+        <script src="{{asset('BackendTem/assets/js/app.js')}}"></script>
 
     </body>
 </html>

@@ -129,7 +129,7 @@ class TeacherController extends Controller
 
 
      public function ManageTeacher(){
-        $teachers = teacher::all();
+        $teachers = teacher::orderBy('id', 'desc')->get();
         return view('backend.teacher.manage_teacher', compact('teachers'));
     }//end method
 
@@ -321,7 +321,7 @@ public function FetchStudent(Request $request)
 public function ViewAssignSubjectTeacher(){
 
     $manageAssigns = AssignedClassSubjectTeacher::with(['teacher', 'subject', 'class'])
-    ->orderBy('teacher_id')
+    ->orderBy('id', 'desc')
     ->get();
 
 

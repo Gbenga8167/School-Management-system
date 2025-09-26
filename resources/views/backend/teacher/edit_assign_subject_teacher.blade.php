@@ -86,10 +86,11 @@
                     <label for="example-text-input" class="col-sm-2 col-form-label">Term</label>
                     <div class="col-sm-10">
                     <select  name="term" class="form-select" aria-label="Default select example" required>
-                             
-                    <option {{$AssignSubjectTeacher->term == 'first_term'? 'selected' : ''}}>First Term</option>
-                    <option {{$AssignSubjectTeacher->term == 'second_term'? 'selected' : ''}}>Second Term</option>
-                    <option {{$AssignSubjectTeacher->term == 'third_term'? 'selected' : ''}}>Third Term</option>
+                     
+                    <option value="">-- Select Term --</option>
+                    <option value="First Term" {{$AssignSubjectTeacher->term == 'First Term'? 'selected' : ''}}>First Term</option>
+                    <option value="Second Term" {{$AssignSubjectTeacher->term == 'Second Term'? 'selected' : ''}}>Second Term</option>
+                    <option value="Third Term" {{$AssignSubjectTeacher->term == 'Third Term'? 'selected' : ''}}>Third Term</option>
                                                     
                                                     
                     </select>
@@ -113,7 +114,7 @@
 
                 <!-- end row -->
 
-                <button type="submit" class="btn btn-primary waves-effect waves-light">Update Assigned Subject Teacher & Class</button>
+                <button type="submit" class="btn btn-primary waves-effect waves-light">Update Subject Teacher & Class</button>
                 
                 </form>
                
