@@ -12,10 +12,7 @@
         <link rel="shortcut icon" href="{{asset('BackendTem/assets/images/favicon.ico')}}">
 
         <!-- Bootstrap Css -->
-<<<<<<< HEAD
-        <!-- Bootstrap Css -->
-=======
->>>>>>> efe155790325f749c12d9f576dd456c927f4cab1
+        
         <link href="{{asset('BackendTem/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
         <!-- Icons Css -->
         <link href="{{asset('BackendTem/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
