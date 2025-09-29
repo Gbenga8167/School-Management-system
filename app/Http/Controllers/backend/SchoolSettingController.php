@@ -21,7 +21,7 @@ class SchoolSettingController extends Controller
     {
         $request->validate([
             'name'   => 'required|string|max:255',
-            //'address'=> 'nullable|string|max:255',
+            'address'=> 'nullable|string|max:255',
             'motto'  => 'nullable|string|max:255',
             'logo'   => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'stamp'  => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
@@ -30,7 +30,7 @@ class SchoolSettingController extends Controller
         $setting = SchoolSetting::first() ?? new SchoolSetting();
     
         $setting->name = $request->name;
-        //$setting->address = $request->address;
+        $setting->address = $request->address;
         $setting->motto = $request->motto;
     
         // Handle logo upload
@@ -72,7 +72,7 @@ class SchoolSettingController extends Controller
 
     public function SessionIndex()
     {
-        $sessions = academic_session::orderBy('id', 'desc')->get();
+        $sessions = academic_session::orderBy('id', 'desc')->paginate(2);
         $terms = terms::orderBy('id', 'asc')->get();
 
         return view('backend.admin_profile.school_setting.term_session_create', compact('sessions', 'terms'));
