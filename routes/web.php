@@ -364,6 +364,17 @@ Route::post('/promotion/update/{id}', 'updatePromotion')->name('promotion.update
     Route::get('/school-settings', 'index')->name('school.settings');
     Route::post('/school-settings/store', 'store')->name('school.settings.store');
 
+
+    //Academic Session and Term Settings
+    Route::get('/academic-settings', 'SessionIndex')->name('session.create');
+    Route::post('/academic-settings/session',  'storeSession')->name('academic.session.store');
+    Route::post('/academic-settings/session/{id}/toggle', 'toggleSession')->name('academic.session.toggle');
+    Route::post('/academic-settings/term/{id}/toggle', 'toggleTerm')->name('academic.term.toggle');
+   // Academic Session CRUD
+    Route::get('/academic-sessions/{id}/edit', 'edit')->name('academic.session.edit');
+    Route::put('/academic-sessions/{id}', 'update')->name('academic.session.update');
+    Route::delete('/academic-sessions/{id}', 'destroy')->name('academic.session.destroy');
+
     });
 
 

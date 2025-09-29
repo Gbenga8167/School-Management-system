@@ -152,6 +152,8 @@ $adminData = App\Models\User::findOrFail(Auth::user()->id);
                 </a>
                 <ul class="sub-menu" aria-expanded="false">
                 <li><a href="{{route('term.calendar')}}">Next Term Begins</a></li>
+                <li><a href="{{route('session.create')}}">School Year Setup</a></li>
+
                 </ul>
                 
             </li>

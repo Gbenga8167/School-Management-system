@@ -10,6 +10,9 @@
         <meta content="Themesdesign" name="author" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- App favicon -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- App favicon -->
         <link rel="shortcut icon" href="{{asset('BackendTem/assets/images/favicon.ico')}}">
 
         <!-- jquery.vectormap css -->
