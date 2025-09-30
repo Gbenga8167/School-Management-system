@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Models\classes;
+use App\Models\Classes;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,7 +23,7 @@ class ClassesController extends Controller
         ]);
 
 //checking if class already exist in the database
-        $AlreadyExist = classes::where('class_name', $request->class_name)->first();
+        $AlreadyExist = Classes::where('class_name', $request->class_name)->first();
         if( $AlreadyExist){
             $notification = array(
                 'message' => ' Class Already exist',
@@ -36,7 +36,7 @@ class ClassesController extends Controller
 
         }else{
              //first method of inserting into database
-             $class = new classes();
+             $class = new Classes();
              $class->class_name = $request->class_name;
              $class->status = $request->status;
              $class->save();
@@ -59,13 +59,13 @@ class ClassesController extends Controller
 
 
     public function ManageClasses(){
-        $classes = classes::all();
+        $classes = Classes::all();
         return view('backend.admin_profile.admin.classes.manage_clases', compact('classes'));
     }// end method
 
     
     public function EditClass($id){
-        $class = classes::Find($id);
+        $class = Classes::Find($id);
         return view('backend.admin_profile.admin.classes.edit_class', compact('class'));
 
     }// end method
@@ -80,7 +80,7 @@ class ClassesController extends Controller
       ]);
 
       $id = $request->id;
-      classes::Find( $id )->update([
+      Classes::Find( $id )->update([
           'class_name' => $request->class_name,
           'status' => $request->status
         
@@ -102,7 +102,7 @@ class ClassesController extends Controller
 
 public function DeleteClass($id){
 
-    classes::Find($id)->delete();
+    Classes::Find($id)->delete();
 
     $notification = array(
         'message' => 'Student Class Deleted Succesfully',
@@ -116,7 +116,7 @@ public function DeleteClass($id){
    //assigned class teacher view
    public function AssignedClassTeacher(){
 
-    $classes = classes::all();
+    $classes = Classes::all();
     $teachers = Teacher::all();
     return view('backend.admin_profile.admin.classes.assigned_class_teacher', compact('classes', 'teachers'));
 }//end method
@@ -133,7 +133,7 @@ public function StoreAssignedClassTeacher(Request $request){
         'teacher_id' => 'required|exists:teachers,id',
     ]);
 
-    $class = classes:: findOrFail($request->class_id);
+    $class = Classes:: findOrFail($request->class_id);
 
     //chech if the class already has a class teacher
 
@@ -162,13 +162,13 @@ public function StoreAssignedClassTeacher(Request $request){
 //manage assigned class teacher
 public function ManageAssignedClassTeacher(){
 
-    $assignedClasses = classes::with('classTeacher')->whereNotNull('class_teacher_id')->get();
+    $assignedClasses = Classes::with('classTeacher')->whereNotNull('class_teacher_id')->get();
     return view('backend.admin_profile.admin.classes.manage_assigned_class_teacher', compact('assignedClasses'));
 }//end method
 
 
 //remove assigned class teacher
-public function RemoveAssignedClassTeacher(classes $class){
+public function RemoveAssignedClassTeacher(Classes $class){
 
     $class->class_teacher_id = null;
 

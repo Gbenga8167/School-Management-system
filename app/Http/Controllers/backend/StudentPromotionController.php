@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Models\terms;
-use App\Models\classes;
+use App\Models\Classes;
 use Illuminate\Http\Request;
 use App\Models\academic_session;
 use App\Http\Controllers\Controller;
@@ -15,7 +15,7 @@ class StudentPromotionController extends Controller
    // Show promotion form
     public function index()
     {
-        $classes = classes::all();
+        $classes = Classes::all();
         $currentTerm = terms::where('is_current', 1)->first();
         $currentSession = academic_session::where('is_current', 1)->first();
 
@@ -61,7 +61,7 @@ class StudentPromotionController extends Controller
     public function fetchSubjects(Request $request)
     {
         $class_id = $request->class_id;
-        $class = classes::with('subjects')->where('id', $class_id)->first();
+        $class = Classes::with('subjects')->where('id', $class_id)->first();
         $class_subjects = $class->subjects;
 
         $subject_data = '';
@@ -144,7 +144,7 @@ public function storePromotion(Request $request)
             ->paginate(20);
 
         // Dropdown data
-        $classes = classes::all();
+        $classes = Classes::all();
         $terms = terms::pluck('name');
         $sessions = academic_session::pluck('name');
 
@@ -192,7 +192,7 @@ public function editPromotion($id)
 {
     $promotion = AssignClassSubjectStudent::with(['student','class','subject'])->findOrFail($id);
 
-    $classes = classes::all();
+    $classes = Classes::all();
     $subjects = $promotion->class ? $promotion->class->subjects : [];
     $terms = terms::pluck('name');
     $sessions = academic_session::pluck('name');

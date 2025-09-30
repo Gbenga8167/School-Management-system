@@ -32,7 +32,7 @@ class Teacher extends Model
     // handle some special task which other subject teacher can not handle 
     
     public function class(){
-        return $this->hasMany(classes::class, 'class_teacher_id');
+        return $this->hasMany(Classes::class, 'class_teacher_id');
     }
 
 
@@ -41,7 +41,7 @@ class Teacher extends Model
     //raltionship for teacher's CBT(A teacher is assigned 
      //to many subject and a subject and class have many teacher)
      public function assignedSubjects(){
-        return $this->belongsToMany(subject::class, 'assigned_class_subject_teachers',
+        return $this->belongsToMany(Subject::class, 'assigned_class_subject_teachers',
          'subject_id', //foreign key on pivot table pointing to subject
           'teacher_id'//foreign key on pivot table pointing to teachers
           );
@@ -52,7 +52,7 @@ class Teacher extends Model
     //raltionship for teacher's CBT(A teacher is assigned 
      //to many subject and a subject and class have many teacher)
      public function assignedClasses(){
-        return $this->belongsToMany(classes::class, 'assigned_class_subject_teachers',
+        return $this->belongsToMany(Classes::class, 'assigned_class_subject_teachers',
          'class_id', //foreign key on pivot table pointing to classes
           'teacher_id'//foreign key on pivot table pointing to teachers
           );

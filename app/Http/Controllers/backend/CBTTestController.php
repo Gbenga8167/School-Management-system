@@ -6,8 +6,8 @@ use App\Models\User;
 use App\Models\terms;
 use App\Models\CBTTest;
 use App\Models\academic_session;
-use App\Models\classes;
-use App\Models\subject;
+use App\Models\Classes;
+use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\CBTQuestion;
 use Illuminate\Http\Request;
@@ -30,12 +30,12 @@ class CBTTestController extends Controller
 
         $teacherId = $teacher->id;
         //only subjects and classes assigned to this teacher
-        $assignedSubject = subject::whereHas('assignedTeachers', function ($query) use ($teacherId){
+        $assignedSubject = Subject::whereHas('assignedTeachers', function ($query) use ($teacherId){
             $query->where('teacher_id', $teacherId); 
         })->get();
 
 
-        $assignedClasses = classes::whereHas('assignedTeachers', function($query) use ($teacherId){
+        $assignedClasses = Classes::whereHas('assignedTeachers', function($query) use ($teacherId){
             $query->where('teacher_id', $teacherId); 
         })->get();
         return view('backend.teacher_account.cbt_test_question.cbt_test_create', compact('assignedSubject', 'assignedClasses'));

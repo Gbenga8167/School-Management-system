@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Models\classes;
-use App\Models\subject;
+use App\Models\Classes;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -25,7 +25,7 @@ class SubjectController extends Controller
         ]);
         //second method of inserting into database
 
-        $AlreadyExist = subject::where('subject_name', $request->subject_name)->first();
+        $AlreadyExist = Subject::where('subject_name', $request->subject_name)->first();
         if($AlreadyExist){
 
                  $notification = array(
@@ -40,7 +40,7 @@ class SubjectController extends Controller
 
         }else{
 
-            subject::create([
+            Subject::create([
                 'subject_name' => $request->subject_name,
                 'status' => $request->status
         
@@ -63,7 +63,7 @@ class SubjectController extends Controller
 
     public function ManageSubject(){
 
-        $subjects = subject::all();
+        $subjects = Subject::all();
         return view('backend.subjects.manage_subject', compact('subjects'));
 
     }// end method
@@ -71,7 +71,7 @@ class SubjectController extends Controller
 
     public function EditSubject($id){
 
-        $subject = subject::find($id);
+        $subject = Subject::find($id);
         return view('backend.subjects.edit_subject', compact('subject'));
 
     }// end method
@@ -86,7 +86,7 @@ class SubjectController extends Controller
         ]);
 
         $id = $request->id;
-        subject::find( $id)->update([
+        Subject::find( $id)->update([
             'subject_name' => $request->subject_name,
             'status' => $request->status
         ]);
@@ -103,7 +103,7 @@ class SubjectController extends Controller
     }//end method
 
     public function DeleteSubject($id){
-        subject::find( $id)->delete();
+        Subject::find( $id)->delete();
 
              $notification = array(
             'message' => ' Subject Deleted Succesfully',
@@ -120,8 +120,8 @@ class SubjectController extends Controller
      // Subject Combination All Method
 
      public function AddSubjectCombination(){
-        $subjects = subject::all();
-        $classes = classes::all();
+        $subjects = Subject::all();
+        $classes = Classes::all();
 
         return view('backend.subjects.add_subject_combination', compact('subjects', 'classes'));
     }//end method
@@ -145,7 +145,7 @@ class SubjectController extends Controller
 
         }else{
 
-            $class = classes::find($request->class_id);
+            $class = Classes::find($request->class_id);
             $subject = $request->subject_ids;
             $class->subjects()->attach($subject);
   

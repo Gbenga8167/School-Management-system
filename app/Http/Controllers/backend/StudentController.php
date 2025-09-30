@@ -5,9 +5,9 @@ namespace App\Http\Controllers\backend;
 use App\Models\User;
 use App\Models\terms;
 use App\Models\academic_session;
-use App\Models\classes;
-use App\Models\student;
-use App\Models\subject;
+use App\Models\Classes;
+use App\Models\Student;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +18,7 @@ use App\Models\AssignClassSubjectStudent;
 class StudentController extends Controller
 {
     public function AddStudent(){
-        $classes = classes::all();
+        $classes = Classes::all();
 
         //AUTO STUDENT ID GENERATO
             $year = date('y'); // e.g. 25 for 2025
@@ -61,7 +61,7 @@ public function StoreStudent(Request $request)
 
          // To disallow multi-User roll-id
 
-    $AlreadyExist = student::where('roll_id', $request->roll_id)->first();
+    $AlreadyExist = Student::where('roll_id', $request->roll_id)->first();
     if($AlreadyExist){
 
              $notification = array(
@@ -206,14 +206,14 @@ public function StoreStudent(Request $request)
 
 public function ManageStudent()
 {
-    $students = student::orderBy('id', 'desc')->get();
+    $students = Student::orderBy('id', 'desc')->get();
     return view('backend.student.manage_student', compact('students'));
 }
 
 
     public function EditStudent($id){
-        $students= student::find($id);
-        $classes = classes::all();
+        $students= Student::find($id);
+        $classes = Classes::all();
         return view('backend.student.edit_student_view', compact('students', 'classes'));
 
 
@@ -222,7 +222,7 @@ public function ManageStudent()
 
     public function UpdateStudent(Request $request){
       $id = $request->id;
-      $student = student::find($id);
+      $student = Student::find($id);
       $student->name = $request->full_name;
        $student->roll_id = $request->roll_id;
        $student->dob = $request->dob;
@@ -276,7 +276,7 @@ public function ManageStudent()
     public function DeleteStudent($id){
         
         
-        $student = student::find($id);
+        $student = Student::find($id);
         @unlink(public_path('uploads/student_photos/'.$student->photo));
         $student->Delete();
 
@@ -300,7 +300,7 @@ public function ManageStudent()
     //ASSIGN STUDENT CLASS SUBJECT
    public function AssignStudentClassSubject()
 {
-    $classes  = classes::all();
+    $classes  = Classes::all();
 
     // Fetch only current term & session set by admin
      // Current term & session
@@ -313,7 +313,7 @@ public function ManageStudent()
 public function FetchSubjects(Request $request)
 {
     $class_id = $request->class_id;
-    $class = classes::with('subjects')->where('id', $class_id)->first();
+    $class = Classes::with('subjects')->where('id', $class_id)->first();
     $class_subjects = $class->subjects;
 
     $subject_data = [];
@@ -332,7 +332,7 @@ public function FetchSubjects(Request $request)
 public function FetchStudents(Request $request)
 {
     $class_id = $request->class_id;
-    $students = student::where('class_id', $class_id)
+    $students = Student::where('class_id', $class_id)
     ->orderBy('id', 'desc')->get();
 
     $student_data = [];
@@ -403,9 +403,9 @@ public function ManageAssignStudentClassSubject(){
 
 public function EditAssignStudentClassSubject($id){
     $AssignSubjectstudent = AssignClassSubjectStudent::findOrFail($id);
-    $students = student::all();
-    $subjects = subject::all();
-    $classes  = classes::all();
+    $students = Student::all();
+    $subjects = Subject::all();
+    $classes  = Classes::all();
 
     return view('backend.student.edit_assign_student_class_subject', compact('AssignSubjectstudent', 'students', 'subjects', 'classes'));
 

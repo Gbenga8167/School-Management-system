@@ -31,12 +31,12 @@ class CBTTest extends Model
 
     //Link to subject
     public function subject(){
-        return $this->belongsTo(subject::class);
+        return $this->belongsTo(Subject::class);
     }
 
     //Link to class
     public function class(){
-        return $this->belongsTo(classes::class);
+        return $this->belongsTo(Classes::class);
     }
 
     

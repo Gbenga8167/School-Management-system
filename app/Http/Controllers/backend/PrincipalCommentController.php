@@ -4,8 +4,8 @@ namespace App\Http\Controllers\backend;
 
 use session;
 use App\Models\terms;
-use App\Models\classes;
-use App\Models\student;
+use App\Models\Classes;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Models\academic_session;
 use App\Models\PsychoAssessment;
@@ -16,7 +16,7 @@ class PrincipalCommentController extends Controller
 {
     public function PrincipalCommentForm(){
 
-        $classes = classes::all();
+        $classes = Classes::all();
         $terms = terms::where('is_current', true)->get();
         $sessions = academic_session::where('is_current', true)->get();
         return view('backend.admin_profile.principal_comments.form', compact('classes', 'terms', 'sessions'));
@@ -32,7 +32,7 @@ class PrincipalCommentController extends Controller
             'session' => 'required',
 
         ]);
-        $classes = classes::all();
+        $classes = Classes::all();
         $terms = terms::where('is_current', true)->get();
         $sessions = academic_session::where('is_current', true)->get();
 
@@ -41,7 +41,7 @@ class PrincipalCommentController extends Controller
         ->where('session', $request->session)
         ->pluck('student_id');
 
-        $students = student::whereIn('id', $assignedStudentIds)->get();
+        $students = Student::whereIn('id', $assignedStudentIds)->get();
 
         if($students->isEmpty()){
             return back()->with('error', 'No students found for this class, term and session.');

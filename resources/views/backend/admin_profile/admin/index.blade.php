@@ -4,8 +4,8 @@
 
 
 @php
-use App\Models\student;
-use App\Models\classes;
+use App\Models\Student;
+use App\Models\Classes;
 use App\Models\Teacher;
 
 // Student Growth per month (current year)
@@ -19,7 +19,7 @@ foreach($months as $index => $month){
 }
 
 // Teachers per class
-$classes = classes::with('classTeacher')->get();
+$classes = Classes::with('classTeacher')->get();
 $teacherNames = $classes->map(fn($c) => $c->classTeacher ? $c->classTeacher->name : 'Unassigned'); // Assuming one teacher per class in your setup
 $classNames = $classes->pluck('class_name'); // Adjust according to your column name
 @endphp
@@ -29,9 +29,9 @@ $classNames = $classes->pluck('class_name'); // Adjust according to your column 
 
 @php
 
-$totalstudent = count(App\Models\student::all());
-$totalsubject = count(App\Models\subject::all());
-$totalclass = count(App\Models\classes::all());
+$totalstudent = count(App\Models\Student::all());
+$totalsubject = count(App\Models\Subject::all());
+$totalclass = count(App\Models\Classes::all());
 $totalteachers = count(App\Models\Teacher::all());
 
 @endphp

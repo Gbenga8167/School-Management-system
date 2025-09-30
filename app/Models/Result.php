@@ -24,7 +24,7 @@ class Result extends Model
    ];
 
    public function subject(){
-      return $this->belongsTo(subject::class);
+      return $this->belongsTo(Subject::class);
   }
 
 }

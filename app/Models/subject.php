@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class subject extends Model
+class Subject extends Model
 {
     protected $guarded = [];
 
@@ -17,7 +17,7 @@ class subject extends Model
 
      public function classes(): BelongsToMany{
 
-        return $this->belongsToMany(classes::class, 'classes_subject', 'subject_id', 'classes_id',)->withPivot
+        return $this->belongsToMany(Classes::class, 'classes_subject', 'subject_id', 'classes_id',)->withPivot
         ('status');
 
     }

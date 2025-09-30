@@ -57,7 +57,7 @@ $teacherphoto = App\Models\Teacher::where('user_id', $id)->first();
                 
                 @php
                 $teacher = auth()->user()->teacher;
-                $isClassTeacher = App\Models\classes::where('class_teacher_id', $teacher->id)->exists();
+                $isClassTeacher = App\Models\Classes::where('class_teacher_id', $teacher->id)->exists();
                 @endphp
 
                 @if($isClassTeacher)

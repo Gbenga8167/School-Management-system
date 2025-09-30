@@ -4,9 +4,9 @@ namespace App\Http\Controllers\backend;
 
 use App\Models\terms;
 use App\Models\Result;
-use App\Models\classes;
-use App\Models\student;
-use App\Models\subject;
+use App\Models\Classes;
+use App\Models\Student;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use App\Models\academic_session;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +29,7 @@ class ResultController extends Controller
        ->unique();
           
         //fetch the actual class and subject record
-        $classes = classes::
+        $classes = Classes::
         whereIn('id', $assignments)->get();
 
         //Fetch only the current term and session (admin controlled)
@@ -59,7 +59,7 @@ class ResultController extends Controller
         ->pluck('subject_id');
 
 
-        $subjects = subject::whereIn('id', $subjectIds)->get();
+        $subjects = Subject::whereIn('id', $subjectIds)->get();
         return response()->json($subjects);
     }//end method
 
@@ -99,8 +99,8 @@ class ResultController extends Controller
             }
         
 
-             $classes = classes::find($request->class_id);
-             $subjects = subject::find($request->subject_id);
+             $classes = Classes::find($request->class_id);
+             $subjects = Subject::find($request->subject_id);
 
 
 

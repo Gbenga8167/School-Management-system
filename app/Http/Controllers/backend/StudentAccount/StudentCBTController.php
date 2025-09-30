@@ -5,7 +5,7 @@ namespace App\Http\Controllers\backend\StudentAccount;
 use Carbon\Carbon;
 use App\Models\terms;
 use App\Models\CBTTest;
-use App\Models\student;
+use App\Models\Student;
 use App\Models\CBTAnswer;
 use App\Models\CBTAttempt;
 use App\Models\CBTQuestion;
@@ -20,7 +20,7 @@ class StudentCBTController extends Controller
     // Display all CBT tests for the student
     public function Index()
     {
-        $student = student::where('user_id', Auth::id())->firstOrFail();
+        $student = Student::where('user_id', Auth::id())->firstOrFail();
         $currentTerm = terms::where('is_current', true)->first()?->name;
         $currentSession = academic_session::where('is_current', true)->first()?->name;
 

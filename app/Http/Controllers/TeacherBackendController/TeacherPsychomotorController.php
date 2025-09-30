@@ -5,8 +5,8 @@ namespace App\Http\Controllers\TeacherBackendController;
 use session;
 use App\Models\User;
 use App\Models\terms;
-use App\Models\classes;
-use App\Models\student;
+use App\Models\Classes;
+use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Models\academic_session;
@@ -27,7 +27,7 @@ class TeacherPsychomotorController extends Controller
        $AssignedClassTeacher = Teacher::where('user_id', $teacher)->first();
           
         //only fetch classes where the teacher is assigned as class teacher
-        $classes = classes::where('class_teacher_id', $AssignedClassTeacher->id)->get();
+        $classes = Classes::where('class_teacher_id', $AssignedClassTeacher->id)->get();
         
         $terms = terms::where('is_current', true)->get();
         $sessions = academic_session::where('is_current', true)->get();
@@ -55,7 +55,7 @@ class TeacherPsychomotorController extends Controller
 
     
         //Ensure security : only assigned teacher can access
-        $class = classes:: where('class_teacher_id',  $assignedteacher)->first();
+        $class = Classes:: where('class_teacher_id',  $assignedteacher)->first();
         if(!$class){
             return back()->with('error', 'You are not authorized 
             to access the psychomotor Assessment.

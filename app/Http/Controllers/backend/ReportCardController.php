@@ -4,8 +4,8 @@ namespace App\Http\Controllers\backend;
 
 use App\Models\terms;
 use App\Models\Result;
-use App\Models\classes;
-use App\Models\student;
+use App\Models\Classes;
+use App\Models\Student;
 use App\Models\Clearance;
 use App\Models\TermCalendar;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class ReportCardController extends Controller
 {
     public function ShowReportSelectForm(){
 
-        $classes = classes::orderBy('class_name')->get(); 
+        $classes = Classes::orderBy('class_name')->get(); 
 
           //Fetch only the current term and session (admin controlled)
         $terms = terms::where('is_current', true)->get();
@@ -41,7 +41,7 @@ class ReportCardController extends Controller
             'session_id' => 'required|exists:academic_sessions,id',
         ]);
 
-        $class = classes::findOrFail(request('class_id'));
+        $class = Classes::findOrFail(request('class_id'));
         $term = terms::findOrFail(request('term_id'));
         $session = academic_session::findOrFail(request('session_id'));
 
@@ -51,7 +51,7 @@ class ReportCardController extends Controller
         $nextTermBegins = $calender?->next_term_begins;
         //B. Fetch students assigned to that class in this term and session
         
-        $students = student::whereIn('id', function($q) use($class,$term,$session)
+        $students = Student::whereIn('id', function($q) use($class,$term,$session)
         {
             $q->select('student_id')->from('assign_class_subject_students')
             ->where([

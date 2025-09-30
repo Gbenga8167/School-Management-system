@@ -4,9 +4,9 @@ namespace App\Http\Controllers\backend;
 
 use App\Models\terms;
 use App\Models\Result;
-use App\Models\classes;
-use App\Models\student;
-use App\Models\subject;
+use App\Models\Classes;
+use App\Models\Student;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use App\Models\academic_session;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +20,7 @@ class AdminResultController extends Controller
     //ADMIN RESULT UPLOAD METHOD
     public function showSelectedAdminForm(){
 
-        $classes = classes::all();
+        $classes = Classes::all();
  
         $terms = terms::where('is_current', true)->get();
         $sessions = academic_session::where('is_current', true)->get();
@@ -43,7 +43,7 @@ class AdminResultController extends Controller
  
      //2. Get actual student records
  
-     $students = student::whereIn('id', $studentIds)
+     $students = Student::whereIn('id', $studentIds)
      ->orderBy('name')->get();
  
      //3.subject IDs offered in that class this term/session
@@ -57,7 +57,7 @@ class AdminResultController extends Controller
  
      //4. Get actual subject records
  
-     $subjects = subject::whereIn('id', $subjectIds)
+     $subjects = Subject::whereIn('id', $subjectIds)
      ->orderBy('subject_name')->get();
  
  
@@ -68,7 +68,7 @@ class AdminResultController extends Controller
      ->groupBy(fn($r)=>$r->subject_id.'_'.$r->student_id);
  
      //7. Get class name 
-     $classes = classes::find($request->class_id);
+     $classes = Classes::find($request->class_id);
  
  
      //5. existing results, grouped key => subjectid_studentid

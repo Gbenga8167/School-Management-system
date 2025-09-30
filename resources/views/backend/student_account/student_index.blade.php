@@ -60,7 +60,7 @@ if ($hour < 12) {
 }
 
 // Get class name
-$studentClassName = \App\Models\classes::where('id', $studentClassId)->value('class_name');
+$studentClassName = \App\Models\Classes::where('id', $studentClassId)->value('class_name');
 
 @endphp
 

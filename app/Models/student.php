@@ -6,14 +6,14 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class student extends Model
+class Student extends Model
 {
     protected $guarded = [];
 
     //declaring relationship btw classes model and student model
     public function class(): BelongsTo{
 
-        return $this->belongsTo(classes::class, 'class_id', 'id',);
+        return $this->belongsTo(Classes::class, 'class_id', 'id',);
     }
 
 

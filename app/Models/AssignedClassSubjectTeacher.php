@@ -10,11 +10,11 @@ class AssignedClassSubjectTeacher extends Model
 
 
     public function subject(){
-        return $this->belongsTo(subject::class, 'subject_id');
+        return $this->belongsTo(Subject::class, 'subject_id');
     }
 
     public function class(){
-        return $this->belongsTo(classes::class, 'class_id');
+        return $this->belongsTo(Classes::class, 'class_id');
     }
 
     public function teacher(){

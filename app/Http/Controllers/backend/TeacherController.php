@@ -5,8 +5,8 @@ namespace App\Http\Controllers\backend;
 use App\Models\User;
 use App\Models\terms;
 use App\Models\academic_session;
-use App\Models\classes;
-use App\Models\subject;
+use App\Models\Classes;
+use App\Models\Subject;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -219,8 +219,8 @@ class TeacherController extends Controller
         $terms = terms::where('is_current', true)->get();
         $sessions = academic_session::where('is_current', true)->get();
         $teachers = Teacher::all();
-        $subjects = subject::all();
-        $classes  = classes::all();
+        $subjects = Subject::all();
+        $classes  = Classes::all();
 
         return view('backend.teacher.assign_teacher_subject', compact('teachers', 'subjects', 'classes', 'terms', 'sessions'));
 
@@ -231,7 +231,7 @@ public function FetchStudent(Request $request)
 {
     $class_id = $request->class_id;
 
-    $class = classes::with('subjects')->where('id', $class_id)->first();
+    $class = Classes::with('subjects')->where('id', $class_id)->first();
 
     if (!$class) {
         return response()->json(['subjects' => '']);
@@ -334,8 +334,8 @@ public function ViewAssignSubjectTeacher(){
 public function EditAssignSubjectTeacher($id){
     $AssignSubjectTeacher = AssignedClassSubjectTeacher::findOrFail($id);
     $teachers = Teacher::all();
-    $subjects = subject::all();
-    $classes  = classes::all();
+    $subjects = Subject::all();
+    $classes  = Classes::all();
 
     return view('backend.teacher.edit_assign_subject_teacher', compact('AssignSubjectTeacher', 'teachers', 'subjects', 'classes'));
 

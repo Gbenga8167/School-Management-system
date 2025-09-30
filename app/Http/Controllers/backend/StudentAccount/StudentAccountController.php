@@ -5,9 +5,9 @@ namespace App\Http\Controllers\backend\StudentAccount;
 use App\Models\User;
 use App\Models\terms;
 use App\Models\Result;
-use App\Models\classes;
-use App\Models\student;
-use App\Models\subject;
+use App\Models\Classes;
+use App\Models\Student;
+use App\Models\Subject;
 use App\Models\Clearance;
 use App\Models\TermCalendar;
 use Illuminate\Http\Request;
@@ -39,7 +39,7 @@ class StudentAccountController extends Controller
         //GET AUTHENTICATED LOGGED IN USERS(STUDENT)
         $id = Auth::user()->id;
         $StudentData = User::findOrFail($id);
-        $studentphoto = student::where('user_id', $id)->first();
+        $studentphoto = Student::where('user_id', $id)->first();
         return view('backend.student_account.student_profile_view', compact('StudentData', 'studentphoto'));
     
     
@@ -48,7 +48,7 @@ class StudentAccountController extends Controller
 
     //STUDENT CHECK RESULT LOGIC
     public function StudentResultForm(){
-     $student = student::where('user_id', Auth::id())->firstOrFail();
+     $student = Student::where('user_id', Auth::id())->firstOrFail();
 
      //Fetch distinct classes, terms, and sessions this student has result for
      $classIds = Result::where('student_id', $student->id)->pluck('class_id')->unique();
@@ -57,7 +57,7 @@ class StudentAccountController extends Controller
      
      $sessions = Result::where('student_id', $student->id)->pluck('session')->unique();
 
-     $classes = classes::whereIn('id', $classIds)->get();
+     $classes = Classes::whereIn('id', $classIds)->get();
 
 
         return view('backend.student_account.result_form', compact('classes', 'terms', 'sessions'));
@@ -81,7 +81,7 @@ class StudentAccountController extends Controller
         $sessions= $request->session;
 
         //GET AUTHENTICATED LOGGED IN USERS(STUDENT)
-        $student = student::where('user_id', Auth::id())->firstOrFail();
+        $student = Student::where('user_id', Auth::id())->firstOrFail();
 
 
         //CHECK IF STUDENT SELECTED CLASS, TERM AND SESSION MATCH
@@ -133,7 +133,7 @@ class StudentAccountController extends Controller
             $settings = SchoolSetting::first();
 
             //get student class
-            $class = classes::find($classId);
+            $class = Classes::find($classId);
 
             //student assessment
             $assessment = PsychoAssessment::where([
@@ -190,7 +190,7 @@ class StudentAccountController extends Controller
             ->where('session', $currentSession)
             ->pluck('subject_id');
 
-        $subjects = subject::whereIn('id', $subjectIds)->get();
+        $subjects = Subject::whereIn('id', $subjectIds)->get();
 
         return view('backend.student_account.student_subjects', compact('subjects', 'currentTerm', 'currentSession'));
     }
