@@ -6,7 +6,7 @@
 @php
 use App\Models\student;
 use App\Models\classes;
-use App\Models\teacher;
+use App\Models\Teacher;
 
 // Student Growth per month (current year)
 $monthlyStudents = [];
@@ -32,7 +32,7 @@ $classNames = $classes->pluck('class_name'); // Adjust according to your column 
 $totalstudent = count(App\Models\student::all());
 $totalsubject = count(App\Models\subject::all());
 $totalclass = count(App\Models\classes::all());
-$totalteachers = count(App\Models\teacher::all());
+$totalteachers = count(App\Models\Teacher::all());
 
 @endphp
 

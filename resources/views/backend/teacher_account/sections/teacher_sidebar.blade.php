@@ -4,7 +4,7 @@
 
 $id = Auth::user()->id;
 $TeacherData = App\Models\User::findOrFail(Auth::user()->id);
-$teacherphoto = App\Models\teacher::where('user_id', $id)->first();
+$teacherphoto = App\Models\Teacher::where('user_id', $id)->first();
 
 
 @endphp

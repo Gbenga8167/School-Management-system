@@ -26,7 +26,7 @@ class classes extends Model
     // handle some special task which other subject teacher can not handle 
     
     public function classTeacher(){
-        return $this->belongsTo(teacher::class, 'class_teacher_id');
+        return $this->belongsTo(Teacher::class, 'class_teacher_id');
     }
 
     
@@ -35,7 +35,7 @@ class classes extends Model
     //raltionship for teacher's CBT(A teacher is assigned 
      //to many subject and a subject and class have many teacher)
      public function assignedTeachers(){
-        return $this->belongsToMany(teacher::class, 'assigned_class_subject_teachers',
+        return $this->belongsToMany(Teacher::class, 'assigned_class_subject_teachers',
          'class_id', //foreign key on pivot table pointing to classes
           'teacher_id'//foreign key on pivot table pointing to teachers
           );

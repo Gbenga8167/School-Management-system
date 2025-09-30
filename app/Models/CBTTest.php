@@ -42,7 +42,7 @@ class CBTTest extends Model
     
     //Link to teacher
     public function teacher(){
-        return $this->belongsTo(teacher::class);
+        return $this->belongsTo(Teacher::class);
     }
 
 }

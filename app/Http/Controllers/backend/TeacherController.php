@@ -7,7 +7,7 @@ use App\Models\terms;
 use App\Models\academic_session;
 use App\Models\classes;
 use App\Models\subject;
-use App\Models\teacher;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -129,13 +129,13 @@ class TeacherController extends Controller
 
 
      public function ManageTeacher(){
-        $teachers = teacher::orderBy('id', 'desc')->get();
+        $teachers = Teacher::orderBy('id', 'desc')->get();
         return view('backend.teacher.manage_teacher', compact('teachers'));
     }//end method
 
 
     public function EditTeacher($id){
-        $teachers = teacher::find($id);
+        $teachers = Teacher::find($id);
         return view('backend.teacher.edit_teacher', compact('teachers'));
 
     }//end method
@@ -143,7 +143,7 @@ class TeacherController extends Controller
 
     public function UpdateTeacher(Request $request){
         $id = $request->id;
-        $teacher = teacher::find($id);
+        $teacher = Teacher::find($id);
         $teacher->name = $request->full_name;
         $teacher->address = $request->address;
         $teacher->nationality = $request->nationality;
@@ -190,7 +190,7 @@ class TeacherController extends Controller
 
 
      public function DeleteTeacher($id){
-        $teacher = teacher::find($id);
+        $teacher = Teacher::find($id);
         @unlink(public_path('uploads/teachers_photos/'.$teacher->photo));
         $teacher->delete();
 
@@ -218,7 +218,7 @@ class TeacherController extends Controller
 
         $terms = terms::where('is_current', true)->get();
         $sessions = academic_session::where('is_current', true)->get();
-        $teachers = teacher::all();
+        $teachers = Teacher::all();
         $subjects = subject::all();
         $classes  = classes::all();
 
@@ -333,7 +333,7 @@ public function ViewAssignSubjectTeacher(){
 
 public function EditAssignSubjectTeacher($id){
     $AssignSubjectTeacher = AssignedClassSubjectTeacher::findOrFail($id);
-    $teachers = teacher::all();
+    $teachers = Teacher::all();
     $subjects = subject::all();
     $classes  = classes::all();
 

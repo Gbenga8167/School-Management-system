@@ -1,5 +1,5 @@
 
-@extends('backend.admin_profile.admin.admin_dashboard');
+@extends('backend.admin_profile.admin.admin_dashboard')
 @section('admin')
 
 <div class="container-fluid">

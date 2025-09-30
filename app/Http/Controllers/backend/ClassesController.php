@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Models\classes;
-use App\Models\teacher;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -117,7 +117,7 @@ public function DeleteClass($id){
    public function AssignedClassTeacher(){
 
     $classes = classes::all();
-    $teachers = teacher::all();
+    $teachers = Teacher::all();
     return view('backend.admin_profile.admin.classes.assigned_class_teacher', compact('classes', 'teachers'));
 }//end method
 

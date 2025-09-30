@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\terms;
 use App\Models\classes;
 use App\Models\student;
-use App\Models\teacher;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Models\academic_session;
 use App\Models\PsychoAssessment;
@@ -24,7 +24,7 @@ class TeacherPsychomotorController extends Controller
        $teacher = Auth()->id();
 
        //check if the logged in user is teacher
-       $AssignedClassTeacher = teacher::where('user_id', $teacher)->first();
+       $AssignedClassTeacher = Teacher::where('user_id', $teacher)->first();
           
         //only fetch classes where the teacher is assigned as class teacher
         $classes = classes::where('class_teacher_id', $AssignedClassTeacher->id)->get();

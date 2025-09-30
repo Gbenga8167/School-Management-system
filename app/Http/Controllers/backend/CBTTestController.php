@@ -8,7 +8,7 @@ use App\Models\CBTTest;
 use App\Models\academic_session;
 use App\Models\classes;
 use App\Models\subject;
-use App\Models\teacher;
+use App\Models\Teacher;
 use App\Models\CBTQuestion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

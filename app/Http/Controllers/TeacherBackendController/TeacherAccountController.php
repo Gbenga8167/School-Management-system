@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\TeacherBackendController;
 
 use App\Models\User;
-use App\Models\teacher;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -29,7 +29,7 @@ class TeacherAccountController extends Controller
 
         $id = Auth::user()->id;
         $TeacherData = User::findOrFail($id);
-        $teacherphoto = teacher::where('user_id', $id)->first();
+        $teacherphoto = Teacher::where('user_id', $id)->first();
         return view('backend.teacher_account.teacher_profile_view', compact('TeacherData', 'teacherphoto'));
     
     
@@ -41,7 +41,7 @@ class TeacherAccountController extends Controller
         $id = Auth::user()->id;
         $user = User::findOrFail($id);
 
-        $teacher = teacher::where('user_id', $id)->first();
+        $teacher = Teacher::where('user_id', $id)->first();
 
         $request->validate([
            'user_name' => 'required',
