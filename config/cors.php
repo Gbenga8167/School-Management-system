@@ -19,6 +19,7 @@ return [
      'sanctum/csrf-cookie',
       'fetch/*',
       'fetch/promotion/*',
+      
     ],
 
     'allowed_methods' => ['*'],
