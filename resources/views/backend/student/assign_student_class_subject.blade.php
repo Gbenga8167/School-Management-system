@@ -88,7 +88,7 @@ $(document).ready(function(){
     $('.fetch-students').on('click', function(){
         let class_id = $(this).data('class');
         $.get("{{ route('fetch.students') }}", { class_id: class_id }, function(result){
-            $('.students-list').html(result.students);
+            $('.students-list').html(result.students.join('')); // ✅ join array into HTML
             $('.showStudents').show();
         });
     });
@@ -97,7 +97,7 @@ $(document).ready(function(){
     $('.class-select').on('change', function(){
         let class_id = $(this).val();
         $.get("{{ route('fetch.subjects') }}", { class_id: class_id }, function(result){
-            $('.subjects-list').html(result.subjects);
+            $('.subjects-list').html(result.subjects.join('')); // ✅ join array into HTML
             $('.showSubject').show();
         });
     });
