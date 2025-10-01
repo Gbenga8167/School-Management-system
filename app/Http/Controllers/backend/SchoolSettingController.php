@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Models\terms;
+use App\Models\Term;
 use Illuminate\Http\Request;
 use App\Models\SchoolSetting;
-use App\Models\academic_session;
+use App\Models\AcademicSession;
 use App\Http\Controllers\Controller;
 
 class SchoolSettingController extends Controller
@@ -72,8 +72,8 @@ class SchoolSettingController extends Controller
 
     public function SessionIndex()
     {
-        $sessions = academic_session::orderBy('id', 'desc')->paginate(2);
-        $terms = terms::orderBy('id', 'asc')->get();
+        $sessions = AcademicSession::orderBy('id', 'desc')->paginate(2);
+        $terms = Term::orderBy('id', 'asc')->get();
 
         return view('backend.admin_profile.school_setting.term_session_create', compact('sessions', 'terms'));
     }
@@ -84,7 +84,7 @@ class SchoolSettingController extends Controller
             'name' => 'required|unique:academic_sessions,name',
         ]);
 
-        academic_session::create([
+        AcademicSession::create([
             'name' => $request->name,
             'is_current' => 0,
         ]);
@@ -94,7 +94,7 @@ class SchoolSettingController extends Controller
 
     public function toggleSession($id)
     {
-        $session = academic_session::findOrFail($id);
+        $session = AcademicSession::findOrFail($id);
         $session->is_current = !$session->is_current;
         $session->save();
 
@@ -103,7 +103,7 @@ class SchoolSettingController extends Controller
 
     public function toggleTerm($id)
     {
-        $term = terms::findOrFail($id);
+        $term = Term::findOrFail($id);
         $term->is_current = !$term->is_current;
         $term->save();
 
@@ -113,7 +113,7 @@ class SchoolSettingController extends Controller
 
     public function edit($id)
 {
-    $session = academic_session::findOrFail($id);
+    $session = AcademicSession::findOrFail($id);
     return view('backend.admin_profile.school_setting.term_session_update', compact('session'));
 }
 
@@ -123,7 +123,7 @@ public function update(Request $request, $id)
         'name' => 'required|string|unique:academic_sessions,name,' . $id,
     ]);
 
-    $session = academic_session::findOrFail($id);
+    $session = AcademicSession::findOrFail($id);
     $session->update([
         'name' => $request->name,
     ]);
@@ -133,7 +133,7 @@ public function update(Request $request, $id)
 
 public function destroy($id)
 {
-    $session = academic_session::findOrFail($id);
+    $session = AcademicSession::findOrFail($id);
     $session->delete();
 
     return redirect()->back()->with('message', 'Academic session deleted successfully!');

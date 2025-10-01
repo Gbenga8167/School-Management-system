@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\backend;
 
 use App\Models\User;
-use App\Models\terms;
-use App\Models\academic_session;
+use App\Models\Term;
+use App\Models\AcademicSession;
 use App\Models\Classes;
 use App\Models\Subject;
 use App\Models\Teacher;
@@ -216,8 +216,8 @@ class TeacherController extends Controller
 
     public function AssignSubjectTeacher(){
 
-        $terms = terms::where('is_current', true)->get();
-        $sessions = academic_session::where('is_current', true)->get();
+        $terms = Term::where('is_current', true)->get();
+        $sessions = AcademicSession::where('is_current', true)->get();
         $teachers = Teacher::all();
         $subjects = Subject::all();
         $classes  = Classes::all();

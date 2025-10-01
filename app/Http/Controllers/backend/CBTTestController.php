@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\backend;
 
 use App\Models\User;
-use App\Models\terms;
+use App\Models\Term;
 use App\Models\CBTTest;
-use App\Models\academic_session;
+use App\Models\AcademicSession;
 use App\Models\Classes;
 use App\Models\Subject;
 use App\Models\Teacher;

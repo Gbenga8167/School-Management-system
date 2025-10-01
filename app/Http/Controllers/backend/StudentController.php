@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\backend;
 
 use App\Models\User;
-use App\Models\terms;
-use App\Models\academic_session;
+use App\Models\Term;
+use App\Models\AcademicSession;
 use App\Models\Classes;
 use App\Models\Student;
 use App\Models\Subject;
@@ -304,8 +304,8 @@ public function ManageStudent()
 
     // Fetch only current term & session set by admin
      // Current term & session
-        $terms = terms::where('is_current', true)->get();
-        $sessions = academic_session::where('is_current', true)->get();
+        $terms = Term::where('is_current', true)->get();
+        $sessions = AcademicSession::where('is_current', true)->get();
     return view('backend.student.assign_student_class_subject', compact('classes', 'terms', 'sessions'));
 }
 

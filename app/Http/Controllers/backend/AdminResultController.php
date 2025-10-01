@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Models\terms;
+use App\Models\Term;
 use App\Models\Result;
 use App\Models\Classes;
 use App\Models\Student;
 use App\Models\Subject;
 use Illuminate\Http\Request;
-use App\Models\academic_session;
+use App\Models\AcademicSession;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -22,8 +22,8 @@ class AdminResultController extends Controller
 
         $classes = Classes::all();
  
-        $terms = terms::where('is_current', true)->get();
-        $sessions = academic_session::where('is_current', true)->get();
+        $terms = Term::where('is_current', true)->get();
+        $sessions = AcademicSession::where('is_current', true)->get();
         return view('backend.admin_profile.admin.upload_result.admin_result_upload', compact('classes','terms', 'sessions'));
     }//end method
  

@@ -1,5 +1,3 @@
-
-
 @extends('backend.admin_profile.admin.admin_dashboard')
 @section('admin')
 

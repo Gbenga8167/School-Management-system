@@ -20,7 +20,7 @@ class TermSeeder extends Seeder
         ];
 
         foreach ($terms as $term) {
-            terms::updateOrCreate(
+            Terms::updateOrCreate(
                 ['name' => $term],
                 ['is_current' => 0] // all off by default
             );

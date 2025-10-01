@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\backend\StudentAccount;
 
 use App\Models\User;
-use App\Models\terms;
+use App\Models\Term;
 use App\Models\Result;
 use App\Models\Classes;
 use App\Models\Student;
@@ -13,7 +13,7 @@ use App\Models\TermCalendar;
 use Illuminate\Http\Request;
 use App\Models\SchoolSetting;
 use App\Models\PsychoAssessment;
-use App\Models\academic_sessions;
+use App\Models\AcademicSession;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

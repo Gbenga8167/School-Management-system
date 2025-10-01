@@ -1,5 +1,3 @@
-
-
 @php
 
 $adminData = App\Models\User::findOrFail(Auth::user()->id);

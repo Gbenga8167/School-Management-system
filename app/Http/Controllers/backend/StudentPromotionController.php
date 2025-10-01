@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Models\terms;
+use App\Models\Term;
 use App\Models\Classes;
 use Illuminate\Http\Request;
-use App\Models\academic_session;
+use App\Models\AcademicSession;
 use App\Http\Controllers\Controller;
 use App\Models\AssignClassSubjectStudent;
 use Illuminate\Support\Facades\DB;
@@ -16,11 +16,11 @@ class StudentPromotionController extends Controller
     public function index()
     {
         $classes = Classes::all();
-        $currentTerm = terms::where('is_current', 1)->first();
-        $currentSession = academic_session::where('is_current', 1)->first();
+        $currentTerm = Term::where('is_current', 1)->first();
+        $currentSession = AcademicSession::where('is_current', 1)->first();
 
-        $terms = terms::all();
-        $sessions = academic_session::all();
+        $terms = Term::all();
+        $sessions = AcademicSession::all();
 
         return view('backend.admin_profile.admin.student_promotion.promote_student', compact(
             'classes', 'currentTerm', 'currentSession', 'terms', 'sessions'
@@ -32,8 +32,8 @@ class StudentPromotionController extends Controller
     {
         $class_id = $request->class_id;
 
-        $currentTerm = terms::where('is_current', 1)->first();
-        $currentSession = academic_session::where('is_current', 1)->first();
+        $currentTerm = Term::where('is_current', 1)->first();
+        $currentSession = AcademicSession::where('is_current', 1)->first();
 
         $students = AssignClassSubjectStudent::with('student')
             ->where('class_id', $class_id)
@@ -145,8 +145,8 @@ public function storePromotion(Request $request)
 
         // Dropdown data
         $classes = Classes::all();
-        $terms = terms::pluck('name');
-        $sessions = academic_session::pluck('name');
+        $terms = Term::pluck('name');
+        $sessions = AcademicSession::pluck('name');
 
         return view('backend.admin_profile.admin.student_promotion.manage_promotion', compact(
             'promotions', 'classes', 'terms', 'sessions'
@@ -194,8 +194,8 @@ public function editPromotion($id)
 
     $classes = Classes::all();
     $subjects = $promotion->class ? $promotion->class->subjects : [];
-    $terms = terms::pluck('name');
-    $sessions = academic_session::pluck('name');
+    $terms = Term::pluck('name');
+    $sessions = AcademicSession::pluck('name');
 
     return view('backend.admin_profile.admin.student_promotion.edit_promotion', compact(
         'promotion', 'classes', 'subjects', 'terms', 'sessions'

@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\backend\StudentAccount;
 
 use Carbon\Carbon;
-use App\Models\terms;
+use App\Models\Term;
 use App\Models\CBTTest;
 use App\Models\Student;
 use App\Models\CBTAnswer;
 use App\Models\CBTAttempt;
 use App\Models\CBTQuestion;
 use Illuminate\Http\Request;
-use App\Models\academic_session;
+use App\Models\AcademicSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\AssignClassSubjectStudent;
@@ -21,8 +21,8 @@ class StudentCBTController extends Controller
     public function Index()
     {
         $student = Student::where('user_id', Auth::id())->firstOrFail();
-        $currentTerm = terms::where('is_current', true)->first()?->name;
-        $currentSession = academic_session::where('is_current', true)->first()?->name;
+        $currentTerm = Term::where('is_current', true)->first()?->name;
+        $currentSession = AcademicSession::where('is_current', true)->first()?->name;
 
         $assignments = AssignClassSubjectStudent::where('student_id', $student->id)
             ->where('term', $currentTerm)

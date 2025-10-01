@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\backend;
 
 use session;
-use App\Models\terms;
+use App\Models\Term;
 use App\Models\Classes;
 use App\Models\Student;
 use Illuminate\Http\Request;
-use App\Models\academic_session;
+use App\Models\AcademicSession;
 use App\Models\PsychoAssessment;
 use App\Http\Controllers\Controller;
 use App\Models\AssignClassSubjectStudent;
@@ -17,8 +17,8 @@ class PrincipalCommentController extends Controller
     public function PrincipalCommentForm(){
 
         $classes = Classes::all();
-        $terms = terms::where('is_current', true)->get();
-        $sessions = academic_session::where('is_current', true)->get();
+        $terms = Term::where('is_current', true)->get();
+        $sessions = AcademicSession::where('is_current', true)->get();
         return view('backend.admin_profile.principal_comments.form', compact('classes', 'terms', 'sessions'));
         
     }//end method
@@ -33,8 +33,8 @@ class PrincipalCommentController extends Controller
 
         ]);
         $classes = Classes::all();
-        $terms = terms::where('is_current', true)->get();
-        $sessions = academic_session::where('is_current', true)->get();
+        $terms = Term::where('is_current', true)->get();
+        $sessions = AcademicSession::where('is_current', true)->get();
 
         $assignedStudentIds = AssignClassSubjectStudent::where('class_id', $request->class_id)
         ->where('term', $request->term)

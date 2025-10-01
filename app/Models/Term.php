@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class academic_session extends Model
+class Term extends Model
 {
     protected $guarded = [];
 }
+
+

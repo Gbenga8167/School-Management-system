@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Models\terms;
+use App\Models\Term;
 use App\Models\Result;
 use App\Models\Classes;
 use App\Models\Student;
 use App\Models\Subject;
 use Illuminate\Http\Request;
-use App\Models\academic_session;
+use App\Models\AcademicSession;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -33,8 +33,8 @@ class ResultController extends Controller
         whereIn('id', $assignments)->get();
 
         //Fetch only the current term and session (admin controlled)
-        $terms = terms::where('is_current', true)->get();
-        $sessions = academic_session::where('is_current', true)->get();
+        $terms = Term::where('is_current', true)->get();
+        $sessions = AcademicSession::where('is_current', true)->get();
 
         //dd($assignments->pluck('subject_id'));
         //dd( $subjects);

@@ -4,12 +4,12 @@ namespace App\Http\Controllers\TeacherBackendController;
 
 use session;
 use App\Models\User;
-use App\Models\terms;
+use App\Models\Term;
 use App\Models\Classes;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
-use App\Models\academic_session;
+use App\Models\AcademicSession;
 use App\Models\PsychoAssessment;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -29,8 +29,8 @@ class TeacherPsychomotorController extends Controller
         //only fetch classes where the teacher is assigned as class teacher
         $classes = Classes::where('class_teacher_id', $AssignedClassTeacher->id)->get();
         
-        $terms = terms::where('is_current', true)->get();
-        $sessions = academic_session::where('is_current', true)->get();
+        $terms = Term::where('is_current', true)->get();
+        $sessions = AcademicSession::where('is_current', true)->get();
 
         return view('backend.teacher_account.select_psychomotor', compact('classes', 'terms', 'sessions'));
     

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Models\terms;
+use App\Models\Term;
 use App\Models\Result;
 use App\Models\Classes;
 use App\Models\Student;
@@ -10,7 +10,7 @@ use App\Models\Clearance;
 use App\Models\TermCalendar;
 use Illuminate\Http\Request;
 use App\Models\SchoolSetting;
-use App\Models\academic_session;
+use App\Models\AcademicSession;
 use App\Models\PsychoAssessment;
 use App\Http\Controllers\Controller;
 
@@ -21,8 +21,8 @@ class ReportCardController extends Controller
         $classes = Classes::orderBy('class_name')->get(); 
 
           //Fetch only the current term and session (admin controlled)
-        $terms = terms::where('is_current', true)->get();
-        $sessions = academic_session::where('is_current', true)->get();
+        $terms = Term::where('is_current', true)->get();
+        $sessions = AcademicSession::where('is_current', true)->get();
     
         return view('backend.admin_profile.report.report_card_form_selector', 
         compact('classes', 'terms', 'sessions'));
@@ -42,8 +42,8 @@ class ReportCardController extends Controller
         ]);
 
         $class = Classes::findOrFail(request('class_id'));
-        $term = terms::findOrFail(request('term_id'));
-        $session = academic_session::findOrFail(request('session_id'));
+        $term = Term::findOrFail(request('term_id'));
+        $session = AcademicSession::findOrFail(request('session_id'));
 
         $calender = TermCalendar::where('term', $term->name)
         ->where('session', $session->name)->first();
