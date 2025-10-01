@@ -25,11 +25,10 @@ return [
     'allowed_methods' => ['*'],
 
    'allowed_origins' => [
-        'http://localhost:3000',              // Local dev
-        'http://127.0.0.1:3000',              // Local dev alternative
-        'https://schoolportal.com',           // Production frontend
-        'https://admin.schoolportal.com',     // Production admin
-    ],
+    'http://localhost:3000', // your local frontend
+    'https://school-management-system-production-2fe2.up.railway.app',
+],
+
 
     'allowed_origins_patterns' => [],
 

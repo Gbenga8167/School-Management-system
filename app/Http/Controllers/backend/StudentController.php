@@ -309,8 +309,58 @@ public function ManageStudent()
     return view('backend.student.assign_student_class_subject', compact('classes', 'terms', 'sessions'));
 }
 
+
+    // Fetch subjects for a selected class (AJAX)
+    public function FetchSubjects(Request $request)
+    {
+        $class_id = $request->class_id;
+
+        if (!$class_id) {
+            return response()->json(['subjects' => []]);
+        }
+
+        $class = Classes::with('subjects')->find($class_id);
+        if (!$class) {
+            return response()->json(['subjects' => []]);
+        }
+
+        $subject_data = [];
+        $subject_data[] = '<input type="checkbox" id="select_all_subjects"> <label><strong>Select All Subjects</strong></label><br>';
+
+        foreach ($class->subjects as $subject) {
+            $subject_data[] =
+                '<input class="form-check-input subject-checkbox" name="subject_ids[]" value="' . $subject->id . '" type="checkbox">
+                 <label>' . $subject->subject_name . '</label><br>';
+        }
+
+        return response()->json(['subjects' => $subject_data]);
+    }
+
+    // Fetch students for a class (AJAX)
+    public function FetchStudents(Request $request)
+    {
+        $class_id = $request->class_id;
+
+        if (!$class_id) {
+            return response()->json(['students' => []]);
+        }
+
+        $students = Student::where('class_id', $class_id)->orderBy('id', 'desc')->get();
+
+        $student_data = [];
+        $student_data[] = '<input type="checkbox" id="select_all_students"> <label><strong>Select All Students</strong></label><br>';
+
+        foreach ($students as $student) {
+            $student_data[] =
+                '<input class="form-check-input student-checkbox" name="student_ids[]" value="' . $student->id . '" type="checkbox">
+                 <label>' . $student->name . '</label><br>';
+        }
+
+        return response()->json(['students' => $student_data]);
+    }
+
 // Fetch subjects for selected class
-public function FetchSubjects(Request $request)
+/*public function FetchSubjects(Request $request)
 {
     $class_id = $request->class_id;
     $class = Classes::with('subjects')->where('id', $class_id)->first();
@@ -346,6 +396,7 @@ public function FetchStudents(Request $request)
 
     return response()->json(['students' => $student_data]);
 }
+*/
 
 // Store Assignments
 public function StoreStudentClassSubject(Request $request)

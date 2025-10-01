@@ -19,10 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'teachers' => TeacherMiddleWare::class,
             'students' => StudentMiddleWare::class,
         ]);
-
-       
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
-

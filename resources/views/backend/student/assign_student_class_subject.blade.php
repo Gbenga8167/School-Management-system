@@ -85,21 +85,32 @@
 $(document).ready(function(){
 
     // Fetch Students when class button clicked
-    $('.fetch-students').on('click', function(){
+    $('.fetch-students').on('click', function(e){
+        e.preventDefault();
         let class_id = $(this).data('class');
-        $.get("{{ route('fetch.students') }}", { class_id: class_id }, function(result){
-            $('.students-list').html(result.students);
-            $('.showStudents').show();
-        });
+
+        $.get("{{ route('fetch.students') }}", { class_id: class_id })
+            .done(function(result){
+                $('.students-list').html(result.students);
+                $('.showStudents').show();
+            })
+            .fail(function(xhr){
+                console.error('Fetch Students Error:', xhr.responseText);
+            });
     });
 
     // Fetch Subjects when class dropdown changes
     $('.class-select').on('change', function(){
         let class_id = $(this).val();
-        $.get("{{ route('fetch.subjects') }}", { class_id: class_id }, function(result){
-            $('.subjects-list').html(result.subjects);
-            $('.showSubject').show();
-        });
+
+        $.get("{{ route('fetch.subjects') }}", { class_id: class_id })
+            .done(function(result){
+                $('.subjects-list').html(result.subjects);
+                $('.showSubject').show();
+            })
+            .fail(function(xhr){
+                console.error('Fetch Subjects Error:', xhr.responseText);
+            });
     });
 
     // Select All Students
@@ -114,5 +125,6 @@ $(document).ready(function(){
 
 });
 </script>
+
 
 @endsection
