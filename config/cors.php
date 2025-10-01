@@ -24,7 +24,12 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+   'allowed_origins' => [
+        'http://localhost:3000',              // Local dev
+        'http://127.0.0.1:3000',              // Local dev alternative
+        'https://schoolportal.com',           // Production frontend
+        'https://admin.schoolportal.com',     // Production admin
+    ],
 
     'allowed_origins_patterns' => [],
 
