@@ -132,7 +132,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
 
 
-    @extends('backend.admin_profile.admin.admin_dashboard')
+@extends('backend.admin_profile.admin.admin_dashboard')
 @section('admin')
 
 <div class="container-fluid">
