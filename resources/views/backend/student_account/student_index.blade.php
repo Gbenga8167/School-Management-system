@@ -109,50 +109,27 @@ $studentClassName = \App\Models\Classes::where('id', $studentClassId)->value('cl
 
 
 <!-- Student Dashboard -->
-<!-- ================= Student Dashboard ================= -->
-
 <div class="container-fluid">
-
     <!-- 1. Welcome Header -->
     <div class="row mb-4 animate-card" style="--delay:0s;">
         <div class="col-12">
-            <div class="d-flex align-items-center p-4 bg-primary text-white rounded-4 shadow">
+            <div class="d-flex align-items-center p-4 text-white rounded-4 shadow"
+                 style="background: linear-gradient(135deg, #007bff, #00c6ff); border-radius:5px;">
                 <div>
                     <h5 class="mb-1 fw-bold" style="color: #fff;">
-                        Good {{ now()->format('A') == 'AM' ? 'Morning' : (now()->format('H') < 17 ? 'Afternoon' : 'Evening') }},
-                        {{ $student->name }}
+                        Hi, {{ $student->name }}
                     </h5>
-                    <small class="text-light" style="font-size:18px;"> Welcome back to your dashboard 👋</small><br>
-                     <small class="text-light" style="font-size:15px;">Today is {{ now()->format('l, F j, Y') }}</small>
-                    <!--Student class, term & session -->
-                    <!-- Student Info Badges -->
-                    <div class="d-flex flex-wrap gap-2 mt-1 animate-badges">
-                        <span class="badge bg-danger text-light px-3 py-2 shadow-sm" style="font-size:12px;">
-                            <i class="bi bi-people-fill me-1"></i>
-                            Class: {{ strtoupper($studentClassName ?? 'Not Assigned') }}
-                        </span>
-
-                        <span class="badge bg-success text-white px-3 py-2 shadow-sm" style="font-size:12px;">
-                            <i class="bi bi-calendar2-week-fill me-1"></i>
-                            Term: {{ $currentTerm }}
-                        </span>
-
-                        <span class="badge bg-warning text-dark px-3 py-2 shadow-sm" style="font-size:12px;">
-                            <i class="bi bi-calendar-check-fill me-1"></i>
-                            Session: {{ $currentSession }}
-                        </span>
-
-                        <!--<h6 class="mb-0" style="color:#f8f9fa;">
-                            Class: {{ $studentClass ?? 'Not Assigned' }} | 
-                            Term: {{ $currentTerm }} | 
-                            Session: {{ $currentSession }}
-                        </h6>-->
-                   </div>
+                    <h6 class="mb-0" style="color:#f8f9fa;">
+                        Class: {{ strtoupper($studentClassName ?? 'Not Assigned') }} | 
+                        Term: {{ $currentTerm }} | 
+                        Session: {{ $currentSession }}
+                    </h6>
                 </div>
-            
             </div>
         </div>
     </div>
+</div>
+
 
     <!-- 2. Quick Stats Cards -->
     <div class="row">

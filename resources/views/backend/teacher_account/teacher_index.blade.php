@@ -127,45 +127,24 @@ $gradeCounts = $gradeDistribution->values();
     }
 </style>
 
-
 <div class="container-fluid">
-
-<!-- Welcome Header -->
-<div class="row mb-4">
-    <div class="col-12 animate-card" style="--delay:0s;">
-        <div class="d-flex justify-content-between align-items-center p-4 bg-primary text-white rounded-4 shadow">
-            <!-- Greeting Section -->
-            <div>
-                @php
-                    $hour = now()->format('H');
-                    if ($hour < 12) {
-                        $greeting = 'Morning';
-                    } elseif ($hour < 17) {
-                        $greeting = 'Afternoon';
-                    } else {
-                        $greeting = 'Evening';
-                    }
-                @endphp
-
-                <h5 class="mb-1 fw-bold" style="color: #fff;">
-                    Good {{ $greeting }},  {{ $teacher->name }}
-                </h5>
+    <!-- 1. Welcome Header -->
+    <div class="row mb-4 animate-card" style="--delay:0s;">
+        <div class="col-12">
+            <div class="d-flex align-items-center p-4 text-white rounded-4 shadow"
+                 style="background: linear-gradient(135deg, #007bff, #00c6ff); border-radius:5px;">
+                <div>
+                    <h5 class="mb-1 fw-bold" style="color: #fff;">
+                       Hi,  {{ $teacher->name }}
+                    </h5>
                 <small class="text-light" style="font-size:18px;">Welcome back to your dashboard 👋</small><br>
-                <small class="text-light" style="font-size:15px;">
-                   Today is {{ now()->format('l, F j, Y') }}
-                </small>
+                
+                </div>
             </div>
-
-            <!-- Live Time 
-            <div class="text-end">
-                <span id="live-time" class="fw-bold" style="font-size: 18px;"></span><br>
-                <small class="text-light" style="font-size:15px;">
-                    {{ now()->format('l, F j, Y') }}
-                </small>
-            </div>-->
         </div>
     </div>
 </div>
+
 
 <!-- Script for Live Time -->
 <script>
