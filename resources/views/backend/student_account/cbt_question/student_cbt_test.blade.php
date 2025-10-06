@@ -41,10 +41,12 @@
     const diff = startTime - now;        // ms until start
 
     if (diff <= 0) {
-      el.textContent = 'Starting...';
-      location.reload();                 // show Begin button automatically
-      return;
-    }
+  el.textContent = 'Starting...';
+  clearInterval(timer); // stop ticking
+  setTimeout(() => location.reload(true), 2000); // force hard reload after 2s
+  return;
+}
+
 
     const totalSeconds = Math.floor(diff / 1000);
     const days    = Math.floor(totalSeconds / 86400);
@@ -75,7 +77,8 @@
   document.head.appendChild(style);
 
   tick();
-  setInterval(tick, 1000);
+  const timer = setInterval(tick, 1000);
+
 </script>
 @endif
 
