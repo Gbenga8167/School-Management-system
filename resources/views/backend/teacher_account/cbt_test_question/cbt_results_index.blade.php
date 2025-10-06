@@ -19,7 +19,7 @@
                 <div class="card-header" style="background: linear-gradient(90deg, #6f42c1, #5a32a3); color: white;">
                     <h5 class="mb-0" style="color:white">{{ $subject }}</h5>
                 </div>
-                <div class="card-body p-0">
+                <div class="card-body p-0 table-responsive">
                     <table class="table table-bordered table-striped mb-0">
                         <thead class="table-light">
                             <tr>
