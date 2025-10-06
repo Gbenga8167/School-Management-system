@@ -85,9 +85,9 @@
                     <div class="col-sm-10">
                     <select  name="term" required class="form-select" aria-label="Default select example">
                     <option selected value="">--Select Term--</option>
-                         <option value="first_term">First Term</option>   
-                         <option value="second_term">Second Term</option>  
-                         <option value="third_term">Third Term</option>           
+                         <option value="First Term">First Term</option>   
+                         <option value="Second Term">Second Term</option>  
+                         <option value="Third Term">Third Term</option>           
                         </select>
                     </div>
                    
