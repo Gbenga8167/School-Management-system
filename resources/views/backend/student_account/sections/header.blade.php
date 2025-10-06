@@ -57,7 +57,7 @@
                         
                         $id = Auth::user()->id;
                         $StudentData = App\Models\User::findOrFail(Auth::user()->id);
-                        $studentphoto = App\Models\student::where('user_id', $id)->first();
+                        $studentphoto = App\Models\Student::where('user_id', $id)->first();
 
                         @endphp
                         
