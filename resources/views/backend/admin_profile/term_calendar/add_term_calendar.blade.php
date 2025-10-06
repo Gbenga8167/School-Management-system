@@ -60,9 +60,9 @@
                     <select  name="term" required class="form-select" aria-label="Default select example">
                        
                         <option  value="">-- Enter Current Term --</option>
-                        <option value="first_term" {{(old('term', $record->term ?? '') == 'first_term') ? 'selected' : '' }}>First Term</option>
-                        <option value="Second Team" {{(old('term', $record->term ?? '') == 'Second Team') ? 'selected' : '' }}>Second Team</option>
-                        <option value="third_term"  {{(old('term', $record->term ?? '') == 'third_term') ? 'selected' : '' }}>Third Term</option>                         
+                        <option value="First Term" {{(old('term', $record->term ?? '') == 'First Term') ? 'selected' : '' }}>First Term</option>
+                        <option value="Second Term" {{(old('term', $record->term ?? '') == 'Second Term') ? 'selected' : '' }}>Second Term</option>
+                        <option value="Third Term"  {{(old('term', $record->term ?? '') == 'Third Term') ? 'selected' : '' }}>Third Term</option>                         
                     </select>
                     </div>
                    

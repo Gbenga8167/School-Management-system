@@ -84,6 +84,7 @@ class StudentAccountController extends Controller
         $student = Student::where('user_id', Auth::id())->firstOrFail();
 
 
+        /*
         //CHECK IF STUDENT SELECTED CLASS, TERM AND SESSION MATCH
         $notMatch = Clearance::where('student_id', $student->id)
         ->where('class_id', $classId)
@@ -96,6 +97,7 @@ class StudentAccountController extends Controller
                 'error', 'Sorry, we couldn\'t find any results for the selected class, term, and session.');
         }
 
+        */
 
         //CLEAR STUDENT RESULT BY ADMIN
         $isCleared = Clearance::where('student_id', $student->id)

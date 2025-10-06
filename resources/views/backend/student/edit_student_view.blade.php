@@ -55,6 +55,42 @@
                 </div>
 
             
+
+                <!-- Email address -->
+                <div class="row mb-3">
+                     <label for="email" class="col-sm-2 col-form-label">Email</label>
+                     <div class="col-sm-10">
+                         <input class="form-control" name="email" type="email" 
+                                value="{{ $students->user->email }}" required>
+                     </div>
+                 </div>
+                 
+                 <!-- Username -->
+                 <div class="row mb-3">
+                     <label for="username" class="col-sm-2 col-form-label">Username</label>
+                     <div class="col-sm-10">
+                         <input class="form-control" name="username" type="text" 
+                                value="{{ $students->user->user_name }}" required>
+                     </div>
+                 </div>
+                 
+            
+                <!-- Password Field with Show/Hide -->
+                <div class="row mb-3">
+                    <label for="password" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10 position-relative">
+                        <input class="form-control" name="password" id="password" type="password"
+                               placeholder="Enter new password (leave blank to keep current)">
+                
+                        <!-- Toggle Eye Icon -->
+                        <i class="fa fa-eye-slash" id="togglePassword"
+                           style="position: absolute; right: 15px; top: 10px; cursor: pointer;"></i>
+                
+                        <small class="text-muted">Leave blank if you don't want to change the password.</small>
+                    </div>
+                </div>
+
+                  
                  <div class="row mb-3">
                      <label for="class_id" class="col-sm-2 col-form-label" style="font-size:15px">Class</label>
                      <div class="col-sm-10">
@@ -285,8 +321,15 @@
     });
 </script>
   
+<script>
+    // Password Show/Hide
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordInput = document.getElementById('password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+</script>
 
 @endsection
-
-
-

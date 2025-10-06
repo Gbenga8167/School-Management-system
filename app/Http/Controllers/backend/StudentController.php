@@ -173,7 +173,7 @@ public function StoreStudent(Request $request)
                 //save the request photo in a variable
                 $file = $request->file('photo');
         
-                //update the admin profile image in the image folder directory, to avoid show previous image repeatedly
+                //update the student profile image in the image folder directory, to avoid show previous image repeatedly
                 @unlink(public_path('uploads/student_photos/'.$student->photo));
         
                 //generating unique name for the image 
@@ -221,57 +221,64 @@ public function ManageStudent()
     }// end method
 
     public function UpdateStudent(Request $request){
-      $id = $request->id;
-      $student = Student::find($id);
-      $student->name = $request->full_name;
-       $student->roll_id = $request->roll_id;
-       $student->dob = $request->dob;
-       $student->gender = $request->gender;
-       $student->status = $request->status;
-       $student->parent_name = $request->parent_name;
-       $student->parent_occupation = $request->parent_occupation;
-       $student->parent_gender = $request->parent_gender;
-       $student->State_of_origin = $request->State_of_origin;
-       $student->phone_number = $request->phone_number;
-       $student->address = $request->address;
-       $student->nationality = $request->nationality;
-       $student->class_id = $request->class_id;
+
+   
+    $id = $request->id;
+    $student = Student::find($id);
+
+    // also fetch related user
+    $user = $student->user;
 
 
+     $request->validate([
+      'email' => 'required|email|unique:users,email,'.$student->user_id,
+      'username' => 'required|unique:users,user_name,'.$student->user_id,
+    ]);
 
-       //checking if admin is also updating his profile photo along with other data
-    if( $request->hasFile('photo')){
+    // update student info
+    $student->name = $request->full_name;
+    $student->roll_id = $request->roll_id;
+    $student->dob = $request->dob;
+    $student->gender = $request->gender;
+    $student->status = $request->status;
+    $student->parent_name = $request->parent_name;
+    $student->parent_occupation = $request->parent_occupation;
+    $student->parent_gender = $request->parent_gender;
+    $student->State_of_origin = $request->State_of_origin;
+    $student->phone_number = $request->phone_number;
+    $student->address = $request->address;
+    $student->nationality = $request->nationality;
+    $student->class_id = $request->class_id;
 
-        //save the request photo in a variable
+    // update photo if new one uploaded
+    if ($request->hasFile('photo')) {
         $file = $request->file('photo');
-
-         //update the profile image in the image folder directory, to avoid show previous image repeatedly
-         @unlink(public_path('uploads/student_photos/'.$student->photo));
-
-        //generating unique name for the image 
-        $imageName = date('YmdHi'). '.' .$file->getClientOriginalName(); // sample-> 20250118.pic_name.png
-
-        //move the photo to the uploads directory
+        @unlink(public_path('uploads/student_photos/'.$student->photo));
+        $imageName = date('YmdHi').'.'.$file->getClientOriginalName();
         $file->move(public_path('uploads/student_photos'), $imageName);
-
-        //save new admin profile image in the database
-        $student['photo'] = $imageName;
-
-
+        $student->photo = $imageName;
     }
-      //save data
-      $student->save();
-  
 
-    $notification = array(
+     // ✅ update user table (email + username + password)
+     $user->email = $request->email;
+     $user->user_name = $request->username;
+
+     if (!empty($request->password)) {
+         $user->password = Hash::make($request->password);
+     }
+
+     $user->save();
+
+     $student->save();
+
+    $notification = [
         'message' => 'Student Updated Successfully!',
         'alert-type' => 'success'
-    );
+    ];
 
-    //redirect back to same page
- 
     return redirect()->route('manage.student')->with($notification);
-    }// end method
+}
+// end method
 
     public function DeleteStudent($id){
         

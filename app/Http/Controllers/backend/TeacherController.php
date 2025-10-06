@@ -144,6 +144,16 @@ class TeacherController extends Controller
     public function UpdateTeacher(Request $request){
         $id = $request->id;
         $teacher = Teacher::find($id);
+
+         // also fetch related user
+    $user = $teacher->user;
+
+
+     $request->validate([
+      'email' => 'required|email|unique:users,email,'.$teacher->user_id,
+      'username' => 'required|unique:users,user_name,'.$teacher->user_id,
+    ]);
+
         $teacher->name = $request->full_name;
         $teacher->address = $request->address;
         $teacher->nationality = $request->nationality;
@@ -158,7 +168,7 @@ class TeacherController extends Controller
  
          //save the request photo in a variable
          $file = $request->file('photo');
- 
+         @unlink(public_path('uploads/teachers_photos/'.$teacher->photo));
          //generating unique name for the image 
          $imageName = date('YmdHi'). '.' .$file->getClientOriginalName(); // sample-> 20250118.pic_name.png
  
@@ -166,12 +176,22 @@ class TeacherController extends Controller
          $file->move(public_path('uploads/teachers_photos'), $imageName);
  
          //save new admin profile image in the database
-         $teacher['photo'] = $imageName;
+         $teacher->photo= $imageName;
  
      }
      $teacher->gender = $request->gender;
     
-     //save data
+    
+     // ✅ update user table (email + username + password)
+     $user->email = $request->email;
+     $user->user_name = $request->username;
+
+     if (!empty($request->password)) {
+         $user->password = Hash::make($request->password);
+     }
+
+      //save data
+     $user->save();
      $teacher->save();
 
 

@@ -36,7 +36,7 @@
                                                 <th>#</th>
                                                 <th>Photo</th>
                                                 <th>Students Name</th>
-                                                <th>Roll Id</th>
+                                                <th>Student Id</th>
                                                 <th>Admission Date</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
