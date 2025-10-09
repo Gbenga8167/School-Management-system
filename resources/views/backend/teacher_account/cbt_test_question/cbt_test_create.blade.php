@@ -85,9 +85,10 @@
                     <div class="col-sm-10">
                     <select  name="term" required class="form-select" aria-label="Default select example">
                     <option selected value="">--Select Term--</option>
-                         <option value="First Term">First Term</option>   
-                         <option value="Second Term">Second Term</option>  
-                         <option value="Third Term">Third Term</option>           
+
+                         @foreach($terms as $term)
+                        <option value="{{$term->name}}">{{$term->name}}</option>
+                         @endforeach
                         </select>
                     </div>
                    
@@ -98,10 +99,11 @@
                     <label for="example-text-input" class="col-sm-2 col-form-label">Academic Session</label>
                     <div class="col-sm-10">
                         <select   name="session" required class="form-select" aria-label="Default select example">
-                        <option selected value="">--Select Academic Session--</option>
-                         <option value="2025/2026">2025/2026</option>   
-                         <option value="2026/2027">2026/2027</option>  
-                         <option value="2027/2028">2027/2028</option>           
+                        <option selected value="">--Select Session--</option>
+
+                         @foreach($sessions as $session)
+                        <option value="{{$session->name}}">{{$session->name}}</option>
+                         @endforeach   
                         </select>
                     </div>
                     </div>

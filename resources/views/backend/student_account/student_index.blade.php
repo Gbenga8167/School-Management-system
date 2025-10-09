@@ -128,7 +128,6 @@ $studentClassName = \App\Models\Classes::where('id', $studentClassId)->value('cl
             </div>
         </div>
     </div>
-</div>
 
 
     <!-- 2. Quick Stats Cards -->

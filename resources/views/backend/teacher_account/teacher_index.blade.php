@@ -143,19 +143,7 @@ $gradeCounts = $gradeDistribution->values();
             </div>
         </div>
     </div>
-</div>
 
-
-<!-- Script for Live Time -->
-<script>
-    function updateTime() {
-        let now = new Date();
-        let options = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
-        document.getElementById('live-time').textContent = now.toLocaleTimeString([], options);
-    }
-    setInterval(updateTime, 1000);
-    updateTime(); // Initial call
-</script>
 
 
     <!-- Quick Stats Cards -->
@@ -261,7 +249,7 @@ $gradeCounts = $gradeDistribution->values();
     </div>
 </div>
 
-
+</div> <!-- closed div class="container-fluid" -->
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>

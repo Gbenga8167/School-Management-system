@@ -133,41 +133,54 @@
     showQuestion(currentIndex);
 
     // ==== SUBMIT (auto or manual) via AJAX ====
-    function submitTest(auto = false) {
-        clearInterval(timerInterval);
+function submitTest(auto = false) {
+    clearInterval(timerInterval);
 
-        if (!auto) {
-            const ok = confirm("Are you sure you want to submit your test? You cannot change your answers after submitting.");
-            if (!ok) {
-                setInterval(tick, 1000);
-                return;
-            }
+    if (!auto) {
+        const ok = confirm("Are you sure you want to submit your test? You cannot change your answers after submitting.");
+        if (!ok) {
+            setInterval(tick, 1000);
+            return;
         }
-
-        fetch("{{ route('student.cbt.submit', $attempt->id) }}", {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                'Accept': 'application/json'
-            }
-        })
-        .then(res => res.ok ? res.json() : Promise.reject(res))
-        .then(data => {
-            if (data && data.success) {
-                alert('Test submitted! Your score: ' + data.score);
-                window.location.href = "{{ route('student.index') }}";
-            } else {
-                alert('Could not submit. Please try again.');
-            }
-        })
-        .catch(err => {
-            console.error('Submit failed', err);
-            window.location.href = "{{ route('student.index') }}";
-        });
     }
 
-    document.getElementById('submitBtn').addEventListener('click', () => submitTest(false));
+    fetch("{{ route('student.cbt.submit', $attempt->id) }}", {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+            'Accept': 'application/json'
+        }
+    })
+    .then(res => res.ok ? res.json() : Promise.reject(res))
+    .then(data => {
+        if (data && data.success) {
+            Swal.fire({
+                title: 'Test Submitted!',
+                text: 'You Scored: ' + data.score,
+                icon: 'success',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#3085d6'
+            }).then(() => {
+                window.location.href = "{{ route('student.index') }}";
+            });
+        } else {
+            Swal.fire({
+                title: 'Submission Failed',
+                text: 'Could not submit. Please try again.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    })
+    .catch(err => {
+        console.error('Submit failed', err);
+        window.location.href = "{{ route('student.index') }}";
+    });
+}
+
+document.getElementById('submitBtn').addEventListener('click', () => submitTest(false));
 })();
+
 </script>
 
 

@@ -22,6 +22,10 @@ class CBTTestController extends Controller
     public function CBTCreate(){
 
        
+        //Fetch only the current term and session (admin controlled)
+        $terms = Term::where('is_current', true)->get();
+        $sessions = AcademicSession::where('is_current', true)->get();
+
         $user = Auth::user();
         $teacher  = $user->teacher;
         if(! $teacher){
@@ -38,7 +42,7 @@ class CBTTestController extends Controller
         $assignedClasses = Classes::whereHas('assignedTeachers', function($query) use ($teacherId){
             $query->where('teacher_id', $teacherId); 
         })->get();
-        return view('backend.teacher_account.cbt_test_question.cbt_test_create', compact('assignedSubject', 'assignedClasses'));
+        return view('backend.teacher_account.cbt_test_question.cbt_test_create', compact('assignedSubject', 'assignedClasses', 'sessions', 'terms'));
     
     
     }//end method
