@@ -43,7 +43,11 @@ $adminData = App\Models\User::findOrFail(Auth::user()->id);
                 <ul class="sub-menu" aria-expanded="false">
                     <li><a href="{{route('create.class')}}">Create Classes</a></li>
                     <li><a href="{{route('manage.classes')}}">Manage Classes</a></li>
+<<<<<<< HEAD
                     <li><a href="{{route('add.assigned.class.teacher')}}">Assign Class Teacher</a></li>
+=======
+                    <li><a href="{{route('add.assigned.class.teacher')}}">Assign Classes Teacher</a></li>
+>>>>>>> 84dfdad576b885ee2e207692fada1eeb65920230
                     <li><a href="{{route('manage.assigned.class.teacher')}}">Manage Assigned Class Teacher</a></li>
                     
                     
