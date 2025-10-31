@@ -21,6 +21,7 @@
                 <div class="mb-3">
                      <label>School Address, Phone, Email etc..</label>
                      <div>
+                        
                          <textarea name="address" class="form-control" rows="5" style="height: 150px;">{{ $setting->address ?? ''  }}</textarea>
 
                      </div>
