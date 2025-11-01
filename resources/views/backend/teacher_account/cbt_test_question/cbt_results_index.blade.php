@@ -17,13 +17,13 @@
         @foreach($groupedResults as $subject => $subjectResults)
             <div class="card mb-4 shadow-sm border-0 rounded-lg">
                 <div class="card-header" style="background: linear-gradient(90deg, #6f42c1, #5a32a3); color: white;">
-                    <h5 class="mb-0" style="color:white">{{ $subject }}</h5>
+                    <h5 class="mb-0" style="color:white">{{ ucwords(strtolower($subject)) }}</h5>
                 </div>
                 <div class="card-body p-0 table-responsive">
                     <table class="table table-bordered table-striped mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th>Student</th>
+                                <th>Student Name</th>
                                 <th>Class</th>
                                 <th>Assessment Type</th>
                                 <th>Score</th>
@@ -33,8 +33,8 @@
                         <tbody>
                             @foreach($subjectResults as $result)
                                 <tr>
-                                    <td><b>{{ $result->student_name }}</b></td>
-                                    <td><b>{{ $result->class_name }}</b></td>
+                                    <td><b>{{ucwords(strtolower($result->student_name)) }}</b></td>
+                                    <td><b>{{strtoupper($result->class_name) }}</b></td>
                                     <td>{{ ucfirst($result->assessment_type) }}</td>
                                     <td><span class="fw-bold text-purple-700">{{ $result->score }}</span></td>
                                     <td>
