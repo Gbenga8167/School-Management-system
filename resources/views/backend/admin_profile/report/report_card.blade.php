@@ -1,0 +1,402 @@
+@extends('backend.admin_profile.admin.admin_dashboard')
+@section('admin')
+
+
+@php
+    use App\Models\SchoolSetting;
+    $schoolSetting = SchoolSetting::first();
+@endphp
+
+<style>
+
+    table.deep-border tbody td,
+    table.deep-border tbody th{
+        border:0.5px solid black;
+    }
+
+    .table-responsive{
+        position:relative;
+    }
+    .fixed-header thead th{
+        position:sticky;
+        top:0;
+        z-index:10;
+        background-color:#343a40;
+        color:#fff;
+    }
+    
+        
+    @media print{
+        body{
+           -webkit-print-color-adjust:exact !important;
+           print-color-adjust:exact !important;
+           color-adjust:exact !important;
+        }
+
+        /*Hide element that shouldnt print*/
+
+        .no-print{
+            display:none !important;
+
+        }
+
+
+        /*Ensure each student starts on a new page*/
+        .page-break{
+            page-break-after:always;
+
+        }
+        
+        /* prevent margin collapse and spacing issues*/
+        .student-report{
+            margin-top:0;
+            padding-top:0;
+        }
+
+        /*add school watermark*/
+        body::before{
+            content:"";
+            position:fixed;
+            background: url('{{ $schoolSetting && $schoolSetting->logo ? asset("uploads/logo_images/" . $schoolSetting->logo) : asset("uploads/default.png") }}');
+            background-size:cover;
+            background-position:top;
+            opacity:0.1;
+            width:100%;
+            height:70%;
+            margin-top:300px;
+            z-index:-1;
+        }
+
+        /* Normal layout spacing for student section*/
+        .student-report{
+            margin-bottom:20px;
+            border:1px solid #ccc;
+            padding:15px;
+            border-radius:10px;
+        }
+
+        
+    }
+ 
+
+
+    @media(max-width:576px){
+        .table-responsive{
+            max-height:200vh;
+        }
+    }
+
+    
+
+
+</style>
+
+
+<div class="no-print" >
+<h4 style="text-align:center; padding-top:20px;" >
+     <u>
+     REPORT CARDS &mdash;
+    {{$session->name}} &bull;
+    {{strtoupper($term->name)}}&bull;
+    {{$class->class_name ?? $students->first()->report_class->name ?? 'unknown class'}}
+     </u>
+    
+</h4><br>
+
+<p style="text-align:center; padding-buttom:20px;">
+   <em>Tip : if pages print with extral space or blank, check printer settings like margins or use "Custom"  page range </em> 
+</p>
+</div>
+
+
+<!-- Print All Result Button i-->
+<!-- Print All Result Button And Clear All Button 
+ From Appearing on the page if the class, 
+ term and session does not exist i-->
+
+@if($students->isEmpty())
+
+<p style="font-size:20px; text-align:center; color:red;">
+    Results Unavailable.
+  </p>
+
+@else
+<div class="d-flex justify-content-around mb-3 no-print " >
+        <button class="btn btn-sm btn-success clear-all"
+         data-class-id="{{$class->id}}" 
+         data-term="{{$term->name}}" 
+         data-session="{{$session->name}}">
+           Clear All Students
+        </button>
+
+        <button class="btn btn-sm btn-dark" onclick="window.print()">
+           Print All Result
+        </button>
+    </div>
+@endif<!-- End Logic Print All Result Button And Clear All Button From Appearing on the page if the class, term and session does not exist i-->
+
+
+<!-- All Report-Cards  i-->
+<div id="all-report-cards">
+
+   @forelse($students as $student)
+   {{--Result fetch per student to check if there are
+    students assigned to the selected class--}}
+
+
+    <div id="report-card-{{ $student->id }}" class="border rounded p-4 shadow-sm  student-report table-responsive">
+      @include('backend.admin_profile.report.report_header', [
+      'settings' => $settings,
+       'student' => $student,
+      'class' => $student->report_class,
+      'term' => $term,
+      'session' => $session,
+      'totals' => $student->score_summary,
+       ])
+
+      @php
+      $results = \App\Models\Result::where([
+        'student_id' =>$student->id,
+        'term' =>$term->name,
+        'session' =>$session->name,
+        ])->get();
+
+       
+     @endphp
+
+    
+     <!-- All Report-Cards is empty -->
+     @if($results->isEmpty())
+    
+     <p style="font-size:18px; text-align:center; color:orange;">No Result Declared For {{ucwords(strtolower($student->name))}}</p>
+     @else
+
+     {{-- Display Score Table --}}
+
+     @include('backend.admin_profile.report.report_subject_table', [
+     'results' => $results,
+     ])
+
+      {{-- Display Psychomotor Table --}}
+      @include('backend.admin_profile.report.psycho_moto_result_table', [
+       'psychomotor' => $student->psychomotor,
+     ])
+
+     {{-- Table Footer  TEACHER AND PRINCIPAL COMMENT --}}
+
+     <table class="table" style="width:90%;" align="center">
+        <tr >
+        <td style="width:70%" colspan ="3">
+            <strong style="font-size:15px;"><u>Class Teacher's Comment :</u> </strong> 
+              {{ucwords(strtolower($student->psychomotor->teacher_comment ?? '_______'))}}
+              <br>
+
+              <strong style="font-size:15px;"><u>Principal's Comment : </u></strong>
+            {{ucwords(strtolower($student->psychomotor->principal_comment ?? '_______'))}}
+            <br>
+
+            <strong style="font-size:15px;"><u>Next Term Begins : </u></strong>
+            {{isset($nextTermBegins) ? \carbon\carbon::parse($nextTermBegins)->format('l, jS F, Y') :'________'}}<br>
+           <!-- how to add student name at the comment session
+             {{ucwords(strtolower($student->name?? 'N/A'))}} -->
+       </td>
+
+       {{--END Table Footer  TEACHER AND PRINCIPAL COMMENT --}}
+
+
+       {{-- Table Footer  SCHOOL STAMP --}}
+       <td style="width:20%; padding:4px; text-align:center;"> 
+           @if(!empty($schoolSetting->stamp))
+           <img src="{{ asset('uploads/stamp_images/'.$schoolSetting->stamp) }}" 
+           alt="School Stamp" width="120" style="width:80px; height:auto;">
+           @endif
+        </td>
+        {{-- END Table Footer  SCHOOL STAMP --}}
+      </tr>
+
+      </table>  
+
+
+     <div class="d-flex justify-content-around mt-3 no-print" >
+
+        {{-- INDIVIDUAL CLEAR BUTTON PER STUDENT--}}
+
+        <button class="btn btn-sm  clear-student 
+        {{ $student->clearance?->is_cleared? 'btn-danger' : 'btn-primary'}}" 
+        data-student-id="{{$student->id}}" 
+         data-class-id="{{$class->id}}" 
+         data-term="{{$term->name}}" 
+         data-session="{{$session->name}}"
+         data-is-cleared="{{$student->clearance?->is_cleared? '1' : '0'}}" >
+            {{ $student->clearance?->is_cleared? 'Uncleared Student' : 'Clear Student'}}
+
+        </button>
+
+        {{-- INDIVIDUAL PRINT BUTTON PER STUDENT --}}
+            <button class="btn btn-sm btn-primary print-single"  data-student-id="{{$student->id}}">
+           Print Student Result
+        </button>
+        
+    </div>
+
+    {{-- FORCE PAGE BREAK AFTER EACH STUDENT --}}
+    @if(!$loop->last)
+    <div class="page-break"></div>
+    @endif
+
+    
+  @endif
+  <hr style="margin:25px 0; height:3px; color:purple" class="no-print">
+  
+  </div> <!-- close div for single-report-card --> 
+  @empty
+
+
+ <p style="font-size:18px; text-align:center; color:red;">
+    No Results Found For This Class, Term, or Session.
+  </p>
+
+ 
+ 
+  @endforelse
+
+
+</div><!--close div for print all -->
+
+
+
+
+    <script scr="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      
+
+<script>
+
+    $(document).ready(function(){
+       //Clear Single Student
+       $(document).on('click', '.clear-student', function(){
+
+        //const isCleared = $(this).data('is-cleared');
+        //const actionText = isCleared? 'unclear' : 'clear';
+
+        //if(!confirm(`Are you sure you want to ${actionText} this student?`))
+        //return;
+        const studentId = $(this).data('student-id');
+        const classId = $(this).data('class-id');
+        const term = $(this).data('term');
+        const session = $(this).data('session');
+        $.ajax({
+            url: `/admin/clearance/toggle/${studentId}`,
+            type: 'POST',
+            data: {
+                class_id: classId,
+                term: term,
+                session: session,
+                _token: '{{csrf_token()}}'
+            },
+            success: function(response){
+                alert(response.message);
+                location.reload();//Refresh view to update button
+            },
+            error: function(){
+                alert('Failed to update clearance.');
+                
+            }
+        });
+       });
+
+       //print single student result
+       
+       $('.print-single').on('click', function(){
+        const studentId = $(this).data('student-id');
+
+        //hide all report cards
+        $('[id^="report-card-"]').hide();
+        
+        //show only the selected student's report
+        $(`#report-card-${studentId}`).show();
+
+        //hide elements not meant for printing
+        $('.no-print').hide();
+
+        //Trigger browser print
+        window.print();
+        
+         //After printing restore all content
+         setTimeout(()=>{
+            $('[id^="report-card-"]').show();
+            $('.no-print').show();
+        }, 1000)
+   
+    });
+
+
+       //Clear All Student
+
+       $(document).on('click', '.clear-all', function(){
+        if(!confirm('Are you sure you want to clear all student?'))
+        return;
+    
+        const classId = $(this).data('class-id');
+        const term = $(this).data('term');
+        const session = $(this).data('session');
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url: '/admin/clearance/clear-all', 
+            method: 'POST',
+            data: {
+                class_id: classId,
+                term: term,
+                session: session,
+            },
+            success: function(response){
+                alert(response.message);
+                //Refresh all button
+                location.reload();
+            },
+            error: function(){
+                alert('Fail to clear all students.');
+                
+            }
+        });
+       });
+
+
+       // print all
+       $('#print-all-btn').on('click', function(){
+        const allContent = document.getElementById('all-report-cards');
+        if(!allContent){
+            alert('Report content not found');
+            return;
+        }
+        const win = window.open('', '_blank');
+        win.document.write(`<html> <head>
+         <title>Print Report</title></head>
+         <body>
+       ${allContent.innerHTML} 
+       </body>
+       </html> `);
+
+        win.document.close();
+        win.focus();
+        win.print();
+        win.close();
+       });
+
+
+    });
+
+
+
+
+
+</script>
+
+
+
+@endsection

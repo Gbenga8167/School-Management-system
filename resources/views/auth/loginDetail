@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>LOGIN PAGE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{asset('../BackendTem/assets/images/favicon.ico')}}">
+
+    <!-- Bootstrap Css -->
+    <link href="{{asset('../BackendTem/assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{{asset('../BackendTem/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="{{asset('../BackendTem/assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+
+    <style>
+        /* ===== Animations ===== */
+        .auth-body-bg {
+            background: linear-gradient(135deg, #007bff, #17a2b8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            border-radius: 20px;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-in-out;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-body {
+            animation: popIn 1s ease;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .form-control {
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #17a2b8;
+            box-shadow: 0 0 10px rgba(23, 162, 184, 0.4);
+        }
+
+        .btn-info {
+            border-radius: 10px;
+            font-weight: bold;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(23, 162, 184, 0.5);
+        }
+
+        h1 {
+            font-weight: 700;
+            animation: fadeDown 1s ease;
+        }
+
+        @keyframes fadeDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== Logo Animation ===== */
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px auto;
+            display: block;
+            animation: bounceIn 1.2s ease;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body class="auth-body-bg">
+    <div class="wrapper-page">
+        <div class="container-fluid p-0">
+            <div class="card">
+                <div class="card-body text-center">
+
+                    <!-- 🔹 Logo with Animation -->
+                    <img src="{{asset('uploads/logo_images/logo.jpg')}}" alt="Logo" class="login-logo">
+                    
+                    <h1 class="text-dark mb-4">Log In</h1>
+
+                    <div class="p-3">
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
+
+                            <!-- Username -->
+                            <div class="form-group mb-3">
+                                <input class="form-control @error('user_name') is-invalid @enderror" type="text"
+                                    name="user_name" :value="old('user_name')" placeholder="Username">
+                                @error('user_name')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <!-- Password -->
+                            <div class="form-group mb-3">
+                                <input class="form-control @error('password') is-invalid @enderror" type="password"
+                                    name="password" placeholder="Password">
+                                @error('password')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <!-- Remember Me -->
+                            <div class="form-group mb-3 d-flex align-items-center">
+                                <input type="checkbox" class="form-check-input me-2" id="customCheck1">
+                                <label class="form-check-label" for="customCheck1">Remember me</label>
+                            </div>
+
+                            <!-- Login Button -->
+                            <div class="form-group mb-3 text-center">
+                                <button class="btn btn-info w-100 waves-effect waves-light" type="submit">Log In</button>
+                            </div>
+
+                            <!-- Links -->
+                            <div class="d-flex justify-content-between mt-3">
+                                <a href="auth-recoverpw.html" class="text-muted"><i class="mdi mdi-lock"></i> Forgot
+                                    password?</a>
+                                <a href="auth-register.html" class="text-muted"><i class="mdi mdi-account-circle"></i>
+                                    Create account</a>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="{{asset('../BackendTem/assets/libs/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('../BackendTem/assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('../BackendTem/assets/libs/metismenu/metisMenu.min.js')}}"></script>
+    <script src="{{asset('../BackendTem/assets/libs/simplebar/simplebar.min.js')}}"></script>
+    <script src="{{asset('../BackendTem/assets/libs/node-waves/waves.min.js')}}"></script>
+    <script src="{{asset('../BackendTem/assets/js/app.js')}}"></script>
+</body>
+</html>
+
