@@ -83,8 +83,6 @@
 
                                <a class="dropdown-item" href="{{route('teacher.password.change')}}"><i class="ri-user-line align-middle me-1"></i> Password Change</a>
                             
-                            
-                                
                                
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item text-danger" href="{{route('teacher.logout')}}"><i class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</a>
