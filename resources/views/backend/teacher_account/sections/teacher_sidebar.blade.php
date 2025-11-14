@@ -87,6 +87,7 @@ $teacherphoto = App\Models\Teacher::where('user_id', $id)->first();
                 </a>
                 <ul class="sub-menu" aria-expanded="false">
                     <li><a href="{{route('select.result')}}"> Result Upload Online</a></li>
+                    <li><a href="{{route('teacher.report.card.selection')}}"> Check Result Per Class</a></li>
                    
                 
                 

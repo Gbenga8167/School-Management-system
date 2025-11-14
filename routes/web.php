@@ -22,6 +22,7 @@ use App\Http\Controllers\backend\StudentAccount\StudentCBTController;
 use App\Http\Controllers\backend\StudentAccount\StudentAccountController;
 use App\Http\Controllers\TeacherBackendController\TeacherAccountController;
 use App\Http\Controllers\TeacherBackendController\TeacherPsychomotorController;
+use App\Http\Controllers\TeacherBackendController\TeacherCheckResultPerClass;
 
 
 
@@ -193,6 +194,15 @@ Route::get('/teacher/dashboard', function () {
 
 
     });
+
+
+    Route::controller(TeacherCheckResultPerClass::class)->group(function(){
+    Route::get('teacher/report-card/select','ShowReportSelectForm')->name('teacher.report.card.selection');
+    Route::get('teacher/report-card','Index')->name('teacher.report.card');
+    
+  
+});
+
 
       });// end teacher route
 
