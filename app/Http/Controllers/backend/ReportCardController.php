@@ -159,7 +159,7 @@ class ReportCardController extends Controller
         $percentage >= 40 => 'WEAK PASS',
         default => 'FAIL',
     };
-
+    
     // Psychomotor / affective
     $psychomotor = PsychoAssessment::where([
         'student_id' => $student->id,
