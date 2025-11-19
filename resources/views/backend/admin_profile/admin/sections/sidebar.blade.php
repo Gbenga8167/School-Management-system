@@ -112,6 +112,7 @@ $adminData = App\Models\User::findOrFail(Auth::user()->id);
                 <li><a href="{{route('admin.report.card.selection')}}"> Generate Report Cards</a></li>
                 <li><a href="{{route('admin.ca.selection')}}"> Generate Assessment Report</a></li>
                 </ul>
+                
               
             </li>
 
