@@ -95,7 +95,7 @@
 <div class="no-print" >
 <h4 style="text-align:center; padding-top:20px;" >
      <u>
-     REPORT CARDS &mdash;
+    ASSESSMENT REPORT &mdash;
     {{$session->name}} &bull;
     {{strtoupper($term->name)}}&bull;
     {{$class->class_name ?? $students->first()->report_class->name ?? 'unknown class'}}
@@ -121,6 +121,8 @@
   </p>
 
 @else
+
+<!--
 <div class="d-flex justify-content-around mb-3 no-print " >
         <button class="btn btn-sm btn-success clear-all"
          data-class-id="{{$class->id}}" 
@@ -129,9 +131,13 @@
            Clear All Students
         </button>
 
-        <button class="btn btn-sm btn-dark" onclick="window.print()">
+-->
+
+      <br><center>
+         <button class="btn btn-sm btn-dark  no-print" onclick="window.print()">
            Print All Result
         </button>
+    </center> 
     </div>
 @endif<!-- End Logic Print All Result Button And Clear All Button From Appearing on the page if the class, term and session does not exist i-->
 
@@ -145,7 +151,7 @@
 
 
     <div id="report-card-{{ $student->id }}" class="border rounded p-4 shadow-sm  student-report table-responsive">
-      @include('backend.admin_profile.report.report_header', [
+      @include('backend.admin_profile.ca_report.report.report_header', [
       'settings' => $settings,
        'student' => $student,
       'class' => $student->report_class,
@@ -173,32 +179,36 @@
 
      {{-- Display Score Table --}}
 
-     @include('backend.admin_profile.report.report_subject_table', [
+     @include('backend.admin_profile.ca_report.report.report_subject_table', [
      'results' => $results,
      ])
 
-      {{-- Display Psychomotor Table --}}
+
+      {{--i just commented==>>>>>>> Display Psychomotor Table 
       @include('backend.admin_profile.report.psycho_moto_result_table', [
        'psychomotor' => $student->psychomotor,
      ])
+     --}}
 
      {{-- Table Footer  TEACHER AND PRINCIPAL COMMENT --}}
 
+
+     <!--
      <table class="table" style="width:90%;" align="center">
         <tr >
         <td style="width:70%" colspan ="3">
             <strong style="font-size:15px;"><u>Class Teacher's Comment :</u> </strong> 
-              {{ucwords(strtolower($student->psychomotor->teacher_comment ?? '_______'))}}
+            {{-- {{ucwords(strtolower($student->psychomotor->teacher_comment ?? '_______'))}} --}}  
               <br>
 
               <strong style="font-size:15px;"><u>Principal's Comment : </u></strong>
-            {{ucwords(strtolower($student->psychomotor->principal_comment ?? '_______'))}}
+          {{--  {{ucwords(strtolower($student->psychomotor->principal_comment ?? '_______'))}} --}}  
             <br>
 
             <strong style="font-size:15px;"><u>Next Term Begins : </u></strong>
-            {{isset($nextTermBegins) ? \carbon\carbon::parse($nextTermBegins)->format('l, jS F, Y') :'________'}}<br>
-           <!-- how to add student name at the comment session
-             {{ucwords(strtolower($student->name?? 'N/A'))}} -->
+           {{-- {{isset($nextTermBegins) ? \carbon\carbon::parse($nextTermBegins)->format('l, jS F, Y') :'________'}}  --}} <br>
+            how to add student name at the comment session
+             {{ucwords(strtolower($student->name?? 'N/A'))}} 
        </td>
 
        {{--END Table Footer  TEACHER AND PRINCIPAL COMMENT --}}
@@ -206,17 +216,18 @@
 
        {{-- Table Footer  SCHOOL STAMP --}}
        <td style="width:20%; padding:4px; text-align:center;"> 
-           @if(!empty($schoolSetting->stamp))
+         {{-- @if(!empty($schoolSetting->stamp))  --}}  
            <img src="{{ asset('uploads/stamp_images/'.$schoolSetting->stamp) }}" 
            alt="School Stamp" width="120" style="width:80px; height:auto;">
-           @endif
+         {{--   @endif --}} 
         </td>
         {{-- END Table Footer  SCHOOL STAMP --}}
       </tr>
 
-      </table>  
+      </table> -->
 
 
+      <!--
      <div class="d-flex justify-content-around mt-3 no-print" >
 
         {{-- INDIVIDUAL CLEAR BUTTON PER STUDENT--}}
@@ -230,12 +241,15 @@
          data-is-cleared="{{$student->clearance?->is_cleared? '1' : '0'}}" >
             {{ $student->clearance?->is_cleared? 'Uncleared Student' : 'Clear Student'}}
 
-        </button>
+        </button> 
+      -->
 
         {{-- INDIVIDUAL PRINT BUTTON PER STUDENT --}}
-            <button class="btn btn-sm btn-primary print-single"  data-student-id="{{$student->id}}">
+           <center>
+            <button class="btn btn-sm btn-primary print-single no-print"  data-student-id="{{$student->id}}">
            Print Student Result
         </button>
+           </center> <br><br>
         
     </div>
 

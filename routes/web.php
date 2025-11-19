@@ -23,7 +23,7 @@ use App\Http\Controllers\backend\StudentAccount\StudentAccountController;
 use App\Http\Controllers\TeacherBackendController\TeacherAccountController;
 use App\Http\Controllers\TeacherBackendController\TeacherPsychomotorController;
 use App\Http\Controllers\TeacherBackendController\TeacherCheckResultPerClass;
-
+use App\Http\Controllers\backend\CaResultController;
 
 
 /*
@@ -363,8 +363,21 @@ Route::post('/promotion/update/{id}', 'updatePromotion')->name('promotion.update
     });
 
     Route::controller(ReportCardController::class)->group(function(){
+         //All result print route
     Route::get('admin/report-card/select','ShowReportSelectForm')->name('admin.report.card.selection');
     Route::get('admin/report-card','Index')->name('admin.report.card');
+
+    //single result print route
+    Route::get('/admin/report-card/single/{student_id}/{class_id}/{term_id}/{session_id}', 'SingleStudentReport')->name('admin.single.report');
+
+    
+  
+});
+
+//CA ASSEMENT FOR ADMIN
+Route::controller(CaResultController::class)->group(function(){
+    Route::get('admin/ca/select','ShowCaForm')->name('admin.ca.selection');
+    Route::get('admin/ca/result','Index')->name('admin.ca.result');
     
   
 });

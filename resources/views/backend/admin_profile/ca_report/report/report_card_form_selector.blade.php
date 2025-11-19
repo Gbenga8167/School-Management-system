@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0">Generate | Report | Card</h4>
+            <h4 class="mb-sm-0">Generate | Assessment (CA)</h4>
 
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
@@ -28,7 +28,7 @@
 
                 <h4 class="card-title">Select Class, Term and Academic Session  </h4>
               
-                <form action="{{route('admin.report.card')}}" method="get">
+                <form action="{{route('admin.ca.result')}}" method="get">
                   
 
                     @if(session('error'))

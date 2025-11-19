@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\backend;
+namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Term;
 use App\Models\Result;
 use App\Models\Classes;
 use App\Models\Student;
 use App\Models\Clearance;
 use App\Models\TermCalendar;
-use Illuminate\Http\Request;
 use App\Models\SchoolSetting;
 use App\Models\AcademicSession;
 use App\Models\PsychoAssessment;
-use App\Http\Controllers\Controller;
 
-class ReportCardController extends Controller
+
+class CaResultController extends Controller
 {
-    public function ShowReportSelectForm(){
+       public function ShowCaForm(){
 
         $classes = Classes::orderBy('class_name')->get(); 
 
@@ -24,7 +25,7 @@ class ReportCardController extends Controller
         $terms = Term::where('is_current', true)->get();
         $sessions = AcademicSession::where('is_current', true)->get();
     
-        return view('backend.admin_profile.report.report_card_form_selector', 
+        return view('backend.admin_profile.ca_report.report.report_card_form_selector', 
         compact('classes', 'terms', 'sessions'));
     } //end method
 
@@ -111,7 +112,7 @@ class ReportCardController extends Controller
                 ])->first();
         }
     
-        return view('backend.admin_profile.report.report_card', [
+        return view('backend.admin_profile.ca_report.report.report_card', [
             'settings' => SchoolSetting::first(),
             'students' => $students,
             'term' => $term,
@@ -126,78 +127,7 @@ class ReportCardController extends Controller
 
     } //end method
 
-
-    public function SingleStudentReport($student_id, $class_id, $term_id, $session_id)
-{
-    $class = Classes::findOrFail($class_id);
-    $term = Term::findOrFail($term_id);
-    $session = AcademicSession::findOrFail($session_id);
-
-    $student = Student::findOrFail($student_id);
-
-    // Fetch student's results
-    $results = Result::where([
-        'student_id' => $student->id,
-        'term' => $term->name,
-        'session' => $session->name,
-    ])->get();
-
-    // compute summary
-    $grandTotal = $results->sum('total');
-    $subjectCount = $results->count();
-    $percentage = $subjectCount > 0 ? round($grandTotal / $subjectCount) : 0;
-
-    $remark = match (true) {
-        $percentage >= 70 => 'EXCELLENT',
-        $percentage >= 60 => 'GOOD',
-        $percentage >= 50 => 'CREDIT',
-        $percentage >= 45 => 'PASS',
-        $percentage >= 40 => 'WEAK PASS',
-        default => 'FAIL',
-    };
-
-    // Psychomotor / affective
-    $psychomotor = PsychoAssessment::where([
-        'student_id' => $student->id,
-        'class_id' => $class->id,
-        'term' => $term->name,
-        'session' => $session->name,
-    ])->first();
-
-    // Clearance status
-    $clearance = Clearance::where([
-        'student_id' => $student->id,
-        'class_id' => $class->id,
-        'term' => $term->name,
-        'session' => $session->name,
-    ])->first();
-
-    $student->report_class = $class->class_name;
-    $student->score_summary = [
-        'score' => $grandTotal,
-        'percentage' => $percentage,
-        'remark' => $remark
-    ];
-    $student->psychomotor = $psychomotor;
-    $student->clearance = $clearance;
-
-    // Calendar
-    $calendar = TermCalendar::where([
-        'term' => $term->name,
-        'session' => $session->name,
-    ])->first();
-
-    return view('backend.admin_profile.report.single_report_card', [
-        'settings' => SchoolSetting::first(),
-        'student' => $student,
-        'results' => $results,
-        'term' => $term,
-        'session' => $session,
-        'class' => $class,
-        'nextTermBegins' => $calendar?->next_term_begins,
-    ]);
 }
 
-
-     
-}
+   
+ 

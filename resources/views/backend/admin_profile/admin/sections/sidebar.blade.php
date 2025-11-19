@@ -110,8 +110,9 @@ $adminData = App\Models\User::findOrFail(Auth::user()->id);
                 <ul class="sub-menu" aria-expanded="false">
                 <li><a href="{{route('admin.result.upload')}}">Upload Result Online</a></li>
                 <li><a href="{{route('admin.report.card.selection')}}"> Generate Report Cards</a></li>
+                <li><a href="{{route('admin.ca.selection')}}"> Generate Assessment Report</a></li>
                 </ul>
-                
+              
             </li>
 
 

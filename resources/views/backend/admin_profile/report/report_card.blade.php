@@ -177,10 +177,12 @@
      'results' => $results,
      ])
 
-      {{-- Display Psychomotor Table --}}
-      @include('backend.admin_profile.report.psycho_moto_result_table', [
-       'psychomotor' => $student->psychomotor,
-     ])
+     <!-- PSYCHOMOTOR TABLE (ISOLATED PER STUDENT) -->
+<div class="student-psychomotor" id="psychomotor-{{ $student->id }}">
+    @include('backend.admin_profile.report.psycho_moto_result_table', [
+        'psychomotor' => $student->psychomotor,
+    ])
+</div>
 
      {{-- Table Footer  TEACHER AND PRINCIPAL COMMENT --}}
 
@@ -233,9 +235,16 @@
         </button>
 
         {{-- INDIVIDUAL PRINT BUTTON PER STUDENT --}}
-            <button class="btn btn-sm btn-primary print-single"  data-student-id="{{$student->id}}">
-           Print Student Result
-        </button>
+              <a href="{{ route('admin.single.report', [
+    'student_id' => $student->id,
+    'class_id' => $class->id,
+    'term_id' => $term->id,
+    'session_id' => $session->id,
+]) }}" 
+class="btn btn-sm btn-primary no-print">
+    Print Student Result
+</a>
+
         
     </div>
 
@@ -304,30 +313,36 @@
         });
        });
 
-       //print single student result
-       
-       $('.print-single').on('click', function(){
-        const studentId = $(this).data('student-id');
+       // PRINT SINGLE STUDENT RESULT
+$('.print-single').on('click', function () {
+    const studentId = $(this).data('student-id');
 
-        //hide all report cards
-        $('[id^="report-card-"]').hide();
-        
-        //show only the selected student's report
-        $(`#report-card-${studentId}`).show();
+    // Hide all report cards
+    $('[id^="report-card-"]').hide();
 
-        //hide elements not meant for printing
-        $('.no-print').hide();
+    // Hide all psychomotor tables
+    $('[id^="psychomotor-"]').hide();
 
-        //Trigger browser print
-        window.print();
-        
-         //After printing restore all content
-         setTimeout(()=>{
-            $('[id^="report-card-"]').show();
-            $('.no-print').show();
-        }, 1000)
-   
-    });
+    // Show only selected student's report
+    $(`#report-card-${studentId}`).show();
+
+    // Show only selected student's psychomotor
+    $(`#psychomotor-${studentId}`).show();
+
+    // Hide all non-print elements
+    $('.no-print').hide();
+
+    // Trigger print
+    window.print();
+
+    // Restore full page after print
+    setTimeout(() => {
+        $('[id^="report-card-"]').show();
+        $('[id^="psychomotor-"]').show();
+        $('.no-print').show();
+    }, 600);
+});
+
 
 
        //Clear All Student
