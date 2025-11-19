@@ -236,14 +236,14 @@
 
         {{-- INDIVIDUAL PRINT BUTTON PER STUDENT --}}
               <a href="{{ route('admin.single.report', [
-    'student_id' => $student->id,
-    'class_id' => $class->id,
-    'term_id' => $term->id,
-    'session_id' => $session->id,
-]) }}" 
-class="btn btn-sm btn-primary no-print">
-    Print Student Result
-</a>
+                             'student_id' => $student->id,
+                             'class_id' => $class->id,
+                             'term_id' => $term->id,
+                             'session_id' => $session->id,
+                         ]) }}" 
+                            class="btn btn-sm btn-primary no-print">
+                                Print Student Result
+              </a>
 
         
     </div>

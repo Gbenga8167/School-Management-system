@@ -31,6 +31,8 @@ class ReportCardController extends Controller
 
     public function Index(){
 
+        // ALL STUDENT RESULT
+
         //GET SUBJECT STUDENT RESULT TABLE FOR EACH STUDENT 
         //SELECTED BY ADMIN IN THE CLASS, SESSION AND TERM
         //A. validate query parameter
@@ -127,6 +129,8 @@ class ReportCardController extends Controller
     } //end method
 
 
+
+    //SINGLE STUDENT RESULT
     public function SingleStudentReport($student_id, $class_id, $term_id, $session_id)
 {
     $class = Classes::findOrFail($class_id);

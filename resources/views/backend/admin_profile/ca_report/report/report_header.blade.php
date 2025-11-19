@@ -71,6 +71,7 @@
         </td>
 
         <td style="text-align:center;">
+            <!--
         <h6 style="font-weight:bold;">Total Score : {{$totals['score']}}</h6> 
         </td>
 
@@ -81,7 +82,7 @@
             &nbsp; Remark : {{strtoupper($totals['remark'])}}
 
 </h6>
-       
+-->
        
         </td>
     </tr>
