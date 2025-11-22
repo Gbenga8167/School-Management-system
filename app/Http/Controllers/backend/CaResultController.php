@@ -125,7 +125,77 @@ class CaResultController extends Controller
 
         ]);
 
-    } //end method
+    } //end method  //SINGLE STUDENT RESULT
+    public function SingleStudentCaReport($student_id, $class_id, $term_id, $session_id)
+{
+    $class = Classes::findOrFail($class_id);
+    $term = Term::findOrFail($term_id);
+    $session = AcademicSession::findOrFail($session_id);
+
+    $student = Student::findOrFail($student_id);
+
+    // Fetch student's results
+    $results = Result::where([
+        'student_id' => $student->id,
+        'term' => $term->name,
+        'session' => $session->name,
+    ])->get();
+
+    // compute summary
+    $grandTotal = $results->sum('total');
+    $subjectCount = $results->count();
+    $percentage = $subjectCount > 0 ? round($grandTotal / $subjectCount) : 0;
+
+    $remark = match (true) {
+        $percentage >= 70 => 'EXCELLENT',
+        $percentage >= 60 => 'GOOD',
+        $percentage >= 50 => 'CREDIT',
+        $percentage >= 45 => 'PASS',
+        $percentage >= 40 => 'WEAK PASS',
+        default => 'FAIL',
+    };
+    
+    // Psychomotor / affective
+    $psychomotor = PsychoAssessment::where([
+        'student_id' => $student->id,
+        'class_id' => $class->id,
+        'term' => $term->name,
+        'session' => $session->name,
+    ])->first();
+
+    // Clearance status
+    $clearance = Clearance::where([
+        'student_id' => $student->id,
+        'class_id' => $class->id,
+        'term' => $term->name,
+        'session' => $session->name,
+    ])->first();
+
+    $student->report_class = $class->class_name;
+    $student->score_summary = [
+        'score' => $grandTotal,
+        'percentage' => $percentage,
+        'remark' => $remark
+    ];
+    $student->psychomotor = $psychomotor;
+    $student->clearance = $clearance;
+
+    // Calendar
+    $calendar = TermCalendar::where([
+        'term' => $term->name,
+        'session' => $session->name,
+    ])->first();
+
+    return view('backend.admin_profile.ca_report.report.single_ca', [
+        'settings' => SchoolSetting::first(),
+        'student' => $student,
+        'results' => $results,
+        'term' => $term,
+        'session' => $session,
+        'class' => $class,
+        'nextTermBegins' => $calendar?->next_term_begins,
+    ]);
+}
 
 }
 

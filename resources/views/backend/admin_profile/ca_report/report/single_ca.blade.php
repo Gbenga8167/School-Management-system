@@ -60,7 +60,7 @@
 <div class="student-report p-4 shadow-sm border rounded">
 
     {{-- HEADER --}}
-    @include('backend.admin_profile.report.report_header', [
+    @include('backend.admin_profile.ca_report.report.report_header', [
         'settings' => $settings,
         'student' => $student,
         'class' => $student->report_class,
@@ -70,12 +70,13 @@
     ])
 
     {{-- SUBJECT TABLE --}}
-    @include('backend.admin_profile.report.report_subject_table', [
+    @include('backend.admin_profile.ca_report.report.report_subject_table', [
         'results' => $results
     ])
 
+    <!--
     {{-- PSYCHOMOTOR --}}
-    @include('backend.admin_profile.report.psycho_moto_result_table', [
+    @include('backend.admin_profile.ca_report.report.psycho_moto_result_table', [
         'psychomotor' => $student->psychomotor
     ])
 
@@ -105,7 +106,7 @@
             </td>
         </tr>
     </table>
-
+    -->
 </div>
 
 @endsection

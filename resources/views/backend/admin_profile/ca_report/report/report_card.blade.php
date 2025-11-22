@@ -246,9 +246,15 @@
 
         {{-- INDIVIDUAL PRINT BUTTON PER STUDENT --}}
            <center>
-            <button class="btn btn-sm btn-primary print-single no-print"  data-student-id="{{$student->id}}">
-           Print Student Result
-        </button>
+<a href="{{ route('admin.single.ca.report', [
+                             'student_id' => $student->id,
+                             'class_id' => $class->id,
+                             'term_id' => $term->id,
+                             'session_id' => $session->id,
+                         ]) }}" 
+                            class="btn btn-sm btn-primary no-print">
+                                Print Student Result
+              </a>
            </center> <br><br>
         
     </div>

@@ -189,15 +189,15 @@
      <table class="table" style="width:90%;" align="center">
         <tr >
         <td style="width:70%" colspan ="3">
-            <strong style="font-size:15px;"><u>Class Teacher's Comment :</u> </strong> 
+            <strong style="font-size:15px;"><u>Class Teacher's Comment </u> : </strong> 
               {{ucwords(strtolower($student->psychomotor->teacher_comment ?? '_______'))}}
               <br>
 
-              <strong style="font-size:15px;"><u>Principal's Comment : </u></strong>
+              <strong style="font-size:15px;"><u>Principal's Comment </u> : </strong>
             {{ucwords(strtolower($student->psychomotor->principal_comment ?? '_______'))}}
             <br>
 
-            <strong style="font-size:15px;"><u>Next Term Begins : </u></strong>
+            <strong style="font-size:15px;"><u>Next Term Begins </u> : </strong>
             {{isset($nextTermBegins) ? \carbon\carbon::parse($nextTermBegins)->format('l, jS F, Y') :'________'}}<br>
            <!-- how to add student name at the comment session
              {{ucwords(strtolower($student->name?? 'N/A'))}} -->
@@ -245,6 +245,7 @@
                                 Print Student Result
               </a>
 
+              
         
     </div>
 

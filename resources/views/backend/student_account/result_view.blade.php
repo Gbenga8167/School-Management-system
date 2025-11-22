@@ -30,7 +30,7 @@ table.deep-border tbody td,
     body::before{
             content:"";
             position:fixed;
-            background:url('{{asset("uploads/logo_images/logo.jpg")}}');
+            background: url('{{ $schoolSetting && $schoolSetting->logo ? asset("uploads/logo_images/" . $schoolSetting->logo) : asset("uploads/default.png") }}');
             background-size:cover;
             background-position:top;
             opacity:0.1;
@@ -297,8 +297,8 @@ table.deep-border tbody td,
       </tr>
       <td>
  
-    <!--<button onclick="window.print()" class="btn btn-primary no-print">Print Results</button>
-    <button onclick="downloadPDF()" class="btn btn-danger no-print">Download as PDF</button>-->
+    <button onclick="window.print()" class="btn btn-primary no-print">Print Results</button>
+   <!-- <button onclick="downloadPDF()" class="btn btn-danger no-print">Download as PDF</button> -->
 
 
      </td>

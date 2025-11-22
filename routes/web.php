@@ -379,7 +379,8 @@ Route::controller(CaResultController::class)->group(function(){
     Route::get('admin/ca/select','ShowCaForm')->name('admin.ca.selection');
     Route::get('admin/ca/result','Index')->name('admin.ca.result');
     
-  
+  //single result print route
+    Route::get('/admin/report-card/single-ca/{student_id}/{class_id}/{term_id}/{session_id}', 'SingleStudentCaReport')->name('admin.single.ca.report');
 });
 
 

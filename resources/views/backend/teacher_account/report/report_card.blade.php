@@ -53,7 +53,7 @@
             padding-top:0;
         }
 
-        /*add school watermark*/
+        /*add school watermark
         body::before{
             content:"";
             position:fixed;
@@ -66,7 +66,7 @@
             margin-top:300px;
             z-index:-1;
         }
-
+*/
         /* Normal layout spacing for student section*/
         .student-report{
             margin-bottom:20px;
