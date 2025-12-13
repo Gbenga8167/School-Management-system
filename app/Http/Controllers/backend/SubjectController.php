@@ -19,10 +19,11 @@ class SubjectController extends Controller
 
         //validate user input
         $request->validate([
-
-            'subject_name' => 'required',
-            'status' => 'required',
-        ]);
+        'subject_name' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/'],
+        'status' => 'required',
+    ], [
+        'subject_name.regex' => 'Subject name can only contain letters, numbers, and spaces.',
+    ]);
         //second method of inserting into database
 
         $AlreadyExist = Subject::where('subject_name', $request->subject_name)->first();
@@ -80,11 +81,11 @@ class SubjectController extends Controller
 
         //validate user input
         $request->validate([
-
-            'subject_name' => 'required',
-            'status' => 'required',
-        ]);
-
+        'subject_name' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/'],
+        'status' => 'required',
+    ], [
+        'subject_name.regex' => 'Subject name can only contain letters, numbers, and spaces.',
+    ]);
         $id = $request->id;
         Subject::find( $id)->update([
             'subject_name' => $request->subject_name,

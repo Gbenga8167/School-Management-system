@@ -16,11 +16,12 @@ class ClassesController extends Controller
     public function StoreClasses(Request $request){
 
         //validate user input
-        $request->validate([
-
-            'class_name' => 'required',
-            'status' => 'required',
-        ]);
+ $request->validate([
+        'class_name' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/'],
+        'status' => 'required',
+    ], [
+        'class_name.regex' => 'The class name field format is invalid.',
+    ]);
 
 //checking if class already exist in the database
         $AlreadyExist = Classes::where('class_name', $request->class_name)->first();
@@ -73,11 +74,12 @@ class ClassesController extends Controller
 
     public function UpdateClass(Request $request){
         //validate user input
-        $request->validate([
-
-          'class_name' => 'required',
-          'status' => 'required',
-      ]);
+          $request->validate([
+        'class_name' => ['required', 'string', 'regex:/^[a-zA-Z0-9 ]+$/'],
+        'status' => 'required',
+    ], [
+        'class_name.regex' => 'The class name field format is invalid.',
+    ]);
 
       $id = $request->id;
       Classes::Find( $id )->update([
