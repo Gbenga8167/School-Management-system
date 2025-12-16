@@ -24,7 +24,50 @@ class TeacherController extends Controller
 
     public function StoreTeacher(Request $request){
 
-        $AlreadyEmail = User::where('email', $request->email)->first();
+
+            // Normalize inputs to avoid case mismatch
+    $request->merge([
+        'gender'  => strtolower($request->gender),
+        'marital' => strtolower($request->marital),
+    ]);
+
+ $request->validate([
+
+
+        // User table
+        'full_name' => ['required', 'regex:/^[a-zA-Z ]+$/'],
+        'username'  => ['required', 'regex:/^[a-zA-Z0-9_]+$/', 'unique:users,user_name'],
+        'email'     => ['required', 'email', 'unique:users,email'],
+        'password'  => ['required', 'min:8'],
+        'role'      => ['required', 'in:2'],
+
+        // Teacher table
+        'address'        => ['nullable', 'regex:/^[a-zA-Z ]+$/'],
+        'nationality'    => ['required', 'regex:/^[a-zA-Z ]+$/'],
+        'dob'            => ['required', 'date'],
+        'gender'         => ['required', 'in:male,female'],
+        'qualification'  => ['required', 'regex:/^[a-zA-Z ]+$/'],
+        'experience' => ['nullable', 'regex:/^[A-Za-z0-9 ]+$/'],
+        'marital'        => ['required', 'in:single,married,divorce'],
+        'State_of_origin'=> ['required'],
+        'phone_number'   => ['required', 'regex:/^[0-9]{10,15}$/'],
+
+        // Photo
+        'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
+
+    ], [
+
+        // ✅ CUSTOM ERROR MESSAGES
+        'full_name.regex' => 'Full name must contain only letters and spaces.',
+        'username.regex'  => 'Username can only contain letters, numbers, and underscore.',
+        'phone_number.regex' => 'Phone number must be numeric and between 10–15 digits.',
+        'gender.in' => 'Please select a valid gender.',
+        'marital.in' => 'Please select a valid marital status.',
+        'photo.image' => 'Uploaded file must be an image.',
+       // 'photo.max' => 'Image file too large.',
+    ]);
+
+       /* $AlreadyEmail = User::where('email', $request->email)->first();
         if($AlreadyEmail){
     
                  $notification = array(
@@ -56,7 +99,7 @@ class TeacherController extends Controller
     
         }
     
-        
+        */
 
 
         // Create User
