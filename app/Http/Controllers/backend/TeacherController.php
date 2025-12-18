@@ -37,7 +37,7 @@ class TeacherController extends Controller
         // User table
         'full_name' => ['required', 'regex:/^[a-zA-Z ]+$/'],
         'username'  => ['required', 'regex:/^[a-zA-Z0-9_]+$/', 'unique:users,user_name'],
-        'email'     => ['required', 'email', 'unique:users,email'],
+        'email'     => ['required', 'email:rfc,dns','unique:users,email'],
         'password'  => ['required', 'min:8'],
         'role'      => ['required', 'in:2'],
 
@@ -62,6 +62,7 @@ class TeacherController extends Controller
         'username.regex'  => 'Username can only contain letters, numbers, and underscore.',
         'phone_number.regex' => 'Phone number must be numeric and between 10–15 digits.',
         'gender.in' => 'Please select a valid gender.',
+        'email.email' => 'Please enter a valid email address (example: name@example.com).',
         'marital.in' => 'Please select a valid marital status.',
         'photo.image' => 'Uploaded file must be an image.',
        // 'photo.max' => 'Image file too large.',
@@ -193,9 +194,122 @@ class TeacherController extends Controller
 
 
      $request->validate([
-      'email' => 'required|email|unique:users,email,'.$teacher->user_id,
-      'username' => 'required|unique:users,user_name,'.$teacher->user_id,
-    ]);
+
+    // ===== USER TABLE =====
+    'full_name' => [
+        'required',
+        'regex:/^[a-zA-Z ]+$/'
+    ],
+
+    'email' => [
+    'required',
+    'email:rfc,dns',
+    'unique:users,email,' . $teacher->user_id
+],
+
+
+    'username' => [
+        'required',
+        'regex:/^[a-zA-Z0-9_]+$/',
+        'unique:users,user_name,' . $teacher->user_id
+    ],
+
+    // Password optional on update
+    'password' => [
+        'nullable',
+        'min:8'
+    ],
+
+    // ===== TEACHER TABLE =====
+    'address' => [
+        'nullable', 
+        'regex:/^[a-zA-Z ]+$/'
+    ],
+
+    'nationality' => [
+        'required',
+        'regex:/^[a-zA-Z ]+$/'
+    ],
+
+    'phone_number' => [
+        'required',
+        'regex:/^[0-9]{10,15}$/'
+    ],
+
+    'qualification' => [
+        'required',
+        'regex:/^[a-zA-Z ]+$/'
+    ],
+
+    // ✅ Numbers + letters + spaces (NO special characters)
+    'experience' => [
+        'nullable',
+        'regex:/^[a-zA-Z0-9 ]+$/'
+    ],
+
+    'marital' => [
+        'required',
+        'in:Married,Single,Divorce'
+    ],
+
+    'State_of_origin' => [
+        'required',
+        'string'
+    ],
+
+    'dob' => [
+        'required',
+        'date'
+    ],
+
+    'gender' => [
+        'required',
+        'in:male,female'
+    ],
+
+    // ===== PHOTO =====
+    'photo' => [
+        'nullable',
+        'image',
+        'mimes:jpg,jpeg,png',
+        'max:2048'
+    ],
+
+], [
+
+    // ===== CUSTOM ERROR MESSAGES =====
+    'full_name.regex' =>
+        'Full name must contain only letters and spaces.',
+
+    'username.regex' =>
+        'Username can only contain letters, numbers, and underscore.',
+
+        'email.email' => 'Please enter a valid email address (example: name@example.com).',
+
+    'qualification.regex' =>
+        'Qualification must contain only letters and spaces.',
+
+    'experience.regex' =>
+        'Work experience can contain only letters, numbers, and spaces.',
+
+    'phone_number.regex' =>
+        'Phone number must be numeric and between 10–15 digits.',
+
+    'gender.in' =>
+        'Please select a valid gender.',
+
+    'marital.in' =>
+        'Please select a valid marital status.',
+
+    'photo.image' =>
+        'Uploaded file must be an image.',
+
+    'photo.mimes' =>
+        'Photo must be JPG, JPEG, or PNG.',
+
+]);
+
+
 
         $teacher->name = $request->full_name;
         $teacher->address = $request->address;

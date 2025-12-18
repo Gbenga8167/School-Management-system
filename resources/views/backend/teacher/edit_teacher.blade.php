@@ -26,6 +26,17 @@
         <div class="card">
             <div class="card-body">
 
+                   @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
                 <h4 class="card-title">Update - Teacher </h4>
               
                 <form action="{{route('update.teacher')}}" method="post"  enctype="multipart/form-data">
@@ -37,7 +48,10 @@
                     <label for="example-text-input" class="col-sm-2 col-form-label">Fullname</label>
                     <div class="col-sm-10">
                         <input class="form-control" name="full_name"  type="text" value="{{$teachers->name}}" >
-                       
+                        
+                         @error('full_name')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -46,8 +60,12 @@
                 <div class="row mb-3">
                      <label for="email" class="col-sm-2 col-form-label">Email</label>
                      <div class="col-sm-10">
-                         <input class="form-control" name="email" type="email" 
+                         <input class="form-control" name="email" type="text" 
                                 value="{{ $teachers->user->email }}" required>
+
+                         @error('email')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                      </div>
                  </div>
                  
@@ -57,6 +75,11 @@
                      <div class="col-sm-10">
                          <input class="form-control" name="username" type="text" 
                                 value="{{ $teachers->user->user_name }}" required>
+
+                         @error('username')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
+            
                      </div>
                  </div>
                  
@@ -81,6 +104,11 @@
                      <label>Address</label>
                      <div>
                          <textarea required="" name="address" class="form-control" rows="5" style="height: 173px;">{{$teachers->address}}</textarea>
+
+                         
+                         @error('address')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                      </div>
                  </div>
 
@@ -90,6 +118,11 @@
                     <div class="col-sm-10">
                         <input class="form-control" name="nationality"  type="text"  value="{{$teachers->nationality}}" >
                     
+
+                        
+                         @error('nationality')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -99,6 +132,10 @@
                     <div class="col-sm-10">
                         <input class="form-control" name="phone_number"  type="text"  value="{{$teachers->phone_number}}" >
                      
+                        
+                         @error('phone_number')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -109,6 +146,9 @@
                     <div class="col-sm-10">
                         <input class="form-control" name="qualification"  type="text"  value="{{$teachers->qualification}}" >
                      
+                        @error('qualification')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -119,6 +159,10 @@
                     <div class="col-sm-10">
                         <input class="form-control" name="experience"  type="text"  value="{{$teachers->work_experience}}" >
                      
+
+                        @error('experience')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -207,6 +251,10 @@
                     <div class="col-sm-10">
                         <input class="form-control" name="photo" id="image"  type="file">
                         
+                        
+                        @error('photo')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -225,11 +273,11 @@
                     <label for="example-text-input" class="col-sm-2 col-form-label">Gender</label>
                     <div class="col-sm-10">
 
-                    <input class="form-check-input"  required type="radio" name="gender"  value="Male" {{$teachers->gender == 'Male'? 'checked' : ''}} >
+                    <input class="form-check-input"  required type="radio" name="gender"  value="male" {{$teachers->gender == 'male'? 'checked' : ''}} >
                     <label class="form-check-label" for="formRadios1"> Male </label>
 
 
-                    <input class="form-check-input"required type="radio" name="gender" value="Female" {{$teachers->gender == 'Female'? 'checked' : ''}}>
+                    <input class="form-check-input"required type="radio" name="gender" value="female" {{$teachers->gender == 'female'? 'checked' : ''}}>
                     <label class="form-check-label" for="formRadios1"> Female </label>
                  
                     </div>
