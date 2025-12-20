@@ -44,7 +44,7 @@ class TeacherController extends Controller
         // Teacher table
         'address'        => ['nullable', 'regex:/^[a-zA-Z ]+$/'],
         'nationality'    => ['required', 'regex:/^[a-zA-Z ]+$/'],
-        'dob'            => ['required', 'date'],
+        'dob'            => ['required', 'date', 'before:today'],
         'gender'         => ['required', 'in:male,female'],
         'qualification'  => ['required', 'regex:/^[a-zA-Z ]+$/'],
         'experience' => ['nullable', 'regex:/^[A-Za-z0-9 ]+$/'],
@@ -65,6 +65,7 @@ class TeacherController extends Controller
         'email.email' => 'Please enter a valid email address (example: name@example.com).',
         'marital.in' => 'Please select a valid marital status.',
         'photo.image' => 'Uploaded file must be an image.',
+        'dob.before' => 'Date of birth must be in the past.',
        // 'photo.max' => 'Image file too large.',
     ]);
 
@@ -259,7 +260,8 @@ class TeacherController extends Controller
 
     'dob' => [
         'required',
-        'date'
+        'date',
+        'before:today'
     ],
 
     'gender' => [
@@ -306,6 +308,8 @@ class TeacherController extends Controller
 
     'photo.mimes' =>
         'Photo must be JPG, JPEG, or PNG.',
+     
+        'dob.before' => 'Date of birth must be in the past.',
 
 ]);
 

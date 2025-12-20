@@ -182,6 +182,10 @@
                     <input class="form-check-input"required type="radio" name="marital" value="Divorce" {{$teachers->marital_status == 'Divorce'? 'checked' : ''}}>
                     <label class="form-check-label" for="formRadios1">Divorce </label>
                  
+
+                       @error('marital')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -230,6 +234,10 @@
             <option value="Zamfara" {{ $teachers->state_of_origin == 'Zamfara' ? 'selected' : '' }}>Zamfara</option>
             <option value="FCT" {{ $teachers->state_of_origin == 'FCT' ? 'selected' : '' }}>Federal Capital Territory (Abuja)</option>                           
                      </select>
+
+                      @error('State_of_origin')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -241,6 +249,9 @@
                     <div class="col-sm-10">
                         <input class="form-control" name="dob"  type="date"  value="{{$teachers->dob}}">
                         
+                         @error('dob')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -280,6 +291,10 @@
                     <input class="form-check-input"required type="radio" name="gender" value="female" {{$teachers->gender == 'female'? 'checked' : ''}}>
                     <label class="form-check-label" for="formRadios1"> Female </label>
                  
+
+                     @error('gender')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>

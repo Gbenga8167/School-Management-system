@@ -7,6 +7,18 @@
             <h5 class="mb-0" style="color:#fff;">School Settings</h5>
         </div>
         <div class="card-body">
+
+        
+                         @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
+
             <form action="{{ route('school.settings.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
@@ -15,6 +27,10 @@
                     <label class="form-label fw-bold">School Name</label>
                     <input type="text" name="name" class="form-control"
                         value="{{ old('name', $setting->name ?? '') }}" required>
+
+                         @error('name')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                 </div>
 
                 <!-- Address -->
@@ -24,6 +40,9 @@
                         
                          <textarea name="address" class="form-control" rows="5" style="height: 150px;">{{ $setting->address ?? ''  }}</textarea>
 
+                         @error('address')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                      </div>
                  </div>
                 
@@ -34,6 +53,10 @@
                 <div class="mb-3">
                     <label class="form-label fw-bold">School Motto</label>
                     <input type="text" name="motto" class="form-control" value="{{ old('motto', $setting->motto ?? '') }}">
+                        
+                        @error('motto')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                 </div>
 
                 
@@ -42,6 +65,9 @@
                     <label class="form-label fw-bold">School Logo</label>
                     <input type="file" name="logo" class="form-control" id="logoInput">
                     
+                        @error('logo')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     <div class="mt-2">
                         <!-- Default: show current logo if exists 
                          
@@ -62,6 +88,9 @@
                     <label class="form-label fw-bold">School Stamp</label>
                     <input type="file" name="stamp" class="form-control" id="stampInput">
                     
+                         @error('stamp')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     <div class="mt-2">
                         <!-- Default: show current logo if exists 
                          

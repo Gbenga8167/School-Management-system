@@ -20,9 +20,9 @@ class SchoolSettingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'   => 'required|string|max:255',
+            'name'   => 'required|regex:/^[a-zA-Z ]+$/|max:255',
             'address'=> 'nullable|string|max:255',
-            'motto'  => 'nullable|string|max:255',
+            'motto'  => 'nullable|regex:/^[a-zA-Z ]+$/',
             'logo'   => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
             'stamp'  => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);

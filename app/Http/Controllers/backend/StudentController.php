@@ -44,18 +44,120 @@ class StudentController extends Controller
 public function StoreStudent(Request $request)
 {
 
-/*
+
  //Step 1: Validate the input
-    $request->validate([
-        'full_name' => 'required|string|max:255',
-        'email' => ['required', 'email', Rule::unique('users', 'email')],
-        'password' => 'required|min:6',
-        'roll_id' => 'required',
-        'class_id' => 'required',
-        'dob' => 'required|date',
-        'gender' => 'required',
-        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);  */
+$request->merge([
+    'gender'         => strtolower($request->gender),
+    'parent_gender'  => strtolower($request->parent_gender),
+]);
+
+$request->validate([
+
+    // ================= USER TABLE =================
+    'full_name' => [
+        'required',
+        'regex:/^[a-zA-Z ]+$/'
+    ],
+
+    'username' => [
+        'required',
+        'regex:/^[a-zA-Z0-9_]+$/',
+        'unique:users,user_name'
+    ],
+
+    'email' => [
+        'required',
+        'email:rfc,dns',
+        'unique:users,email'
+    ],
+
+    'password' => [
+        'required',
+        'min:6'
+    ],
+
+    'role' => [
+        'required',
+        'in:3' // student only
+    ],
+
+    // ================= STUDENT TABLE =================
+    'roll_id' => [
+        'required',
+        'unique:students,roll_id'
+    ],
+
+    'class_id' => [
+        'required',
+        'exists:classes,id'
+    ],
+
+    'dob' => [
+        'required',
+        'date',
+        'before:today'
+    ],
+
+    'gender' => [
+        'required',
+        'in:male,female'
+    ],
+
+    'parent_name' => [
+        'required',
+        'regex:/^[a-zA-Z ]+$/'
+    ],
+
+    'parent_occupation' => [
+        'required',
+        'regex:/^[a-zA-Z0-9 ]+$/'
+    ],
+
+    'parent_gender' => [
+        'required',
+        'in:male,female'
+    ],
+
+    'State_of_origin' => [
+        'required'
+    ],
+
+    'phone_number' => [
+        'required',
+        'regex:/^[0-9]{10,15}$/'
+    ],
+
+    'address' => [
+       'required', 
+       'regex:/^[a-zA-Z ]+$/'
+    ],
+
+    'nationality' => [
+        'required',
+        'regex:/^[a-zA-Z ]+$/'
+    ],
+
+    // ================= PHOTO =================
+    'photo' => [
+        'nullable',
+        'image',
+        'mimes:jpg,jpeg,png',
+        'max:2048'
+    ],
+
+], [
+
+    // ================= CUSTOM MESSAGES =================
+    'full_name.regex' => 'Student name must contain only letters and spaces.',
+    'parent_name.regex' => 'Parent name must contain only letters and spaces.',
+    'parent_occupation.regex' => 'Occupation can contain letters and numbers only.',
+    'username.regex' => 'Username can contain only letters, numbers, and underscore.',
+    'email.email' => 'Please enter a valid email address.',
+    'email.dns' => 'Email domain does not exist.',
+    'phone_number.regex' => 'Phone number must be 10–15 digits.',
+    'dob.before' => 'Date of birth must be in the past.',
+]);
+
 
 
 
@@ -230,9 +332,58 @@ public function ManageStudent()
     $user = $student->user;
 
 
-     $request->validate([
-      'email' => 'required|email|unique:users,email,'.$student->user_id,
-      'username' => 'required|unique:users,user_name,'.$student->user_id,
+    // ✅ VALIDATION
+    $request->validate([
+        // Student
+        'full_name' => ['required','regex:/^[a-zA-Z0-9 ]+$/','max:255'],
+        'dob' => ['required','date','before:today'],
+        'gender' => ['required','in:male,female'],
+        'status' => ['required','in:0,1'],
+        'class_id' => ['required','exists:classes,id'],
+
+        // Parent
+        'parent_name' => ['required','regex:/^[a-zA-Z0-9 ]+$/'],
+        'parent_occupation' => ['required','regex:/^[a-zA-Z0-9 ]+$/'],
+        'parent_gender' => ['required','in:male,female'],
+
+        // Address & location
+        'State_of_origin' => ['required'],
+        'address' => ['required','regex:/^[a-zA-Z ]+$/'],
+        'nationality' => ['required','regex:/^[a-zA-Z ]+$/'],
+
+        // Phone
+        'phone_number' => ['required','regex:/^[0-9]+$/','min:10','max:15'],
+
+        // User
+        'email' => [
+            'required',
+            'email:rfc,dns',
+           'unique:users,email,' .$student->user_id
+        ],
+
+        'username' => [
+            'required',
+            'regex:/^[a-zA-Z0-9_]+$/',
+            'unique:users,user_name,' .$student->user_id
+        ],
+
+        'password' => ['nullable','min:6'],
+
+        // Image
+        'photo' => ['nullable','image','mimes:jpg,jpeg,png','max:2048'],
+    ],
+    // ✅ CUSTOM ERROR MESSAGES
+    [
+        'full_name.regex' => 'Full name can only contain letters, numbers and spaces.',
+        'parent_name.regex' => 'Parent name can only contain letters, numbers and spaces.',
+        'parent_occupation.regex' => 'Parent occupation cannot contain special characters.',
+        'username.regex' => 'Username can only contain letters, numbers and underscore.',
+        'phone_number.regex' => 'Phone number must contain digits only.',
+        'email.email' => 'Enter a valid email address (example@mail.com).',
+        'email.unique' => 'This email is already in use.',
+        'username.unique' => 'This username is already taken.',
+        'photo.image' => 'Uploaded file must be an image.',
+        'dob.before' => 'Date of birth must be in the past.',
     ]);
 
     // update student info

@@ -27,6 +27,15 @@
         <div class="card">
             <div class="card-body">
 
+                                    @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                 <h4 class="card-title">Update - Student </h4>
               
                 <form action="{{route('update.student')}}" method="post"  enctype="multipart/form-data">
@@ -39,6 +48,10 @@
                     <div class="col-sm-10">
                         <input class="form-control" name="full_name"  type="text" value="{{$students->name}}" >
                        
+
+                         @error('full_name')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -60,8 +73,12 @@
                 <div class="row mb-3">
                      <label for="email" class="col-sm-2 col-form-label">Email</label>
                      <div class="col-sm-10">
-                         <input class="form-control" name="email" type="email" 
-                                value="{{ $students->user->email }}" required>
+                         <input class="form-control" name="email" type="text" 
+                                value="{{ $students->user->email }}">
+
+                                 @error('email')
+                        <small class="text-danger">{{ $message }}</small>
+                               @enderror
                      </div>
                  </div>
                  
@@ -70,7 +87,11 @@
                      <label for="username" class="col-sm-2 col-form-label">Username</label>
                      <div class="col-sm-10">
                          <input class="form-control" name="username" type="text" 
-                                value="{{ $students->user->user_name }}" required>
+                                value="{{ $students->user->user_name }}">
+
+                                 @error('username')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                      </div>
                  </div>
                  
@@ -94,7 +115,7 @@
                  <div class="row mb-3">
                      <label for="class_id" class="col-sm-2 col-form-label" style="font-size:15px">Class</label>
                      <div class="col-sm-10">
-                         <select name="class_id" class="form-select" required>
+                         <select name="class_id" class="form-select">
                              <option value="">-- Select Class --</option>
                              @foreach($classes as $class)
                                  <option value="{{ $class->id }}" 
@@ -103,6 +124,10 @@
                                  </option>
                              @endforeach
                          </select>
+
+                          @error('class_id')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                      </div>
                  </div>
 
@@ -112,8 +137,12 @@
                 <div class="row mb-3">
                     <label for="example-text-input" class="col-sm-2 col-form-label">DOB</label>
                     <div class="col-sm-10">
-                        <input class="form-control" required name="dob"  type="date"  value="{{$students->dob}}">
+                        <input class="form-control" name="dob"  type="date"  value="{{$students->dob}}">
+                      
                         
+                         @error('dob')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -124,6 +153,9 @@
                     <div class="col-sm-10">
                         <input class="form-control" name="photo" id="image"  type="file">
                         
+                         @error('photo')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -142,13 +174,16 @@
                     <label for="example-text-input" class="col-sm-2 col-form-label">Gender</label>
                     <div class="col-sm-10">
 
-                    <input class="form-check-input"  required type="radio" name="gender"  value="Male" {{$students->gender == 'Male'? 'checked' : ''}} >
+                    <input class="form-check-input" type="radio" name="gender"  value="male" {{$students->gender == 'male'? 'checked' : ''}} >
                     <label class="form-check-label" for="formRadios1"> Male </label>
 
 
-                    <input class="form-check-input"required type="radio" name="gender" value="Female" {{$students->gender == 'Female'? 'checked' : ''}}>
+                    <input class="form-check-input" type="radio" name="gender" value="female" {{$students->gender == 'female'? 'checked' : ''}}>
                     <label class="form-check-label" for="formRadios1"> Female </label>
                  
+                     @error('gender')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -164,6 +199,10 @@
                                                     <option value="1">Active</option>
                                                     <option value="0">In-Active</option>
                                                     </select>
+
+                         @error('status')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -176,8 +215,12 @@
                 <div class="row mb-3">
                     <label for="example-text-input" class="col-sm-2 col-form-label">Parent name</label>
                     <div class="col-sm-10">
-                        <input class="form-control" required  name="parent_name"  type="text" value="{{$students->parent_name}}" >
+                        <input class="form-control" name="parent_name"  type="text" value="{{$students->parent_name}}" >
                        
+
+                         @error('parent_name')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                     <!-- end row -->
 
@@ -187,8 +230,11 @@
                 <div class="row mb-3">
                     <label for="example-text-input" class="col-sm-2 col-form-label">Parent Occupation</label>
                     <div class="col-sm-10">
-                        <input class="form-control"  required   name="parent_occupation"  type="text" value="{{$students->parent_occupation}}">
-                       
+                        <input class="form-control" name="parent_occupation"  type="text" value="{{$students->parent_occupation}}">
+                      
+                         @error('parent_occupation')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -201,13 +247,16 @@
                     <label for="example-text-input" class="col-sm-2 col-form-label">Gender</label>
                     <div class="col-sm-10">
 
-                    <input class="form-check-input"  required type="radio" name="parent_gender"  value="Male" {{$students->parent_gender == 'Male'? 'checked' : ''}} >
+                    <input class="form-check-input" type="radio" name="parent_gender"  value="male" {{$students->parent_gender == 'male'? 'checked' : ''}} >
                     <label class="form-check-label" for="formRadios1"> Male </label>
 
 
-                    <input class="form-check-input"required type="radio" name="parent_gender" value="Female" {{$students->parent_gender == 'Female'? 'checked' : ''}}>
+                    <input class="form-check-input" type="radio" name="parent_gender" value="female" {{$students->parent_gender == 'female'? 'checked' : ''}}>
                     <label class="form-check-label" for="formRadios1"> Female </label>
                  
+                     @error('parent_gender')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -218,7 +267,7 @@
                 <div class="row mb-3">
     <label for="example-text-input" class="col-sm-2 col-form-label">State Of Origin</label>
     <div class="col-sm-10">
-        <select name="State_of_origin" required class="form-select" aria-label="Default select example">
+        <select name="State_of_origin" class="form-select" aria-label="Default select example">
             <option value="">-- Select State --</option>
             <option value="Abia" {{ $students->state_of_origin == 'Abia' ? 'selected' : '' }}>Abia</option>
             <option value="Adamawa" {{ $students->state_of_origin == 'Adamawa' ? 'selected' : '' }}>Adamawa</option>
@@ -258,6 +307,11 @@
             <option value="Zamfara" {{ $students->state_of_origin == 'Zamfara' ? 'selected' : '' }}>Zamfara</option>
             <option value="FCT" {{ $students->state_of_origin == 'FCT' ? 'selected' : '' }}>Federal Capital Territory (Abuja)</option>
         </select>
+
+
+                       @error('State_of_origin')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
     </div>
 </div>
 
@@ -268,8 +322,11 @@
                 <div class="row mb-3">
                     <label for="example-text-input"  class="col-sm-2 col-form-label">Phone Number</label>
                     <div class="col-sm-10">
-                        <input class="form-control" required name="phone_number"  type="text" value="{{$students->phone_number}}">
+                        <input class="form-control" name="phone_number"  type="text" value="{{$students->phone_number}}">
                     
+                         @error('phone_number')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
@@ -279,7 +336,11 @@
                 <div class="mb-3">
                      <label>Contact Address</label>
                      <div>
-                         <textarea required="" name="address" required class="form-control" rows="5" style="height: 173px;"  placeholder="Address" >{{$students->address}}</textarea>
+                         <textarea name="address" class="form-control" rows="5" style="height: 173px;"  placeholder="Address" >{{$students->address}}</textarea>
+
+                          @error('address')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                      </div>
                  </div>
                  <!-- end row -->
@@ -287,8 +348,11 @@
                 <div class="row mb-3">
                     <label for="example-text-input"  class="col-sm-2 col-form-label">Nationality</label>
                     <div class="col-sm-10">
-                        <input class="form-control" required name="nationality"  type="text" value="{{$students->nationality}}">
+                        <input class="form-control" name="nationality"  type="text" value="{{$students->nationality}}">
                     
+                         @error('nationality')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                    
                 </div>
