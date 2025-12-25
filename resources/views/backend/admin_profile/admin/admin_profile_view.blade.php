@@ -27,6 +27,17 @@
         <div class="card">
             <div class="card-body">
 
+                                    @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+
                 <h4 class="card-title">ADMIN PROFILE - Update </h4>
               
                 <form action="{{route('admin.profile.update')}}" method="post" enctype="multipart/form-data">
@@ -42,7 +53,7 @@
                 <div class="row mb-3">
                     <label for="example-search-input" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
-                        <input class="form-control" name="email" type="email" value="{{ $adminData->email }}">
+                        <input class="form-control" name="email" type="text" value="{{ $adminData->email }}">
                     </div>
                 </div>
                 <!-- end row -->

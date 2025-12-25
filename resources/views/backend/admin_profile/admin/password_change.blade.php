@@ -47,7 +47,7 @@
                 <div class="row mb-3">
                     <label for="example-search-input" class="col-sm-2 col-form-label">New Password</label>
                     <div class="col-sm-10">
-                        <input class="form-control @error('old_password') is-invalid @enderror" name="new_password" type="password" placeholder="New_Password">
+                        <input class="form-control @error('new_password') is-invalid @enderror" name="new_password" type="password" placeholder="New_Password">
                         @error('new_password')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror

@@ -34,6 +34,21 @@ class AdminController extends Controller
 
         $id = Auth::user()->id;
         $admin = User::findOrFail($id);
+
+        //validate input
+        $request->validate([
+
+        'user_name'  => ['required', 'regex:/^[a-zA-Z0-9_]+$/'],
+        'email'     => ['required', 'email:rfc,dns'],
+        'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'], 
+        ],
+
+        [
+        'email.email' => 'Please enter a valid email address (example: name@example.com).',
+        'user_name.regex'  => 'Username can only contain letters, numbers, and underscore.',
+        'photo.image' => 'Uploaded file must be an image.',        
+        ]);
+
         $admin->user_name = $request->user_name;
         $admin->email = $request->email;
        
@@ -84,7 +99,7 @@ class AdminController extends Controller
         $request->validate([
     
             'old_password' => 'required',
-            'new_password' => 'required|confirmed',
+            'new_password' => 'required|confirmed|min:8',
         ]);
     
         if(!Hash::check($request->old_password, Auth::user()->password)){
